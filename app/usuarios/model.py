@@ -4,9 +4,8 @@ import werkzeug.security as ws
 
 
 class Usuario(UserMixin):
-    def __init__(self, id, nombre, password, nivel, experiencia, monedas, foto_perfil, titulo_nobiliario, matrimonio,
+    def __init__(self, nombre, password, nivel, experiencia, monedas, foto_perfil, titulo_nobiliario, matrimonio,
                  inventario, transformaciones, hechizos, sala_actual):
-        self.id = id
         self.nombre = nombre
         self.password = password
         self.nivel = nivel
@@ -21,7 +20,7 @@ class Usuario(UserMixin):
         self.sala_actual = sala_actual
 
     def check_password(self, password):
-        ws.check_password_hash(self.password, password)
+        return ws.check_password_hash(self.password, password)
 
     @staticmethod
     def current():
@@ -30,3 +29,18 @@ class Usuario(UserMixin):
             flask_login.logout_user()
             usr = None
         return usr
+
+    def __dict__(self):
+        return {
+            'password': self.password,
+            'nivel': self.nivel,
+            'experiencia': self.experiencia,
+            'monedas': self.monedas,
+            'foto_perfil': self.foto_perfil,
+            'titulo_nobiliario': self.titulo_nobiliario,
+            'matrimonio': self.matrimonio,
+            'inventario': self.inventario,
+            'transformaciones': self.transformaciones,
+            'hechizos': self.hechizos,
+            'sala_actual': self.sala_actual
+        }
