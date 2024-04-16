@@ -1,0 +1,16 @@
+{% extends 'base_login.html' %}
+
+{% block title %} - Registro{% endblock %}
+
+{% block content %}
+    <form method="POST" action="/registro">
+        {{ form.hidden_tag() }}
+    <fieldset>
+        <legend>Perfil</legend>
+        {{ form.nombre.label }} {{ form.nombre }}
+        {{ form.password.label }} {{ form.password }}
+        {{ form.foto_perfil.label }} {{ form.foto_perfil }}
+    </fieldset>
+    {{ form.submit }}
+    </form>
+{% endblock %}

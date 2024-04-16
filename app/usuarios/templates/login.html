@@ -1,0 +1,13 @@
+{% extends 'base_login.html' %}
+
+{% block content %}
+    <form method="GET" action="/sesion">
+        {{ form.hidden_tag() }}
+        <fieldset>
+            <legend>Inicia sesión</legend>
+            {{ form.nombre.label }} {{ form.nombre }}
+            {{ form.password.label }} {{ form.password }}
+            {{ form.submit }}
+        </fieldset>
+    </form>
+{% endblock %}
