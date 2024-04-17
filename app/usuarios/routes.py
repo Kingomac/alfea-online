@@ -20,9 +20,9 @@ def registro():
         usuario = Usuario(form.nombre.data, ws.generate_password_hash(form.password.data), nivel=1, experiencia=0,
                           monedas=0, foto_perfil='',
                           titulo_nobiliario='', matrimonio=None, inventario=[], transformaciones=[], hechizos=[],
-                          sala_actual='')
+                          sala_actual=1)
         redis_db.set(f"usuario:{form.nombre.data}", json.dumps(usuario.__dict__()))
-        return 'Usuario registrado'
+        return redirect(url_for('usuarios.index'))
     return render_template('registro.html', form=form)
 
 

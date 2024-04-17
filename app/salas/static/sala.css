@@ -1,0 +1,21 @@
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    margin: 0;
+}
+
+main {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 1fr 5fr 1fr;
+    place-items: stretch;
+
+    section {
+        border: 1px solid red;
+    }
+
+    .ui-estado {
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        place-items: stretch;
+    }
+}

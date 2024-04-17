@@ -1,0 +1,30 @@
+id;alias;nombre_sala
+1;alfea-interior;Alfea Interior
+2;alfea-patio;Patio de Alfea
+3;alfea-dormitorios;Dormitorios de Alfea
+4;alfea-biblioteca;Biblioteca de Alfea
+5;alfea-archivomagico;Archivo Mágico
+6;alfea-faragonda;Despacho de Faragonda
+7;alfea-anfiteatro;Anfiteatro de Alfea
+8;alfea-aula;Aula de Alfea
+9;alfea-cocina;Cocina de Alfea
+10;alfea-lab;Laboratorio de Alfea
+11;alfea-invernadero;Invernadero de Alfea
+12;alfea-camsecretos;Cámara de secretos de Alfea
+13;alfea-cam-realidad-magica;Cámara de realidad mágica de Alfea
+14;bosque-oscuro;Bosque Oscuro
+15;lago-rocaluz;Lago Rocaluz
+16;torrenubes-vestibulo;Vestíbulo de Torre de Nubes
+17;torrenubes-anfiteatro;Anfiteatro de Torre de Nubes
+18;torrenubes-griffin;Despacho de Griffin (Torre de Nubes)
+19;torrenubes-calabozos;Calabozos de Torre de Nubes
+20;torrenubes-dormitorios;Dormitorios de Torre de Nubes
+21;torrenubes-archivomagico;Archivo Mágico de Torre de Nubes
+22;fuenteroja-patio;Patio de Fuente Roja
+23;fuenteroja-domitorios;Dormitorios de Fuente Roja
+24;aldea-pixie;Aldea Pixie
+25;andros-portal-omega;Portal Omega de Andros
+26;andros-palacio-terrestre;Palacio Real terrestre de Andros
+27;andros-palacio-submarino;Palacio Real submarino de Andros
+28;andros-portal-oceano-infinito;Portal al Oceano infinito de Andros
+29;andros-ciudad-terrestre;Ciudad terrestre de Andros
