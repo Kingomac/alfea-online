@@ -1,6 +1,8 @@
 import flask_login
 from flask_login import UserMixin
 import werkzeug.security as ws
+from db import redis_db
+import json
 
 
 class Usuario(UserMixin):
@@ -22,6 +24,9 @@ class Usuario(UserMixin):
     def check_password(self, password):
         return ws.check_password_hash(self.password, password)
 
+    def get_id(self):
+        return self.nombre
+
     @staticmethod
     def current():
         usr = flask_login.current_user
@@ -29,6 +34,13 @@ class Usuario(UserMixin):
             flask_login.logout_user()
             usr = None
         return usr
+
+    @staticmethod
+    def find_by_name(nombre):
+        fetch = redis_db.get(f"usuario:{nombre}")
+        if fetch is None:
+            return None
+        return Usuario(nombre, **json.loads(fetch))
 
     def __dict__(self):
         return {
