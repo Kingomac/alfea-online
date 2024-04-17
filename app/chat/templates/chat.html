@@ -24,7 +24,7 @@
         socket.emit('conectar_sala', '{{ sala }}')
         document.getElementById('btn-enviar').onclick = () => {
             const mensaje = document.getElementById('txt-mensaje').value
-            socket.emit('mensaje_nuevo', JSON.stringify({
+            socket.emit('mensaje_nuevo_{% if sala.startswith('priv') %}priv{% else %}sala{% endif %}', JSON.stringify({
                 mensaje: mensaje,
                 sala: '{{ sala }}',
                 usuario: '{{ current_user.nombre }}'

@@ -17,15 +17,27 @@ def registar_sockets(socketio: SocketIO):
         print(f"Desconectado de la sala {sala}")
         leave_room(sala)
 
-    @socketio.on('mensaje_nuevo')
-    def handle_mensaje_nuevo(data):
+    def guardar_mensaje(data) -> tuple[Mensaje, str, str]:
         data = json.loads(data)
-        print(f"Mensaje nuevo: {data}")
         sala, mensaje, usuario, timestamp = data['sala'], data['mensaje'], data['usuario'], datetime.now().timestamp()
         clave = f"chat:{sala}:{timestamp}"
         obj_mensaje = Mensaje(mensaje=mensaje, usuario=usuario, timestamp=timestamp)
         redis_db.set(clave, json.dumps(obj_mensaje.__dict__()))
+        return obj_mensaje, clave, sala
+
+    @socketio.on('mensaje_nuevo_sala')
+    def handle_mensaje_nuevo(data):
+        obj_mensaje, clave, sala = guardar_mensaje(data)
         redis_db.expire(clave, 7200)
         emit('mensaje_nuevo',
-             {'mensaje': data['mensaje'], 'usuario': usuario, 'fecha_bonita': obj_mensaje.get_fecha_bonita()},
+             {'mensaje': obj_mensaje.mensaje, 'usuario': obj_mensaje.usuario,
+              'fecha_bonita': obj_mensaje.get_fecha_bonita()},
+             broadcast=True, room=sala)
+
+    @socketio.on('mensaje_nuevo_priv')
+    def handle_mensaje_nuevo_privado(data):
+        obj_mensaje, clave, sala = guardar_mensaje(data)
+        emit('mensaje_nuevo',
+             {'mensaje': obj_mensaje.mensaje, 'usuario': obj_mensaje.usuario,
+              'fecha_bonita': obj_mensaje.get_fecha_bonita()},
              broadcast=True, room=sala)
