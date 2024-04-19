@@ -7,6 +7,7 @@ from .model import Usuario
 import json
 import werkzeug.security as ws
 import flask_login
+from game_data_loader import salas_csv
 
 bp_usuarios = Blueprint('usuarios', __name__, url_prefix='/', template_folder='templates')
 
@@ -37,5 +38,8 @@ def index():
         if not usr.check_password(form.password.data):
             return 'Login incorrecto'
         flask_login.login_user(usr)
-        redirect(url_for('usuarios.index'))
+        print(f"{usr.sala_actual=}")
+        alias = salas_csv.get_by_id(str(usr.sala_actual))['alias']
+        print(f"{url_for('ui.sala', alias=alias)=}")
+        return redirect(url_for('ui.sala', alias=alias))
     return render_template('login.html', form=form)

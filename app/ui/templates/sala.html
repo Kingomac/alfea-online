@@ -13,7 +13,8 @@
     </section>
     <!-- Parte principal (chat y opciones) -->
     <section>
-        <h1>{{ nombre_sala }}</h1>
+        {% from 'macros/chat.html' import salaChat with context %}
+        {{ salaChat(sala=sala, mensajes=mensajes) }}
     </section>
     <!-- IU de estado y móvil -->
     <section class="ui-estado">

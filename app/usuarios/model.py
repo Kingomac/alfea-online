@@ -8,18 +8,18 @@ import json
 class Usuario(UserMixin):
     def __init__(self, nombre, password, nivel, experiencia, monedas, foto_perfil, titulo_nobiliario, matrimonio,
                  inventario, transformaciones, hechizos, sala_actual):
-        self.nombre = nombre
-        self.password = password
-        self.nivel = nivel
-        self.experiencia = experiencia
-        self.monedas = monedas
-        self.foto_perfil = foto_perfil
-        self.titulo_nobiliario = titulo_nobiliario
-        self.matrimonio = matrimonio
-        self.inventario = inventario
-        self.transformaciones = transformaciones
-        self.hechizos = hechizos
-        self.sala_actual = sala_actual
+        self.nombre: str = nombre
+        self.password: str = password
+        self.nivel: int = nivel
+        self.experiencia: int = experiencia
+        self.monedas: int = monedas
+        self.foto_perfil: str = foto_perfil
+        self.titulo_nobiliario: str = titulo_nobiliario
+        self.matrimonio: str = matrimonio
+        self.inventario: [] = inventario
+        self.transformaciones: [] = transformaciones
+        self.hechizos: [] = hechizos
+        self.sala_actual: int = sala_actual
 
     def check_password(self, password):
         return ws.check_password_hash(self.password, password)
