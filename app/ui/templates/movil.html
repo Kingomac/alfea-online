@@ -1,0 +1,110 @@
+<style>
+    .movil {
+        display: grid;
+        grid-template-rows: min-content auto min-content;
+        width: 100%;
+        height: 100%;
+        border: 3px solid #750573;
+        border-radius: 10px;
+        background: rgb(223, 171, 252);
+        background: linear-gradient(0deg, rgba(223, 171, 252, 1) 0%, rgba(240, 165, 234, 1) 100%);
+
+        .parte-superior {
+            display: grid;
+            grid-template-columns: 1fr 3fr 1fr;
+            gap: 5px;
+            place-items: center;
+
+            img {
+                width: 45px;
+                rotate: 25deg;
+            }
+
+            .altavoz {
+                background-color: #342d80;
+                border: 2px solid #320874;
+                width: 70%;
+                height: 8px;
+                border-radius: 5px;
+            }
+
+            .camara-frontal {
+                aspect-ratio: 1 / 1;
+                width: 15px;
+                border-radius: 50%;
+                background-color: #342d80;
+                border: 2px solid #320874;
+            }
+        }
+
+        .parte-inferior {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            place-items: center;
+
+            img {
+                height: 40px;
+                margin: 5px;
+            }
+
+            .boton-cuadrado {
+                background: rgb(242, 251, 251);
+                background: linear-gradient(30deg, rgba(242, 251, 251, 1) 0%, rgba(153, 211, 225, 1) 100%);
+                aspect-ratio: 1 / 1;
+                border-radius: 5px;
+                padding: 8px;
+                border: 2px solid #09325a;
+                transition-duration: .5s;
+
+                &:active {
+                    background: rgb(160, 255, 255);
+                    background: linear-gradient(30deg, rgba(160, 255, 255, 1) 0%, rgba(117, 162, 173, 1) 100%);
+                }
+            }
+
+            .boton-diamante {
+                display: block;
+                rotate: 45deg;
+                width: 10px;
+                aspect-ratio: 1 / 1;
+                border-radius: 1px;
+                background: rgb(72, 186, 233);
+                background: linear-gradient(45deg, rgba(72, 186, 233, 1) 0%, rgba(53, 151, 203, 1) 100%);
+                border: 2px solid #072c50;
+                transition-duration: .5s;
+
+                &:active {
+                    background: rgb(42, 120, 152);
+                    background: linear-gradient(45deg, rgb(83, 146, 175) 0%, rgb(38, 113, 152) 100%);
+                    rotate: -135deg;
+                }
+            }
+        }
+
+        .pantalla {
+            background: rgb(23, 202, 252);
+            background: linear-gradient(180deg, rgba(23, 202, 252, 1) 0%, rgba(82, 226, 253, 1) 12%, rgba(2, 252, 252, 1) 31%, rgba(15, 255, 250, 1) 56%, rgba(243, 253, 255, 1) 100%);
+            margin: 0 6px;
+            border: 2px solid #09325a;
+            border-radius: 2px;
+        }
+    }
+</style>
+<div class="movil">
+    <div class="parte-superior">
+        <img src="{{ url_for('.static', filename='img/clave-sol.svg') }}" alt="Clave de Sol">
+        <div class="altavoz"></div>
+        <div class="camara-frontal"></div>
+    </div>
+    <div class="pantalla">
+
+    </div>
+    <div class="parte-inferior">
+        <img src="{{ url_for('.static', filename='img/corchea.svg') }}" alt="Corchea">
+        <button class="boton-cuadrado">
+            <span class="boton-diamante"></span>
+        </button>
+        <img src="{{ url_for('.static', filename='img/semicorchea.svg') }}" alt="Semicorchea">
+    </div>
+</div>

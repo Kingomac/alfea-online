@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Alfea Online - {{ nombre_sala }}</title>
-    <link rel="stylesheet" href="/salas/static/sala.css">
+    <link rel="stylesheet" href="{{ url_for('.static', filename='sala.css') }}">
 </head>
 <body>
 <main>
@@ -23,7 +23,7 @@
         </section>
         <!-- Móvil -->
         <section>
-            <h1>Móvil</h1>
+            {% include 'movil.html' %}
         </section>
     </section>
 </main>

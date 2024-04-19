@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory
-from app import bp_usuarios, bp_chat, registar_sockets, bp_salas
+from app import bp_usuarios, bp_chat, registar_sockets, bp_ui
 import redis
 from flask_login import LoginManager
 from app.usuarios.model import Usuario
@@ -14,7 +14,7 @@ login_manager.login_view = 'usuarios.index'
 
 app.register_blueprint(bp_usuarios)
 app.register_blueprint(bp_chat)
-app.register_blueprint(bp_salas)
+app.register_blueprint(bp_ui)
 
 registar_sockets(socketio)
 
