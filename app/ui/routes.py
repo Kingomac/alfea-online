@@ -1,3 +1,5 @@
+import json
+
 from flask import Blueprint, render_template, send_from_directory
 from game_data_loader import salas_csv, movil_apps_csv
 from db import redis_db
@@ -18,5 +20,8 @@ def sala(alias):
 
     claves = redis_db.keys(f"chat:{alias}:*")
     mensajes = get_mensajes_from_keys(claves)
+    usuarios_sala = tuple(map(lambda x: json.loads(x)['usuario'], redis_db.lrange(f"usuarios-sala:{alias}", 0, -1)))
+    print(f"{usuarios_sala=}")
 
-    return render_template('sala.html', sala=alias, mensajes=mensajes, movil_apps=movil_apps_csv.rows, **datos_sala)
+    return render_template('sala.html', sala=alias, mensajes=mensajes, movil_apps=movil_apps_csv.rows,
+                           usuarios_sala=usuarios_sala, **datos_sala)

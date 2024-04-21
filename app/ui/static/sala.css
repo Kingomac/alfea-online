@@ -22,4 +22,11 @@ main {
         grid-template-rows: 1fr auto;
         place-items: stretch;
     }
+
+    .titulo-sala {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
 }

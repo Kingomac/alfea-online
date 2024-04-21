@@ -10,9 +10,15 @@
     <!-- Lista de usuarios conectados -->
     <section>
         <h1>Usuarios conectados</h1>
+        {% from 'macros/lista_usuarios_sala.html' import listaUsuariosSala with context %}
+        {{ listaUsuariosSala(usuarios=usuarios_sala, sala=sala) }}
     </section>
     <!-- Parte principal (chat y opciones) -->
     <section>
+        <div class="titulo-sala">
+            <h1>{{ nombre_sala }}</h1>
+            <button>...</button>
+        </div>
         {% from 'macros/chat.html' import salaChat with context %}
         {{ salaChat(sala=sala, mensajes=mensajes) }}
     </section>

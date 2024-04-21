@@ -1,0 +1,27 @@
+{% macro listaUsuariosSala(usuarios,sala) %}
+
+    <ul id="listaUsuarios">
+        {% for usuario in usuarios %}
+            <li id="listaUsuarios-{{ usuario }}">{{ usuario }}</li>
+        {% endfor %}
+    </ul>
+
+    <script type="module">
+        import {io} from '/static/socket.io.esm.min.js'
+
+        const socket = io()
+
+        socket.on('connect', () => {
+            console.log('Conectado al servidor')
+            socket.on('add_usuario_sala_{{ sala }}', (usuario) => {
+                document.querySelector('#listaUsuarios').innerHTML += `<li id="listaUsuarios-${usuario}">${usuario}</li>`
+                console.log('Usuario agregado a la sala')
+            })
+            socket.on('rm_usuario_sala_{{ sala }}', (usuario) => {
+                document.querySelector(`#listaUsuarios-${usuario}`).remove()
+            })
+        })
+
+    </script>
+
+{% endmacro %}

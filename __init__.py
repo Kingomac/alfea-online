@@ -1,1 +1,1 @@
-from .main import login_manager
+from .main import socketio
