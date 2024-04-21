@@ -19,7 +19,7 @@ main {
 
     .ui-estado {
         display: grid;
-        grid-template-rows: 1fr 1fr;
+        grid-template-rows: 1fr auto;
         place-items: stretch;
     }
 }

@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, send_from_directory
-from game_data_loader import salas_csv
+from game_data_loader import salas_csv, movil_apps_csv
 from db import redis_db
 from app.chat import get_mensajes_from_keys
 
@@ -19,4 +19,4 @@ def sala(alias):
     claves = redis_db.keys(f"chat:{alias}:*")
     mensajes = get_mensajes_from_keys(claves)
 
-    return render_template('sala.html', sala=alias, mensajes=mensajes, **datos_sala)
+    return render_template('sala.html', sala=alias, mensajes=mensajes, movil_apps=movil_apps_csv.rows, **datos_sala)
