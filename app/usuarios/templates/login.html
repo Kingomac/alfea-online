@@ -1,6 +1,8 @@
-{% extends 'base_login.html' %}
+{% extends 'base.html' %}
 
-{% block content %}
+{% block title %}Inicio{% endblock %}
+
+{% block main %}
     <form method="POST" action="/">
         {{ form.hidden_tag() }}
         <fieldset>
@@ -10,4 +12,13 @@
             {{ form.submit }}
         </fieldset>
     </form>
+    <section>
+        <h2>Regístrate en Alfea Online y explora la dimensión de Magix</h2>
+        <a href="{{ url_for('usuarios.registro') }}">Regístrate</a>
+    </section>
+    <section>
+        <p>Alfea Online es un MMORPG no lineal en el que tú construyes tu propia historia.</p>
+        <p>Tu decides, hada, mago/a, especialista o bruja. ¿Ayudas a las Winx o a Valtor? ¿Prefieres ir por libre y
+            matar a todos? ¿Solo chatear?</p>
+    </section>
 {% endblock %}

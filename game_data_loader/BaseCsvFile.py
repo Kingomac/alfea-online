@@ -10,3 +10,6 @@ class BaseCsvFile:
     @property
     def rows(self):
         return self.__rows
+
+    def __getitem__(self, item):
+        return self.rows[item]

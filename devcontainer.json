@@ -1,0 +1,17 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/python:3",
+  "forwardPorts": [
+    5000
+  ],
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "latest"
+    }
+  },
+  "extensions": [
+    "ms-python.python",
+  ],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  }
+}

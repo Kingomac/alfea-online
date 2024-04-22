@@ -1,0 +1,3 @@
+id;nombre;ataque_fisico;ataque_magico;defensa_fisica;defensa_magica;precision;coste_mana;prob_critico
+1;Ventisca;10;5;0;0;60;10;25
+2;Barrera de sonido;0;0;5;10;90;10;0
