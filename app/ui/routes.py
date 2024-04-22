@@ -21,7 +21,8 @@ def sala(alias):
     claves = redis_db.keys(f"chat:{alias}:*")
     mensajes = get_mensajes_from_keys(claves)
     usuarios_sala = tuple(map(lambda x: json.loads(x)['usuario'], redis_db.lrange(f"usuarios-sala:{alias}", 0, -1)))
-    print(f"{usuarios_sala=}")
+    desplazamientos_cercanos = salas_csv.get_desplazamientos_cercanos(datos_sala['grupo'])
+    print(f"{desplazamientos_cercanos=}")
 
     return render_template('sala.html', sala=alias, mensajes=mensajes, movil_apps=movil_apps_csv.rows,
-                           usuarios_sala=usuarios_sala, **datos_sala)
+                           usuarios_sala=usuarios_sala, desplazamientos_cercanos=desplazamientos_cercanos, **datos_sala)

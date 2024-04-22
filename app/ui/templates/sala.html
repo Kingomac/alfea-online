@@ -19,8 +19,14 @@
             <h1>{{ nombre_sala }}</h1>
             <button>...</button>
         </div>
-        {% from 'macros/chat.html' import salaChat with context %}
-        {{ salaChat(sala=sala, mensajes=mensajes) }}
+        <div id="chat-sala">
+            {% from 'macros/chat.html' import salaChat with context %}
+            {{ salaChat(sala=sala, mensajes=mensajes) }}
+        </div>
+        <div id="opciones-sala">
+            {% from 'macros/desplazamientos_cercanos.html' import desplazamientosCercanos with context %}
+            {{ desplazamientosCercanos(desplazamientos_cercanos) }}
+        </div>
     </section>
     <!-- IU de estado y móvil -->
     <section class="ui-estado">

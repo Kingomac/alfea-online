@@ -1,0 +1,8 @@
+{% macro desplazamientosCercanos(salas) %}
+    <ul>
+        {% for dc in salas %}
+            <li><a href="{{ url_for('ui.sala', alias=dc['alias']) }}">{{ dc['nombre_sala'] }}</a></li>
+        {% endfor %}
+
+    </ul>
+{% endmacro %}

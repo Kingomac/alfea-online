@@ -11,5 +11,8 @@ class SalasCsv(BaseCsvFile):
     def get_by_id(self, sala_id):
         return next((sala for sala in self.rows if sala['id'] == sala_id), None)
 
+    def get_desplazamientos_cercanos(self, grupo):
+        return [sala for sala in self.rows if sala['grupo'] == grupo]
+
 
 salas_csv = SalasCsv()
