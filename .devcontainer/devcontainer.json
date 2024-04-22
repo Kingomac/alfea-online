@@ -1,5 +1,9 @@
 {
   "image": "mcr.microsoft.com/devcontainers/python:3",
+  "runArgs": [
+    "--network",
+    "als"
+  ],
   "forwardPorts": [
     5000
   ],
