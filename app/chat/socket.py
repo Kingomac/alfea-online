@@ -13,22 +13,18 @@ def registar_sockets(socketio: SocketIO):
         print(f"{request.sid=}")
         print(f"{data['usuario']} conectado a la sala {data['sala']}")
         join_room(data['sala'])
-        redis_db.lpush(f"usuarios-sala:{data['sala']}", json.dumps({'usuario': data['usuario'], 'id': request.sid}))
+        redis_db.set(f"conexion-sala:{data['sala']}:{request.sid}", data['usuario'])
         emit(f'add_usuario_sala_{data["sala"]}', data['usuario'], broadcast=True)
         print(f'Emitiendo evento: add_usuario_sala_{data["sala"]}')
 
     @socketio.on('disconnect')
     def handle_disconnect():
         print(f"Desconectado {request.sid}")
-        for key in redis_db.keys(f"usuarios-sala:*"):
-            usuarios = redis_db.lrange(key, 0, -1)
-            for usuario in usuarios:
-                usuario = json.loads(usuario)
-                if usuario['id'] == request.sid:
-                    print(f"Eliminando {usuario['usuario']} de la sala {key}")
-                    redis_db.lrem(key, 0, json.dumps(usuario))
-                    sala = key.decode().split(":")[1]
-                    emit(f'rm_usuario_sala_{sala}', usuario['usuario'], broadcast=True)
+        for key in redis_db.scan_iter(f"conexion-sala:*:{request.sid}"):
+            sala = key.decode().split(':')[1]
+            usuario = redis_db.get(key).decode()
+            redis_db.delete(key)
+            emit(f'rm_usuario_sala_{sala}', usuario, broadcast=True)
 
     @socketio.on('desconectar_sala')
     def desconectar_sala(sala):

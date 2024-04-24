@@ -18,6 +18,7 @@
                 console.log('Usuario agregado a la sala')
             })
             socket.on('rm_usuario_sala_{{ sala }}', (usuario) => {
+                console.log(`Usuario eliminado de la sala: ${usuario}`)
                 document.querySelector(`#listaUsuarios-${usuario}`).remove()
             })
         })
