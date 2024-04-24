@@ -4,10 +4,12 @@ import werkzeug.security as ws
 from db import redis_db
 import json
 
+from util import decode_hgetall
+
 
 class Usuario(UserMixin):
     def __init__(self, nombre, password, nivel, experiencia, monedas, foto_perfil, titulo_nobiliario, matrimonio,
-                 inventario, transformaciones, hechizos, sala_actual):
+                sala_actual):
         self.nombre: str = nombre
         self.password: str = password
         self.nivel: int = nivel
@@ -16,9 +18,6 @@ class Usuario(UserMixin):
         self.foto_perfil: str = foto_perfil
         self.titulo_nobiliario: str = titulo_nobiliario
         self.matrimonio: str = matrimonio
-        self.inventario: [] = inventario
-        self.transformaciones: [] = transformaciones
-        self.hechizos: [] = hechizos
         self.sala_actual: int = sala_actual
 
     def check_password(self, password):
@@ -37,22 +36,7 @@ class Usuario(UserMixin):
 
     @staticmethod
     def find_by_name(nombre):
-        fetch = redis_db.get(f"usuario:{nombre}")
+        fetch = decode_hgetall(redis_db.hgetall(f"usuario:{nombre}"))
         if fetch is None:
             return None
-        return Usuario(nombre, **json.loads(fetch))
-
-    def __dict__(self):
-        return {
-            'password': self.password,
-            'nivel': self.nivel,
-            'experiencia': self.experiencia,
-            'monedas': self.monedas,
-            'foto_perfil': self.foto_perfil,
-            'titulo_nobiliario': self.titulo_nobiliario,
-            'matrimonio': self.matrimonio,
-            'inventario': self.inventario,
-            'transformaciones': self.transformaciones,
-            'hechizos': self.hechizos,
-            'sala_actual': self.sala_actual
-        }
+        return Usuario(**fetch)

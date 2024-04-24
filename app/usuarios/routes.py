@@ -1,10 +1,11 @@
 from flask import Blueprint
+
+from util import decode_hgetall
 from .RegistroForm import RegistroForm
 from .InicioSesionForm import InicioSesionForm
 from flask import render_template, redirect, url_for
 from db import redis_db
 from .model import Usuario
-import json
 import werkzeug.security as ws
 import flask_login
 from game_data_loader import salas_csv
@@ -19,10 +20,8 @@ def registro():
         if redis_db.get(f"usuario:{form.nombre.data}") is not None:
             return 'Usuario ya registrado'
         usuario = Usuario(form.nombre.data, ws.generate_password_hash(form.password.data), nivel=1, experiencia=0,
-                          monedas=0, foto_perfil='',
-                          titulo_nobiliario='', matrimonio=None, inventario=[], transformaciones=[], hechizos=[],
-                          sala_actual=1)
-        redis_db.set(f"usuario:{form.nombre.data}", json.dumps(usuario.__dict__()))
+                          monedas=0, foto_perfil='', titulo_nobiliario='', matrimonio='', sala_actual=1)
+        redis_db.hmset(f"usuario:{form.nombre.data}", usuario.__dict__)
         return redirect(url_for('usuarios.index'))
     return render_template('registro.html', form=form)
 
@@ -31,10 +30,11 @@ def registro():
 def index():
     form = InicioSesionForm()
     if form.validate_on_submit():
-        dbusr = redis_db.get(f"usuario:{form.nombre.data}")
+        dbusr = decode_hgetall(redis_db.hgetall(f"usuario:{form.nombre.data}"))
+        print(f"{dbusr=}")
         if dbusr is None:
             return 'Login incorrecto'
-        usr = Usuario(nombre=form.nombre.data, **json.loads(dbusr))
+        usr = Usuario(**dbusr)
         if not usr.check_password(form.password.data):
             return 'Login incorrecto'
         flask_login.login_user(usr)
