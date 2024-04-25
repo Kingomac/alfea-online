@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+    h1 {
+        @apply text-2xl text-center;
+    }
+
+    h2 {
+        @apply text-xl;
+    }
+
+    input[type="text"],
+    fieldset {
+        @apply border border-gray-300 rounded-md p-2;
+    }
+}
