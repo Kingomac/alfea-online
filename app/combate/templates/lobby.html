@@ -12,7 +12,25 @@
     <!-- Contenido principal -->
     <section>
 
-        <section><h1>{{ heroes }} vs {{ villanos }}</h1></section>
+        <section><h1>{{ datos_sala["nombre_sala"] }}</h1></section>
+
+        <!-- Heroes -->
+        <section>
+            <ul>
+                {% for heroe in heroes %}
+                    <li>{{ heroe["nombre"] }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <!-- Villanos -->
+        <section>
+            <ul>
+                {% for villano in villanos %}
+                    <li>{{ villano["nombre"] }}</li>
+                {% endfor %}
+            </ul>
+        </section>
 
     </section>
 

@@ -1,4 +1,2 @@
-sala;heroes;villanos;imagen
-alfea-patio;winx;lord_darkar;
-bosque-oscuro;winx;trix;
-andros-portal-omega;winx;valtor;
+id;sala;heroes;villanos;imagen
+1;alfea-patio;2,3,4;1;
