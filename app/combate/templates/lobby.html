@@ -16,9 +16,10 @@
 
         <!-- Heroes -->
         <section>
+            {% from 'macros/card_lobby.html' import cardLobby with context %}
             <ul>
                 {% for heroe in heroes %}
-                    <li>{{ heroe["nombre"] }}</li>
+                    {{ cardLobby(heroe) }}
                 {% endfor %}
             </ul>
         </section>
@@ -27,7 +28,7 @@
         <section>
             <ul>
                 {% for villano in villanos %}
-                    <li>{{ villano["nombre"] }}</li>
+                    {{ cardLobby(villano) }}
                 {% endfor %}
             </ul>
         </section>

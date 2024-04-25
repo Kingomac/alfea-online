@@ -1,0 +1,17 @@
+{% macro cardLobby(datos) %}
+<div>
+    <span>{{ datos['nombre'] }}</span>
+    <span>{{ datos['vida_maxima'] }}</span>
+    <input type="range" min="0" max="1000" value="{{ datos['vida_maxima'] }}" disabled>
+    <span>{{ datos['mana_maximo'] }}</span>
+    <input type="range" min="0" max="1000" value="{{ datos['mana_maximo'] }}" disabled>
+    <span>{{ datos['poder_fisico'] }}</span>
+    <input type="range" min="0" max="1000" value="{{ datos['poder_fisico'] }}" disabled>
+    <span>{{ datos['poder_magico'] }}</span>
+    <input type="range" min="0" max="1000" value="{{ datos['poder_magico'] }}" disabled>
+    <span>{{ datos['resistencia_fisica'] }}</span>
+    <input type="range" min="0" max="1000" value="{{ datos['resistencia_fisica'] }}" disabled>
+    <span>{{ datos['resistencia_magica'] }}</span>
+    <input type="range" min="0" max="1000" value="{{ datos['resistencia_magica'] }}" disabled>
+</div>
+{% endmacro %}
