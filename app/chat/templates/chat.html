@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-<h1>Chat - {{ sala }}</h1>
-<ul id="lista-mensajes">
-    {% for mensaje in mensajes %}
-        <li>{{ mensaje.get_fecha_bonita() }} - {{ mensaje.usuario }}: {{ mensaje.mensaje }}</li>
-    {% endfor %}
-</ul>
-<div>
-    <input id="txt-mensaje" type="text" placeholder="Envía un mensaje"/>
-    <button id="btn-enviar">Enviar</button>
-</div>
-<script type="module">
-    import {io} from '/static/socket.io.esm.min.js'
 
-    const socket = io()
-    socket.on('connect', () => {
-        console.log('Conectado al servidor')
-        socket.emit('conectar_sala', '{{ sala }}')
-        document.getElementById('btn-enviar').onclick = () => {
-            const mensaje = document.getElementById('txt-mensaje').value
-            socket.emit('mensaje_nuevo_{% if sala.startswith('priv') %}priv{% else %}sala{% endif %}', JSON.stringify({
-                mensaje: mensaje,
-                sala: '{{ sala }}',
-                usuario: '{{ current_user.nombre }}'
-            }))
-        }
-        socket.on('mensaje_nuevo', (mensaje) => {
-            console.log('Nuevo mensaje', mensaje)
-            const li = document.createElement('li')
-            li.innerText = mensaje.fecha_bonita + ' - ' + mensaje.usuario + ': ' + mensaje.mensaje
-            document.getElementById('lista-mensajes').append(li)
+<body>
+    <h1>Chat - {{ sala }}</h1>
+    <ul id="lista-mensajes">
+        {% for mensaje in mensajes %}
+        <li>{{ mensaje.get_fecha_bonita() }} - {{ mensaje.usuario }}: {{ mensaje.mensaje }}</li>
+        {% endfor %}
+    </ul>
+    <div>
+        <input id="txt-mensaje" type="text" placeholder="Envía un mensaje" />
+        <button id="btn-enviar">Enviar</button>
+    </div>
+    <script type="module">
+        import { io } from '/static/socket.io.esm.min.js'
+
+        const socket = io()
+        socket.on('connect', () => {
+            console.log('Conectado al servidor')
+            socket.emit('conectar_sala', '{{ sala }}')
+            document.getElementById('btn-enviar').onclick = () => {
+                const mensaje = document.getElementById('txt-mensaje').value
+                socket.emit("mensaje_nuevo_{% if sala.startswith('priv') %}priv{% else %}sala{% endif %}", JSON.stringify({
+                    mensaje: mensaje,
+                    sala: '{{ sala }}',
+                    usuario: '{{ current_user.nombre }}'
+                }))
+            }
+            socket.on('mensaje_nuevo', (mensaje) => {
+                console.log('Nuevo mensaje', mensaje)
+                const li = document.createElement('li')
+                li.innerText = mensaje.fecha_bonita + ' - ' + mensaje.usuario + ': ' + mensaje.mensaje
+                document.getElementById('lista-mensajes').append(li)
+            })
         })
-    })
-</script>
+    </script>
 </body>
+
 </html>

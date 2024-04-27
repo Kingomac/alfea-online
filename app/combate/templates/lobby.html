@@ -5,39 +5,69 @@
 
 {% block main %}
 
-    <!-- Chat -->
-    <section>
+<!-- Chat -->
+<section>
 
+</section>
+
+<!-- Contenido principal -->
+<section class="grid grid-cols-2 text-center gap-2 place-items-center">
+
+    <section class="col-span-2">
+        <h1>{{ datos_sala["nombre_sala"] }}</h1>
     </section>
 
-    <!-- Contenido principal -->
-    <section class="grid grid-cols-2 text-center gap-2 place-items-center">
-
-        <section class="col-span-2"><h1>{{ datos_sala["nombre_sala"] }}</h1></section>
-
-        <!-- Heroes -->
-        <section class="w-[33vw]">
-            <h1>Heroes</h1>
-            <button class="bg-blue-200 w-full hover:bg-blue-400">Unirse</button>
-            <div class="flex flex-col gap-2 overflow-auto h-[84.5vh]">
-                {% for heroe in heroes %}
-                    {{ cardLobby(heroe) }}
-                {% endfor %}
-            </div>
-        </section>
-
-        <!-- Villanos -->
-        <section class="w-[33vw]">
-            <h1>Villanos</h1>
-            <button class="bg-blue-200 w-full hover:bg-blue-400">Unirse</button>
-            <div class="flex flex-col gap-2 overflow-auto h-[84.5vh]">
-                {% for villano in villanos %}
-                    {{ cardLobby(villano) }}
-                {% endfor %}
-            </div>
-        </section>
-        
-        <button class="col-span-2 p-2 bg-red-200 w-full hover:bg-red-400">Iniciar combate</button>
+    <!-- Heroes -->
+    <section class="w-[33vw]">
+        <h1>Heroes</h1>
+        <button class="bg-blue-200 w-full hover:bg-blue-400" unirse-bando="heroes">Unirse</button>
+        <div class="flex flex-col gap-2 overflow-auto h-[80vh]">
+            {% for heroe in heroes %}
+            {{ cardLobby(heroe) }}
+            {% endfor %}
+        </div>
     </section>
+
+    <!-- Villanos -->
+    <section class="w-[33vw]">
+        <h1>Villanos</h1>
+        <button class="bg-blue-200 w-full hover:bg-blue-400" unirse-bando="villanos">Unirse</button>
+        <div class="flex flex-col gap-2 overflow-auto h-[80vh]">
+            {% for villano in villanos %}
+            {{ cardLobby(villano) }}
+            {% endfor %}
+        </div>
+    </section>
+
+    <button class="col-span-2 p-2 bg-red-200 w-full hover:bg-red-400">Iniciar combate</button>
+</section>
+
+<script type="module">
+    import { io } from '/static/socket.io.esm.min.js'
+
+    const socket = io('/lobby_combate')
+
+    socket.on('actualizar_lobby_{{ id_raid }}', (data) => {
+        console.log(data)
+    })
+
+    function unirseBando(bando) {
+        socket.emit('unirse_bando', {
+            id_raid: '{{ id_raid }}',
+            bando: bando,
+            usuario: '{{ current_user.nombre }}'
+        })
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('[unirse-bando]').forEach((element) => {
+            element.onclick = () => {
+                unirseBando(element.getAttribute('unirse-bando'))
+                console.log('Unirse a bando', element.getAttribute('unirse-bando'))
+            }
+        })
+    })
+
+</script>
 
 {% endblock %}

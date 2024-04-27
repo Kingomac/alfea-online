@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory
-from app import bp_usuarios, bp_chat, registar_sockets, bp_ui, bp_combate
+from app import bp_usuarios, bp_chat, registar_sockets, bp_ui, bp_combate, registrar_sockets_lobby_combate
 import redis
 from flask_login import LoginManager
 from app.usuarios.model import Usuario
@@ -18,6 +18,7 @@ app.register_blueprint(bp_ui)
 app.register_blueprint(bp_combate)
 
 registar_sockets(socketio)
+registrar_sockets_lobby_combate(socketio)
 
 
 @login_manager.unauthorized_handler

@@ -12,8 +12,11 @@
         @apply text-xl;
     }
 
+    input[type="submit"],
     input[type="text"],
-    fieldset {
+    input[type="password"],
+    fieldset,
+    button {
         @apply border border-gray-300 rounded-md p-2;
     }
 }
