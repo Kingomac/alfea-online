@@ -33,15 +33,16 @@ def index():
     form = InicioSesionForm()
     if form.validate_on_submit():
         dbusr = decode_hgetall(redis_db.hgetall(f"usuario:{form.nombre.data}"))
-        print(f"{dbusr=}")
-        if dbusr is None:
-            return 'Login incorrecto'
-        usr = Usuario(**dbusr)
-        if not usr.check_password(form.password.data):
-            return 'Login incorrecto'
-        flask_login.login_user(usr)
-        print(f"{usr.sala_actual=}")
-        alias = salas_csv.get_by_id(str(usr.sala_actual))['alias']
-        print(f"{url_for('ui.sala', alias=alias)=}")
-        return redirect(url_for('ui.sala', alias=alias))
+        if dbusr:
+            usr = Usuario(**dbusr)
+            if usr.check_password(form.password.data):
+                flask_login.login_user(usr)
+                print(f"{usr.sala_actual=}")
+                alias = salas_csv.get_by_id(str(usr.sala_actual))['alias']
+                print(f"{url_for('ui.sala', alias=alias)=}")
+                return redirect(url_for('ui.sala', alias=alias))
+            form.errors = {'nombre': [u'Contraseña incorrecta']}
+        else:
+            form.errors = {'nombre': [u'Usuario no registrado']}
+    print(f"{form.errors=}")
     return render_template('login.html', form=form)

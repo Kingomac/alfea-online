@@ -3,23 +3,30 @@
 {% block title %}Inicio{% endblock %}
 
 {% block main %}
-    <h1>Bienvenido a Alfea Online</h1>
-    <form method="POST" action="/" class="w-fit m-auto content-center">
-        {{ form.hidden_tag() }}
-        <fieldset class="border-2 grid grid-cols-2 p-2 gap-2">
-            <legend>Inicia sesión</legend>
-            {{ form.nombre.label }} {{ form.nombre }}
-            {{ form.password.label }} {{ form.password }}
-            {{ form.submit(class_="col-span-2") }}
-        </fieldset>
-    </form>
-    <section class="m-2 flex flex-col gap-2 place-items-center">
-        <h2>Regístrate en Alfea Online y explora la dimensión de Magix</h2>
-        <a class="p-2 rounded border-2 bg-sky-300 hover:bg-sky-600" href="{{ url_for('usuarios.registro') }}">Regístrate</a>
-    </section>
-    <section>
-        <p>Alfea Online es un MMORPG no lineal en el que tú construyes tu propia historia.</p>
-        <p>Tu decides, hada, mago/a, especialista o bruja. ¿Ayudas a las Winx o a Valtor? ¿Prefieres ir por libre y
-            matar a todos? ¿Solo chatear?</p>
-    </section>
+<h1>Bienvenido a Alfea Online</h1>
+<form method="POST" action="/" class="w-fit m-auto content-center">
+    {{ form.hidden_tag() }}
+    <fieldset>
+        {% for field, errors in form.errors.items() %}
+        {% for error in errors %}
+        <p>{{error}}</p>
+        {% endfor %}
+        {% endfor %}
+    </fieldset>
+    <fieldset class="border-2 grid grid-cols-2 p-2 gap-2">
+        <legend>Inicia sesión</legend>
+        {{ form.nombre.label }} {{ form.nombre }}
+        {{ form.password.label }} {{ form.password }}
+        {{ form.submit(class_="col-span-2") }}
+    </fieldset>
+</form>
+<section class="m-2 flex flex-col gap-2 place-items-center">
+    <h2>Regístrate en Alfea Online y explora la dimensión de Magix</h2>
+    <a class="p-2 rounded border-2 bg-sky-300 hover:bg-sky-600" href="{{ url_for('usuarios.registro') }}">Regístrate</a>
+</section>
+<section>
+    <p>Alfea Online es un MMORPG no lineal en el que tú construyes tu propia historia.</p>
+    <p>Tu decides, hada, mago/a, especialista o bruja. ¿Ayudas a las Winx o a Valtor? ¿Prefieres ir por libre y
+        matar a todos? ¿Solo chatear?</p>
+</section>
 {% endblock %}
