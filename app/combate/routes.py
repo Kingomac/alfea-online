@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from game_data_loader import salas_csv, raids_csv, npc_csv
 from db import redis_db
-from app.combate.model import CombateStats
+from app.usuarios.model import CombatStats
 from flask_login import current_user
 
 bp_combate = Blueprint('combate', __name__, url_prefix='/combate',
@@ -14,7 +14,7 @@ def add_usuarios_listlobby(id_raid: str, bando: str, listlobby: list) -> list[st
 
     for usuario in usuarios:
         datos = redis_db.hgetall(f'usuario:{usuario}')
-        stats = CombateStats.from_str(datos[b'combate_stats_str'].decode())
+        stats = CombatStats.from_str(datos[b'combate_stats_str'].decode())
         listlobby.append({
             'nombre': datos[b'nombre'].decode(),
             'vida_maxima': stats.vida_maxima,

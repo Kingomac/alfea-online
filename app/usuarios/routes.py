@@ -5,11 +5,10 @@ from .RegistroForm import RegistroForm
 from .InicioSesionForm import InicioSesionForm
 from flask import render_template, redirect, url_for
 from db import redis_db
-from .model import Usuario
 import werkzeug.security as ws
 import flask_login
 from game_data_loader import salas_csv
-from app.combate.model import CombateStats
+from .model import CombatStats, Usuario
 
 bp_usuarios = Blueprint('usuarios', __name__,
                         url_prefix='/', template_folder='templates')

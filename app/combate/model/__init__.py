@@ -1,1 +1,1 @@
-from .CombateStats import CombateStats
+from .InCombatUser import InCombatUser

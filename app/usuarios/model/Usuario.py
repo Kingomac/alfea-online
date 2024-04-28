@@ -3,7 +3,6 @@ from flask_login import UserMixin
 import werkzeug.security as ws
 from db import redis_db
 import json
-from app.combate.model import CombateStats
 
 from util import decode_hgetall
 

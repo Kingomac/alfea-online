@@ -1,8 +1,8 @@
-id;nombre;vida_maxima;mana_maximo;poder_fisico;poder_magico;resistencia_fisica;resistencia_magica
-1;Valtor;1000;999;50;1000;50;1000
-2;Bloom;500;300;20;1000;20;200
-3;Stella;500;300;20;1000;20;200
-4;Flora;500;300;20;1000;20;200
-5;Musa;500;300;20;1000;20;200
-6;Tecna;500;300;20;1000;20;200
-7;Aisha;500;300;20;1000;20;200
+id;nombre;vida_maxima;mana_maximo;poder_fisico;poder_magico;resistencia_fisica;resistencia_magica;velocidad
+1;Valtor;1000;999;50;1000;50;1000;1000
+2;Bloom;500;300;20;1000;20;200;700
+3;Stella;500;300;20;1000;20;200;500
+4;Flora;500;300;20;1000;20;200;500
+5;Musa;500;300;20;1000;20;200;300
+6;Tecna;500;300;20;1000;20;200;300
+7;Aisha;500;300;20;1000;20;200;950
