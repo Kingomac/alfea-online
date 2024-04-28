@@ -2,16 +2,16 @@
 <div class="grid grid-cols-2 gap-1 place-items-stretch text-right border-2 rounded p-2">
     <span class="col-span-2 text-center">{{ datos['nombre'] }}</span>
     <span>Vida máxima - {{ datos['vida_maxima'] }}</span>
-    <input type="range" min="0" max="1000" value="{{ datos['vida_maxima'] }}" disabled>
+    <progress min="0" max="1000" value="{{ datos['vida_maxima'] }}"></progress>
     <span>Maná máximo - {{ datos['mana_maximo'] }}</span>
-    <input type="range" min="0" max="1000" value="{{ datos['mana_maximo'] }}" disabled>
+    <progress type="range" min="0" max="1000" value="{{ datos['mana_maximo'] }}"></progress>
     <span>Poder físico - {{ datos['poder_fisico'] }}</span>
-    <input type="range" min="0" max="1000" value="{{ datos['poder_fisico'] }}" disabled>
+    <progress type="range" min="0" max="1000" value="{{ datos['poder_fisico'] }}"></progress>
     <span>Poder mágico - {{ datos['poder_magico'] }}</span>
-    <input type="range" min="0" max="1000" value="{{ datos['poder_magico'] }}" disabled>
+    <progress type="range" min="0" max="1000" value="{{ datos['poder_magico'] }}"></progress>
     <span>Resistencia física - {{ datos['resistencia_fisica'] }}</span>
-    <input type="range" min="0" max="1000" value="{{ datos['resistencia_fisica'] }}" disabled>
+    <progress type="range" min="0" max="1000" value="{{ datos['resistencia_fisica'] }}"></progress>
     <span>Resistencia mágica - {{ datos['resistencia_magica'] }}</span>
-    <input type="range" min="0" max="1000" value="{{ datos['resistencia_magica'] }}" disabled>
+    <progress type="range" min="0" max="1000" value="{{ datos['resistencia_magica'] }}"></progress>
 </div>
 {% endmacro %}

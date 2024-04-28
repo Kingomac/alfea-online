@@ -9,8 +9,10 @@ from .model import Usuario
 import werkzeug.security as ws
 import flask_login
 from game_data_loader import salas_csv
+from app.combate.model import CombateStats
 
-bp_usuarios = Blueprint('usuarios', __name__, url_prefix='/', template_folder='templates')
+bp_usuarios = Blueprint('usuarios', __name__,
+                        url_prefix='/', template_folder='templates')
 
 
 @bp_usuarios.route('/registro', methods=['GET', 'POST'])
@@ -20,7 +22,7 @@ def registro():
         if redis_db.get(f"usuario:{form.nombre.data}") is not None:
             return 'Usuario ya registrado'
         usuario = Usuario(form.nombre.data, ws.generate_password_hash(form.password.data), nivel=1, experiencia=0,
-                          monedas=0, foto_perfil='', titulo_nobiliario='', matrimonio='', sala_actual=1)
+                          monedas=0, foto_perfil='', titulo_nobiliario='', matrimonio='', sala_actual=1, combate_stats_str=str(CombateStats.get_default()))
         redis_db.hmset(f"usuario:{form.nombre.data}", usuario.__dict__)
         return redirect(url_for('usuarios.index'))
     return render_template('registro.html', form=form)

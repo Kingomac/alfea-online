@@ -3,13 +3,15 @@ from flask_login import UserMixin
 import werkzeug.security as ws
 from db import redis_db
 import json
+from app.combate.model import CombateStats
 
 from util import decode_hgetall
 
 
 class Usuario(UserMixin):
+
     def __init__(self, nombre, password, nivel, experiencia, monedas, foto_perfil, titulo_nobiliario, matrimonio,
-                sala_actual):
+                 sala_actual, combate_stats_str: str):
         self.nombre: str = nombre
         self.password: str = password
         self.nivel: int = nivel
@@ -19,12 +21,17 @@ class Usuario(UserMixin):
         self.titulo_nobiliario: str = titulo_nobiliario
         self.matrimonio: str = matrimonio
         self.sala_actual: int = sala_actual
+        self.combate_stats_str: str = combate_stats_str
 
     def check_password(self, password):
         return ws.check_password_hash(self.password, password)
 
     def get_id(self):
         return self.nombre
+
+    @property
+    def combate_stats(self):
+        return CombateStats.from_str(self.combate_stats_str)
 
     @staticmethod
     def current():
