@@ -2,7 +2,7 @@ from flask import Flask, send_from_directory
 from app import bp_usuarios, bp_chat, registar_sockets, bp_ui, bp_combate, registrar_sockets_lobby_combate
 import redis
 from flask_login import LoginManager
-from app.usuarios.model import Usuario
+from app.usuarios.model.Usuario import Usuario
 from flask_socketio import SocketIO
 
 app = Flask(__name__)

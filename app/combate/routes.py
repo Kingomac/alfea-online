@@ -3,6 +3,7 @@ from game_data_loader import salas_csv, raids_csv, npc_csv
 from db import redis_db
 from app.usuarios.model import CombatStats
 from flask_login import current_user
+from app.chat import get_mensajes_sala
 
 bp_combate = Blueprint('combate', __name__, url_prefix='/combate',
                        template_folder='templates', static_folder='static')
@@ -37,8 +38,8 @@ def lobby_raid(id_raid):
     usuarios_heroes = add_usuarios_listlobby(id_raid, 'heroes', heroes)
     usuarios_villanos = add_usuarios_listlobby(id_raid, 'villanos', villanos)
     puede_unirse = current_user.nombre not in usuarios_heroes and current_user.nombre not in usuarios_villanos
-
-    return render_template('lobby.html', n_heroes=len(usuarios_heroes), n_villanos=len(usuarios_villanos), puede_unirse=puede_unirse, heroes=heroes, villanos=villanos, datos_sala=datos_sala, id_raid=id_raid)
+    mensajes = get_mensajes_sala(f'raid-{id_raid}')
+    return render_template('lobby.html', n_heroes=len(usuarios_heroes), n_villanos=len(usuarios_villanos), puede_unirse=puede_unirse, heroes=heroes, villanos=villanos, datos_sala=datos_sala, id_raid=id_raid, mensajes=mensajes)
 
 
 @bp_combate.route('/lobby/duelo/<usr1>/<usr2>')

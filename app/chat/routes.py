@@ -5,7 +5,8 @@ from .model import Mensaje
 import json
 import flask_login
 
-bp_chat = Blueprint('chat', __name__, url_prefix='/chat', template_folder='templates')
+bp_chat = Blueprint('chat', __name__, url_prefix='/chat',
+                    template_folder='templates')
 
 
 @bp_chat.route('/sala/<sala>')
@@ -29,3 +30,8 @@ def get_mensajes_from_keys(claves):
                 clave in claves]
     mensajes.sort(key=lambda x: x.timestamp)
     return mensajes
+
+
+def get_mensajes_sala(sala):
+    claves = redis_db.keys(f"chat:{sala}:*")
+    return get_mensajes_from_keys(claves)
