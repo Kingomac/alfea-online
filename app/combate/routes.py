@@ -42,6 +42,11 @@ def lobby_raid(id_raid):
     return render_template('lobby.html', n_heroes=len(usuarios_heroes), n_villanos=len(usuarios_villanos), puede_unirse=puede_unirse, heroes=heroes, villanos=villanos, datos_sala=datos_sala, id_raid=id_raid, mensajes=mensajes)
 
 
+@bp_combate.route('/combate/<id_combate>')
+def combate(id_combate):
+    return 'Combate'
+
+
 @bp_combate.route('/lobby/duelo/<usr1>/<usr2>')
 def duelo():
     return 'Lobby de duelo'

@@ -27,7 +27,10 @@ def registrar_sockets_lobby_combate(socketio: SocketIO):
             return InCombatUser.from_usuario(usr)
 
         participantes = list(map(convertir_usuario_participante,
-                             redis_db.smembers(f'lobby_combate:{id_raid}:*')))
-        print(participantes)
-        # for p in datos_raid['heroes'].split(','):
-        #    datos_npc = npc_csv.get_by_id(p)
+                             redis_db.smembers(f'lobby_combate:{id_raid}:villanos').union(redis_db.smembers(f'lobby_combate:{id_raid}:heroes'))))
+
+        for p in ",".join((datos_raid['heroes'], datos_raid['villanos'])).split(','):
+            datos_npc = npc_csv.get_npc_by_id(p)
+            participantes.append(InCombatUser.from_npc_csv(datos_npc))
+
+        print(f"{list(map(str, participantes))=}")

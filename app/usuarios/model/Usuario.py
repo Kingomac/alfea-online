@@ -1,6 +1,7 @@
 import flask_login
 from flask_login import UserMixin
 import werkzeug.security as ws
+from .CombatStats import CombatStats
 from db import redis_db
 import json
 
@@ -28,9 +29,9 @@ class Usuario(UserMixin):
     def get_id(self):
         return self.nombre
 
-    @property
-    def combate_stats(self):
-        return CombateStats.from_str(self.combate_stats_str)
+    def get_combate_stats(self):
+        return CombatStats.from_str(self.combate_stats_str)
+        # return CombatStats(*map(int, self.combate_stats_str.split(',')))
 
     @staticmethod
     def current():

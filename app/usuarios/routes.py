@@ -18,7 +18,7 @@ bp_usuarios = Blueprint('usuarios', __name__,
 def registro():
     form = RegistroForm()
     if form.validate_on_submit():
-        if redis_db.get(f"usuario:{form.nombre.data}") is not None:
+        if redis_db.exists(f"usuario:{form.nombre.data}") > 0:
             return 'Usuario ya registrado'
         usuario = Usuario(form.nombre.data, ws.generate_password_hash(form.password.data), nivel=1, experiencia=0,
                           monedas=0, foto_perfil='', titulo_nobiliario='', matrimonio='', sala_actual=1, combate_stats_str=str(CombatStats.get_default()))

@@ -1,3 +1,4 @@
-id;nombre;ataque_fisico;ataque_magico;defensa_fisica;defensa_magica;precision;coste_mana;prob_critico
-1;Ventisca;10;5;0;0;60;10;25
-2;Barrera de sonido;0;0;5;10;90;10;0
+id;nombre;ataque_fisico;ataque_magico;defensa_fisica;defensa_magica;precision;coste_mana;prob_critico;lanzamiento;forma;descripcion
+1;Ventisca;10;5;0;0;60;10;25;normal;Gloomix;Es un hechizo de ataque de Icy en sus tres formas: Gloomix, Sirenix Oscuro y en su papel de la Reina de las Nieves. Consiste en que ella forma un gran campo nevado capaz de congelar lo que vea en su alrededor, otra versión es que puede crear una neblina para congelar a cualquier persona y formando un ciclo polar. También dispara un proyectil blanco formando copos de nieve hacia el enemigo.
+2;Barrera de sonido;0;0;5;10;90;10;0;normal;Charmix;Utilizado por Musa. Consiste en que ella dispara una bola de energía de color rosa oscuro en el objetivo.
+3;Convergencia Bloomix;15;10;0;0;70;15;30;convergencia;Bloomix;Crean proyectiles amarillos frente un enemigo

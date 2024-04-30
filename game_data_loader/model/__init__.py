@@ -1,0 +1,1 @@
+from .Ataque import Ataque

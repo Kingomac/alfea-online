@@ -44,7 +44,7 @@
         </div>
     </section>
 
-    <button class="col-span-3 p-2 bg-red-200 w-full hover:bg-red-400">Iniciar combate</button>
+    <button class="col-span-3 p-2 bg-red-200 w-full hover:bg-red-400" id="iniciar-combate">Iniciar combate</button>
 </section>
 
 <script type="module">
@@ -72,6 +72,11 @@
                 console.log('Unirse a bando', element.getAttribute('unirse-bando'))
             }
         })
+        document.getElementById('iniciar-combate').onclick = () => {
+            socket.emit('iniciar_combate', {
+                id_raid: '{{ id_raid }}'
+            })
+        }
     })
 
 </script>

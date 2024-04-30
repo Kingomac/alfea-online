@@ -13,7 +13,7 @@ class CombatStats:
         return CombatStats(vida_maxima=100, mana_maximo=100, poder_fisico=10, poder_magico=10, resistencia_fisica=10, resistencia_magica=10, velocidad=10)
 
     def __str__(self) -> str:
-        return ",".join(map(str, [self.vida_maxima, self.mana_maximo, self.poder_fisico, self.poder_magico, self.resistencia_fisica, self.resistencia_magica]))
+        return ",".join(map(str, [self.vida_maxima, self.mana_maximo, self.poder_fisico, self.poder_magico, self.resistencia_fisica, self.resistencia_magica, self.velocidad]))
 
     @staticmethod
     def from_str(s: str):

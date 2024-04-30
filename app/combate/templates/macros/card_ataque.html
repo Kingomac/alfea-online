@@ -1,0 +1,40 @@
+{% macro cardAtaque(ataque) %}
+<div>
+    <span>{{ ataque.nombre }}</span>
+    <img src="/static/img/ataques/{{ ataque.imagen }}" alt="{{ ataque.nombre }}">
+    <div>
+        <span>{{ ataque.coste_mana }}</span>
+        <button onclick="document.getElementById('dialog-ataque-{{ataque.id}}').setAttribute('open', '')"></button>
+    </div>
+    <dialog id="dialog-ataque-{{ataque.id}}">
+        <span>{{ataque.nombre}}</span>
+        <p>{{ataque.descripcion}}</p>
+        <p>Lanzamiento: {{ataque.lanzamiento}}</p>
+        <p>Forma: {{ataque.forma}}</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Ataque físico</th>
+                    <th>Ataque mágico</th>
+                    <th>Defensa física</th>
+                    <th>Defensa mágica</th>
+                    <th>Precisión</th>
+                    <th>Coste de maná</th>
+                    <th>Probabilidad de crítico</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ ataque.ataque_fisico }}</td>
+                    <td>{{ ataque.ataque_magico }}</td>
+                    <td>{{ ataque.defensa_fisica }}</td>
+                    <td>{{ ataque.defensa_magica }}</td>
+                    <td>{{ ataque.precision }}</td>
+                    <td>{{ ataque.coste_mana }}</td>
+                    <td>{{ ataque.prob_critico }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </dialog>
+</div>
+{% endmacro %}

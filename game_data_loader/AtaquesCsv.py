@@ -1,4 +1,5 @@
 from .BaseCsvFile import BaseCsvFile
+from .model import Ataque
 
 
 class AtaquesCsv(BaseCsvFile):
@@ -6,4 +7,9 @@ class AtaquesCsv(BaseCsvFile):
         super().__init__('game_data/combate/ataques.csv')
 
     def get_by_id(self, ataque_id):
-        return next((ataque for ataque in self.rows if ataque['id'] == ataque_id), None)
+        datos = next(
+            (ataque for ataque in self.rows if ataque['id'] == ataque_id), None)
+        return Ataque(**datos)
+
+
+ataques_csv = AtaquesCsv()
