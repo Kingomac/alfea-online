@@ -1,1 +1,2 @@
-from .InCombatUser import InCombatUser
+from .InCombatUser import InCombatParticipant
+from .InCombat import InCombat

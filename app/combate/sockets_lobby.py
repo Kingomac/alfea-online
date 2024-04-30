@@ -3,7 +3,7 @@ from db import redis_db
 from game_data_loader import raids_csv, npc_csv
 from util import decode_hgetall
 from app.usuarios import Usuario
-from app.combate.model import InCombatUser
+from app.combate.model import InCombatParticipant, InCombat
 
 
 def registrar_sockets_lobby_combate(socketio: SocketIO):
@@ -24,13 +24,17 @@ def registrar_sockets_lobby_combate(socketio: SocketIO):
         def convertir_usuario_participante(nombre_usuario: str):
             usr = Usuario(
                 **decode_hgetall(redis_db.hgetall(f'usuario:{nombre_usuario.decode()}')))
-            return InCombatUser.from_usuario(usr)
+            return InCombatParticipant.from_usuario(usr)
 
         participantes = list(map(convertir_usuario_participante,
                              redis_db.smembers(f'lobby_combate:{id_raid}:villanos').union(redis_db.smembers(f'lobby_combate:{id_raid}:heroes'))))
 
         for p in ",".join((datos_raid['heroes'], datos_raid['villanos'])).split(','):
-            datos_npc = npc_csv.get_npc_by_id(p)
-            participantes.append(InCombatUser.from_npc_csv(datos_npc))
+            datos_npc = npc_csv.npc_from_dict(npc_csv.get_npc_by_id(p))
+            participantes.append(InCombatParticipant.from_npc(datos_npc))
+
+        socketio.emit(f'actualizar_lobby_{id_raid}', {
+            'id_combate': InCombat.create(participantes).save()
+        }, namespace='/lobby_combate')
 
         print(f"{list(map(str, participantes))=}")
