@@ -11,5 +11,8 @@ class AtaquesCsv(BaseCsvFile):
             (ataque for ataque in self.rows if ataque['id'] == ataque_id), None)
         return Ataque(**datos)
 
+    def get_choices_iniciales(self):
+        return [(datos['id'], datos['nombre']) for datos in self.rows[:12]]
+
 
 ataques_csv = AtaquesCsv()

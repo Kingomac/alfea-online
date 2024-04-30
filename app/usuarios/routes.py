@@ -23,6 +23,9 @@ def registro():
         usuario = Usuario(form.nombre.data, ws.generate_password_hash(form.password.data), nivel=1, experiencia=0,
                           monedas=0, foto_perfil='', titulo_nobiliario='', matrimonio='', sala_actual=1, combate_stats_str=str(CombatStats.get_default()))
         redis_db.hmset(f"usuario:{form.nombre.data}", usuario.__dict__)
+        redis_db.sadd(f'ataques:{usuario.nombre}', *form.ataques.data)
+        redis_db.sadd(f'ataques_equipados:{
+                      usuario.nombre}', *form.ataques.data)
         return redirect(url_for('usuarios.index'))
     return render_template('registro.html', form=form)
 
