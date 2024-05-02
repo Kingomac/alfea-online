@@ -26,15 +26,21 @@ def registrar_sockets_lobby_combate(socketio: SocketIO):
                 **decode_hgetall(redis_db.hgetall(f'usuario:{nombre_usuario.decode()}')))
             return InCombatParticipant.from_usuario(usr)
 
-        participantes = list(map(convertir_usuario_participante,
-                             redis_db.smembers(f'lobby_combate:{id_raid}:villanos').union(redis_db.smembers(f'lobby_combate:{id_raid}:heroes'))))
+        heroes = list(map(convertir_usuario_participante,
+                          redis_db.smembers(f'lobby_combate:{id_raid}:heroes')))
+        villanos = list(map(convertir_usuario_participante,
+                            redis_db.smembers(f'lobby_combate:{id_raid}:villanos')))
 
-        for p in ",".join((datos_raid['heroes'], datos_raid['villanos'])).split(','):
+        for p in datos_raid['heroes'].split(','):
             datos_npc = npc_csv.npc_from_dict(npc_csv.get_npc_by_id(p))
-            participantes.append(InCombatParticipant.from_npc(datos_npc))
+            heroes.append(InCombatParticipant.from_npc(datos_npc))
+
+        for p in datos_raid['villanos'].split(','):
+            datos_npc = npc_csv.npc_from_dict(npc_csv.get_npc_by_id(p))
+            villanos.append(InCombatParticipant.from_npc(datos_npc))
 
         socketio.emit(f'comienza_combate_{id_raid}', {
-            'id_combate': InCombat.create(participantes).save()
+            'id_combate': InCombat.create(heroes, villanos).save()
         }, namespace='/lobby_combate')
 
         redis_db.delete(f'lobby_combate:{id_raid}:heroes')

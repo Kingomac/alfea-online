@@ -5,6 +5,7 @@ from app.usuarios.model import CombatStats
 from flask_login import current_user
 from app.chat import get_mensajes_sala
 from app.ataque.service import get_ataques_equipados_usuario
+from app.combate.model import InCombat
 
 bp_combate = Blueprint('combate', __name__, url_prefix='/combate',
                        template_folder='templates', static_folder='static')
@@ -45,10 +46,9 @@ def lobby_raid(id_raid):
 
 @bp_combate.route('/combate/<id_combate>')
 def combate(id_combate):
-    usuario = current_user
-    ataques_equipados = get_ataques_equipados_usuario(usuario.nombre)
-    print(ataques_equipados[0].nombre)
-    return render_template('combate.html', id_combate=id_combate, ataques=ataques_equipados)
+    ataques_equipados = get_ataques_equipados_usuario(current_user.nombre)
+    incombat = InCombat.load(id_combate)
+    return render_template('combate.html', id_combate=id_combate, heroes=incombat.heroes, villanos=incombat.villanos, ataques=ataques_equipados)
 
 
 @bp_combate.route('/lobby/duelo/<usr1>/<usr2>')

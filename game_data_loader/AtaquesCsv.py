@@ -9,7 +9,6 @@ class AtaquesCsv(BaseCsvFile):
     def get_by_id(self, ataque_id):
         datos = next(
             (ataque for ataque in self.rows if ataque['id'] == ataque_id), None)
-        print(f"{datos=}")
         return Ataque(**datos)
 
     def get_choices_iniciales(self):
