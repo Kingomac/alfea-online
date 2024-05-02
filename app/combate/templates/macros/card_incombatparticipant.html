@@ -1,0 +1,12 @@
+{% macro cardInCombatParticipant(participant) %}
+<div class="flex border rounded">
+    <img alt="algun dia">
+    <div class="grid grid-cols-2">
+        <span class="col-span-2 text-center">{{ participant.nombre }}</span>
+        <span>Vida - {{ participant.vida }}</span>
+        <progress class="rounded h-2" min="0" max="1000" value="{{ participant.vida }}"></progress>
+        <span>Maná máximo - {{ participant.mana }}</span>
+        <progress class="rounded h-2" type="range" min="0" max="1000" value="{{ participant.mana }}"></progress>
+    </div>
+</div>
+{% endmacro%}
