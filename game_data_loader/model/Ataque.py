@@ -61,3 +61,6 @@ class Ataque:
     @property
     def descripcion(self):
         return self.__descripcion
+
+    def __str__(self) -> str:
+        return f"{self.__id},{self.__nombre},{self.__ataque_fisico},{self.__ataque_magico},{self.__defensa_fisica},{self.__defensa_magica},{self.__precision},{self.__coste_mana},{self.__prob_critico},{self.__lanzamiento},{self.__forma},{self.__descripcion}"

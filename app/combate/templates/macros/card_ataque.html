@@ -1,13 +1,20 @@
 {% macro cardAtaque(ataque) %}
-<div>
-    <span>{{ ataque.nombre }}</span>
-    <img src="/static/img/ataques/{{ ataque.imagen }}" alt="{{ ataque.nombre }}">
-    <div>
-        <span>{{ ataque.coste_mana }}</span>
-        <button onclick="document.getElementById('dialog-ataque-{{ataque.id}}').setAttribute('open', '')"></button>
+<div
+    class="w-60 h-72 border p-3 rounded {% if ataque.lanzamiento == 'convergencia' %}bg-purple-300{% else %}bg-yellow-300{% endif %}">
+    <p class="text-center">{{ ataque.nombre }}</p>
+    <img class="w-full h-52 object-cover rounded" src="/static/img/ataques/{{ ataque.id }}.webp"
+        alt="{{ ataque.nombre }}">
+    <div class="flex justify-between items-center">
+        <span>Mana: {{ ataque.coste_mana }}</span>
+        <button class="p-2 rounded-full bg-red-200"
+            onclick="document.getElementById('dialog-ataque-{{ataque.id}}').showModal()"></button>
     </div>
-    <dialog id="dialog-ataque-{{ataque.id}}">
-        <span>{{ataque.nombre}}</span>
+    <dialog id="dialog-ataque-{{ataque.id}}" class="p-6 rounded">
+        <div class="flex justify-items-center">
+            <span class="w-full text-center">{{ataque.nombre}}</span>
+            <button class="rounded-full"
+                onclick="document.getElementById('dialog-ataque-{{ataque.id}}').close()">x</button>
+        </div>
         <p>{{ataque.descripcion}}</p>
         <p>Lanzamiento: {{ataque.lanzamiento}}</p>
         <p>Forma: {{ataque.forma}}</p>

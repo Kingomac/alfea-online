@@ -1,2 +1,2 @@
-from .Ataque import Ataque
 from .Npc import Npc
+from .Ataque import Ataque

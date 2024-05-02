@@ -1,5 +1,4 @@
 from .Ataque import Ataque
-from ..AtaquesCsv import ataques_csv
 
 
 class Npc:

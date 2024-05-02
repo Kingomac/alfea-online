@@ -4,4 +4,36 @@
 
 {% block main %}
 
+<!-- Chat -->
+<section>
+
+</section>
+
+<!-- Parte de combate -->
+<section>
+    <h1>Título</h1>
+
+    <!-- Listas de usuarios -->
+    <div>
+        <!-- Lista de usuarios héroes -->
+        <ul>
+
+        </ul>
+        <!-- Lista de usuarios villanos -->
+        <ul>
+
+        </ul>
+    </div>
+
+    <!-- Menú de selección de ataques -->
+    <div class="flex flex-wrap justify-around gap-2">
+        {% from 'macros/card_ataque.html' import cardAtaque with context %}
+        {% for ataque in ataques %}
+        <!-- Llamada al macro cardAtaque -->
+        {{ cardAtaque(ataque) }}
+        {% endfor %}
+    </div>
+
+</section>
+
 {% endblock %}

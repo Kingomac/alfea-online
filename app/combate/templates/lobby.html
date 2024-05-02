@@ -57,6 +57,11 @@
         window.location.reload()
     })
 
+    socket.on('comienza_combate_{{ id_raid }}', (data) => {
+        console.log('Comienza el combate', data)
+        window.location.href = `/combate/combate/${data["id_combate"]}`
+    })
+
     function unirseBando(bando) {
         socket.emit('unirse_bando', {
             id_raid: '{{ id_raid }}',

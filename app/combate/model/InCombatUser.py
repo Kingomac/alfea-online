@@ -1,8 +1,8 @@
 from db import redis_db
 from app.usuarios.model import Usuario
 from game_data_loader import ataques_csv, npc_csv
-from game_data_loader.model import Ataque, Npc
-from game_data_loader.service import get_ataques_equipados_usuario
+from game_data_loader.model import Npc, Ataque
+from app.ataque.service import get_ataques_equipados_usuario
 
 
 class InCombatParticipant:

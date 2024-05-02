@@ -33,8 +33,9 @@ def registrar_sockets_lobby_combate(socketio: SocketIO):
             datos_npc = npc_csv.npc_from_dict(npc_csv.get_npc_by_id(p))
             participantes.append(InCombatParticipant.from_npc(datos_npc))
 
-        socketio.emit(f'actualizar_lobby_{id_raid}', {
+        socketio.emit(f'comienza_combate_{id_raid}', {
             'id_combate': InCombat.create(participantes).save()
         }, namespace='/lobby_combate')
 
-        print(f"{list(map(str, participantes))=}")
+        redis_db.delete(f'lobby_combate:{id_raid}:heroes')
+        redis_db.delete(f'lobby_combate:{id_raid}:villanos')
