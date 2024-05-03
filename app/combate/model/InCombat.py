@@ -14,6 +14,15 @@ class InCombat:
         self.ataquesTurno: list[AtaqueTurno] = ataquesTurno
         self.npc_han_atacado = npc_han_atacado
 
+    def get_participant_by_nombre(self, nombre: str):
+        for x in self.heroes:
+            if x.nombre == nombre:
+                return x
+        for x in self.villanos:
+            if x.nombre == nombre:
+                return x
+        return None
+
     def save(self):
         redis_db.json().set(f"combate:{self.id}", Path.root_path(), {
             "id": self.id,
@@ -30,13 +39,22 @@ class InCombat:
         if data:
             return InCombat(data["id"],
                             [InCombatParticipant.from_combat(
-                                **x) for x in data["heroes"]],
+                                x['nombre'], int(x['vida']), int(x['mana']), x['id_npc']) for x in data["heroes"]],
                             [InCombatParticipant.from_combat(
-                                **x) for x in data["villanos"]],
+                                x['nombre'], int(x['vida']), int(x['mana']), x['id_npc']) for x in data["villanos"]],
                             [AtaqueTurno(**x) for x in data["ataquesTurno"]],
-                            data["npcHanAtacado"])
+                            bool(data["npcHanAtacado"]))
         return None
 
     @staticmethod
     def create(heroes: list[InCombatParticipant], villanos: list[InCombatParticipant]):
         return InCombat(str(uuid4()), heroes, villanos, {})
+
+    def __dict__(self):
+        return {
+            "id": self.id,
+            "heroes": [x.__dict__() for x in self.heroes],
+            "villanos": [x.__dict__() for x in self.villanos],
+            "ataquesTurno": self.ataquesTurno,
+            "npcHanAtacado": self.npc_han_atacado
+        }

@@ -29,7 +29,7 @@ class InCombatParticipant:
 
     def get_ataques_equipados(self):
         if self.is_npc:
-            return list(map(ataques_csv.get_by_id, npc_csv.get_by_id(self.id_npc).ataques))
+            return list(map(ataques_csv.get_by_id, npc_csv.get_npc_by_id(self.id_npc)["ataques"].split(",")))
         return list(map(ataques_csv.get_by_id, redis_db.smembers(f"ataques_equipados:{self.nombre}")))
 
     @staticmethod
