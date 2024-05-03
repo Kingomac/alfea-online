@@ -28,6 +28,8 @@ class InCombatParticipant:
         return InCombatParticipant(npc.nombre, npc.vida_maxima, npc.mana_maximo, CombatStats(npc.vida_maxima, npc.mana_maximo, npc.poder_fisico, npc.poder_magico, npc.resistencia_fisica, npc.resistencia_magica, npc.velocidad), npc.id)
 
     def get_ataques_equipados(self):
+        if self.is_npc:
+            return list(map(ataques_csv.get_by_id, npc_csv.get_by_id(self.id_npc).ataques))
         return list(map(ataques_csv.get_by_id, redis_db.smembers(f"ataques_equipados:{self.nombre}")))
 
     @staticmethod

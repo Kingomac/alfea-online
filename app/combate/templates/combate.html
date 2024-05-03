@@ -57,13 +57,19 @@
         <button id="selectorObjetivoAceptar">Aceptar</button>
     </div>
 
+    <!-- Mensaje final -->
+    <div style="display: none;" id="mensaje-final">
+        <p>Espera a que el resto de jugadores seleccionen sus ataques</p>
+    </div>
+
     <script type="module">
         import { io } from '/static/socket.io.esm.min.js'
         const socket = io('/combate')
         let ataqueSeleccionado = {
             usuarioNombre: "{{ current_user.nombre }}",
             ataqueId: null,
-            objetivoNombre: null
+            objetivoNombre: null,
+            idCombate: "{{ id_combate }}"
         }
 
         function mostrarSelectorAtaques() {
@@ -106,6 +112,7 @@
 
             document.getElementById('selectorObjetivoAceptar').onclick = () => {
                 esconderSelectorObjetivo()
+                document.getElementById('mensaje-final').style.display = 'block'
                 atacarObjetivo()
             }
         }
