@@ -3,19 +3,16 @@ from app.usuarios.model import Usuario
 from game_data_loader import ataques_csv, npc_csv
 from game_data_loader.model import Npc, Ataque
 from app.ataque.service import get_ataques_equipados_usuario
+from app.usuarios.model import CombatStats
 
 
 class InCombatParticipant:
-    def __init__(self, nombre: str, vida: int, mana: int, poder_fisico: int, poder_magico: int, resistencia_fisica: int, resistencia_magica: int, velocidad: int, id_npc: bool = None):
+    def __init__(self, nombre: str, vida: int, mana: int, combat_stats: CombatStats, id_npc: bool = None):
         self.nombre = nombre
         self.id_npc = id_npc
         self.vida = vida
         self.mana = mana
-        self.poder_fisico = poder_fisico
-        self.poder_magico = poder_magico
-        self.resistencia_fisica = resistencia_fisica
-        self.resistencia_magica = resistencia_magica
-        self.velocidad = velocidad
+        self.combat_stats = combat_stats
 
     @property
     def is_npc(self):
@@ -24,35 +21,39 @@ class InCombatParticipant:
     @staticmethod
     def from_usuario(usr: Usuario):
         stats = usr.get_combate_stats()
-        return InCombatParticipant(usr.nombre, stats.vida_maxima, stats.mana_maximo, stats.poder_fisico, stats.poder_magico, stats.resistencia_fisica, stats.resistencia_magica, stats.velocidad)
+        return InCombatParticipant(usr.nombre, stats.vida_maxima, stats.mana_maximo, stats)
 
     @staticmethod
     def from_npc(npc: Npc):
-        return InCombatParticipant(npc.nombre, npc.vida_maxima, npc.mana_maximo, npc.poder_fisico, npc.poder_magico, npc.resistencia_fisica, npc.resistencia_magica, npc.velocidad, npc.id)
+        return InCombatParticipant(npc.nombre, npc.vida_maxima, npc.mana_maximo, CombatStats(npc.vida_maxima, npc.mana_maximo, npc.poder_fisico, npc.poder_magico, npc.resistencia_fisica, npc.resistencia_magica, npc.velocidad), npc.id)
 
     def get_ataques_equipados(self):
         return list(map(ataques_csv.get_by_id, redis_db.smembers(f"ataques_equipados:{self.nombre}")))
 
-    def __str__(self) -> str:
-        return f"{self.nombre},{self.is_npc},{self.vida},{self.mana},{self.poder_fisico},{self.poder_magico},{self.resistencia_fisica},{self.resistencia_magica},{self.velocidad}"
-
     @staticmethod
     def load_usuario(nombre_usuario: str):
-        return InCombatParticipant.from_usuario(Usuario.load(nombre_usuario))
+        return InCombatParticipant.from_usuario(Usuario.find_by_name(nombre_usuario))
 
     @staticmethod
     def load_npc(id_npc: str):
         return InCombatParticipant.from_npc(npc_csv.npc_from_dict(npc_csv.get_npc_by_id(id_npc)))
+
+    @staticmethod
+    def from_combat(nombre: str, vida: int, mana: int, id_npc: str = None):
+        if id_npc:
+            npc = InCombatParticipant.load_npc(id_npc)
+            npc.vida = vida
+            npc.mana = mana
+            return npc
+        usr = InCombatParticipant.load_usuario(nombre)
+        usr.vida = vida
+        usr.mana = mana
+        return usr
 
     def __dict__(self):
         return {
             "nombre": self.nombre,
             "id_npc": self.id_npc,
             "vida": self.vida,
-            "mana": self.mana,
-            "poder_fisico": self.poder_fisico,
-            "poder_magico": self.poder_magico,
-            "resistencia_fisica": self.resistencia_fisica,
-            "resistencia_magica": self.resistencia_magica,
-            "velocidad": self.velocidad
+            "mana": self.mana
         }

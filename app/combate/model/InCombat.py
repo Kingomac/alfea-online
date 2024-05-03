@@ -25,7 +25,7 @@ class InCombat:
     def load(id: str):
         data = redis_db.json().get(f"combate:{id}")
         if data:
-            return InCombat(data["id"], [InCombatParticipant(**x) for x in data["heroes"]], [InCombatParticipant(**x) for x in data["villanos"]], data["ataquesTurno"])
+            return InCombat(data["id"], [InCombatParticipant.from_combat(**x) for x in data["heroes"]], [InCombatParticipant.from_combat(**x) for x in data["villanos"]], data["ataquesTurno"])
         return None
 
     @staticmethod
