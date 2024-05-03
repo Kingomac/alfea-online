@@ -48,7 +48,10 @@ def lobby_raid(id_raid):
 def combate(id_combate):
     ataques_equipados = get_ataques_equipados_usuario(current_user.nombre)
     incombat = InCombat.load(id_combate)
-    return render_template('combate.html', id_combate=id_combate, heroes=incombat.heroes, villanos=incombat.villanos, ataques=ataques_equipados)
+    es_heroe = any(
+        map(lambda x: x.nombre == current_user.nombre, incombat.heroes))
+    es_villano = not es_heroe
+    return render_template('combate.html', id_combate=id_combate, heroes=incombat.heroes, villanos=incombat.villanos, ataques=ataques_equipados, es_heroe=es_heroe, es_villano=es_villano)
 
 
 @bp_combate.route('/lobby/duelo/<usr1>/<usr2>')

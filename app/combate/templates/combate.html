@@ -31,13 +31,86 @@
     </div>
 
     <!-- Menú de selección de ataques -->
-    <div class="flex flex-wrap justify-around gap-2">
+    <div class="flex flex-wrap justify-around gap-2" id="menu-seleccion-ataques">
         {% from 'macros/card_ataque.html' import cardAtaque with context %}
         {% for ataque in ataques %}
         <!-- Llamada al macro cardAtaque -->
         {{ cardAtaque(ataque) }}
         {% endfor %}
     </div>
+
+    <!-- Menú de selección de objetivo -->
+    <div style="display: none;" id="menu-seleccion-objetivo">
+        <label for="objetivo">Selecciona un objetivo</label>
+        <select id="objetivo">
+            {% if es_villano %}
+            {% for usuario in heroes %}
+            <option value="{{ usuario.nombre }}">{{ usuario.nombre }}</option>
+            {% endfor %}
+            {% else %}
+            {% for usuario in villanos %}
+            <option value="{{ usuario.nombre }}">{{ usuario.nombre }}</option>
+            {% endfor %}
+            {% endif %}
+        </select>
+        <button id="selectorObjetivoCancelar">Cancelar</button>
+        <button id="selectorObjetivoAceptar">Aceptar</button>
+    </div>
+
+    <script type="module">
+        import { io } from '/static/socket.io.esm.min.js'
+        const socket = io('/combate')
+        let ataqueSeleccionado = {
+            usuarioNombre: "{{ current_user.nombre }}",
+            ataqueId: null,
+            objetivoNombre: null
+        }
+
+        function mostrarSelectorAtaques() {
+            document.getElementById('menu-seleccion-ataques').style.display = 'flex'
+        }
+
+        function esconderSelectorAtaques() {
+            document.getElementById('menu-seleccion-ataques').style.display = 'none'
+        }
+
+        function mostrarSelectorObjetivo() {
+            document.getElementById('menu-seleccion-objetivo').style.display = 'flex'
+        }
+
+        function esconderSelectorObjetivo() {
+            document.getElementById('menu-seleccion-objetivo').style.display = 'none'
+        }
+
+        function atacarObjetivo() {
+            ataqueSeleccionado.objetivoNombre = document.getElementById('objetivo').value
+            socket.emit('atacar', ataqueSeleccionado)
+        }
+
+        window.onload = () => {
+            const ataques = document.querySelectorAll('[ataque-id]')
+            for (const x of ataques) {
+                x.addEventListener('click', (e) => {
+                    if (e.target.tagName === 'BUTTON') return
+                    const ataqueId = e.target.getAttribute('ataque-id')
+                    ataqueSeleccionado.ataqueId = x.getAttribute('ataque-id')
+                    esconderSelectorAtaques()
+                    mostrarSelectorObjetivo()
+                })
+            }
+
+            document.getElementById('selectorObjetivoCancelar').onclick = () => {
+                esconderSelectorObjetivo()
+                mostrarSelectorAtaques()
+            }
+
+            document.getElementById('selectorObjetivoAceptar').onclick = () => {
+                esconderSelectorObjetivo()
+                atacarObjetivo()
+            }
+        }
+
+    </script>
 
 </section>
 
