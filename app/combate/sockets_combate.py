@@ -32,7 +32,11 @@ def registrar_sockets_combate(socketio: SocketIO):
                         ataque.id, heroe.nombre, random.choice(incombat.villanos).nombre))
             incombat.npc_han_atacado = True
 
-        if len(incombat.ataquesTurno) == len(incombat.heroes) + len(incombat.villanos):
+        # Comprobar que todos los participantes han atacado
+        num_vivos = sum(1 for x in incombat.heroes if x.vida > 0) + \
+            sum(1 for x in incombat.villanos if x.vida > 0)
+
+        if len(incombat.ataquesTurno) == num_vivos:
             escudos = {}
             # Gestión de escudos
             for x in incombat.ataquesTurno:
@@ -57,6 +61,24 @@ def registrar_sockets_combate(socketio: SocketIO):
 
             # Limpiar ataques
             incombat.ataquesTurno = []
+
+            # Determinar si el combate ha terminado
+            num_heroes_vivos = sum(1 for x in incombat.heroes if x.vida > 0)
+            num_villanos_vivos = sum(
+                1 for x in incombat.villanos if x.vida > 0)
+            if num_heroes_vivos == 0 or num_villanos_vivos == 0:
+                ganadores = ''
+                if num_heroes_vivos == 0 and num_villanos_vivos == 0:
+                    ganadores = 'empate'
+                elif num_heroes_vivos == 0:
+                    ganadores = 'villanos'
+                else:
+                    ganadores = 'heroes'
+                socketio.emit('fin_combate', {
+                              'ganador': ganadores}, namespace='/combate')
+                incombat.delete()
+                return
+
             socketio.emit('nuevo_turno', incombat.__dict__(),
                           namespace='/combate')
 
