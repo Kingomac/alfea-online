@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, redirect, render_template, url_for
 from game_data_loader import salas_csv, raids_csv, npc_csv
 from db import redis_db
 from app.usuarios.model import CombatStats
@@ -46,6 +46,8 @@ def lobby_raid(id_raid):
 
 @bp_combate.route('/combate/<id_combate>')
 def combate(id_combate):
+    if not InCombat.tiene_acceso(current_user.nombre, id_combate):
+        return redirect(url_for('usuarios.index'))
     ataques_equipados = get_ataques_equipados_usuario(current_user.nombre)
     incombat = InCombat.load(id_combate)
     es_heroe = any(

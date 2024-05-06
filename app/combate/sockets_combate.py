@@ -56,6 +56,7 @@ def registrar_sockets_combate(socketio: SocketIO):
             incombat.ataquesTurno.sort(key=lambda x: incombat.get_participant_by_nombre(
                 x.id_usuario).combat_stats.velocidad, reverse=True)
 
+            # Calcular daños de cada ataque
             for x in incombat.ataquesTurno:
                 ataque = ataques_csv.get_by_id(x.id_ataque)
                 atacante = incombat.get_participant_by_nombre(x.id_usuario)

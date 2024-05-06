@@ -38,6 +38,13 @@ class InCombat:
         redis_db.json().delete(f"combate:{self.id}")
 
     @staticmethod
+    def tiene_acceso(usuario, id_combate):
+        if redis_db.exists(f"combate:{id_combate}"):
+            combate = InCombat.load(id_combate)
+            return any(map(lambda x: x.nombre == usuario, combate.heroes + combate.villanos))
+        return False
+
+    @staticmethod
     def load(id: str):
         data = redis_db.json().get(f"combate:{id}")
         if data:

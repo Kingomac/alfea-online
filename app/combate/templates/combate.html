@@ -93,6 +93,11 @@
                 document.querySelector(`progress[vida-usuario="${usuario.nombre}"]`).value = usuario.vida
                 document.querySelector(`progress[mana-usuario="${usuario.nombre}"]`).value = usuario.mana
             }
+
+            // Si el usuario está muerto redirigirlo al index
+            if (incombat.{% if es_heroe %}heroes{% else %}villanos{% endif %}.find(usuario => usuario.vida <= 0 && usuario.nombre === "{{ current_user.nombre }}")) {
+            window.location.href = '/'
+        }
         })
 
         let ataqueSeleccionado = {
