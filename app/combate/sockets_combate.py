@@ -14,10 +14,13 @@ def registrar_sockets_combate(socketio: SocketIO):
         # usuario, id_ataque, id_combate, objetivo
         print(f"{data=}")
         incombat = InCombat.load(data['idCombate'])
-        if incombat.get_participant_by_nombre(data['usuarioNombre']).vida <= 0:
-            return
-        incombat.ataquesTurno.append(AtaqueTurno(
-            data["ataqueId"], data["usuarioNombre"], data["objetivoNombre"]))
+
+        # Si el usuario está vivo se permite el ataque
+        if incombat.get_participant_by_nombre(data['usuarioNombre']).vida > 0:
+            incombat.ataquesTurno.append(AtaqueTurno(
+                data["ataqueId"], data["usuarioNombre"], data["objetivoNombre"]))
+
+        # Los NPCs atacan si no han atacado todavía
         if not incombat.npc_han_atacado:
             for villano in incombat.villanos:
                 if villano.is_npc:
@@ -35,6 +38,8 @@ def registrar_sockets_combate(socketio: SocketIO):
         # Comprobar que todos los participantes han atacado
         num_vivos = sum(1 for x in incombat.heroes if x.vida > 0) + \
             sum(1 for x in incombat.villanos if x.vida > 0)
+        print(f"{num_vivos=}")
+        print(f"{len(incombat.ataquesTurno)=}")
 
         if len(incombat.ataquesTurno) == num_vivos:
             escudos = {}
@@ -44,22 +49,43 @@ def registrar_sockets_combate(socketio: SocketIO):
                 escudos[x.id_usuario] = (
                     ataque.defensa_fisica, ataque.defensa_magica)
 
+            def get_escudo_objetivo(objetivo):
+                return escudos[objetivo] if objetivo in escudos else (0, 0)
+
+            # Ordernar ataques turno por velocidad de ataque
+            incombat.ataquesTurno.sort(key=lambda x: incombat.get_participant_by_nombre(
+                x.id_usuario).combat_stats.velocidad, reverse=True)
+
             for x in incombat.ataquesTurno:
+                ataque = ataques_csv.get_by_id(x.id_ataque)
+                atacante = incombat.get_participant_by_nombre(x.id_usuario)
                 objetivo = incombat.get_participant_by_nombre(x.id_objetivo)
+
+                # Restar maná
+                atacante.mana -= ataque.coste_mana
+
+                # Si atacas sin maná te haces daño
+                if atacante.mana < 0:
+                    atacante.vida *= 0.75
+
+                # Inflingir daño a objetivo
                 if objetivo.vida > 0:
-                    atacante = incombat.get_participant_by_nombre(x.id_usuario)
-                    ataque = ataques_csv.get_by_id(x.id_ataque)
                     dano = ataque.ataque_fisico + \
                         atacante.combat_stats.poder_fisico - \
-                        escudos[x.id_objetivo][0]
+                        get_escudo_objetivo(x.id_objetivo)[0]
                     dano += ataque.ataque_magico + \
                         atacante.combat_stats.poder_magico - \
-                        escudos[x.id_objetivo][1]
+                        get_escudo_objetivo(x.id_objetivo)[1]
                     objetivo.vida -= dano
                     if objetivo.vida < 0:
                         objetivo.vida = 0
 
-            # Limpiar ataques
+            # Enviar actualización a los clientes
+            socketio.emit(f'nuevo_turno_{data['idCombate']}', incombat.__dict__(),
+                          namespace='/combate')
+
+            # Reset estado turno
+            incombat.npc_han_atacado = False
             incombat.ataquesTurno = []
 
             # Determinar si el combate ha terminado
@@ -78,8 +104,5 @@ def registrar_sockets_combate(socketio: SocketIO):
                               'ganador': ganadores}, namespace='/combate')
                 incombat.delete()
                 return
-
-            socketio.emit('nuevo_turno', incombat.__dict__(),
-                          namespace='/combate')
 
         incombat.save()

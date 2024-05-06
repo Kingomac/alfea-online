@@ -4,11 +4,11 @@
     <div class="grid grid-cols-2">
         <span class="col-span-2 text-center">{{ participant.nombre }}</span>
         <span>Vida - {{ participant.vida }}</span>
-        <progress class="rounded h-2" min="0" max="{{ participant.combat_stats.vida_maxima }}"
-            value="{{ participant.vida }}"></progress>
+        <progress vida-usuario="{{ participant.nombre }}" class="rounded h-2" min="0"
+            max="{{ participant.combat_stats.vida_maxima }}" value="{{ participant.vida }}"></progress>
         <span>Maná - {{ participant.mana }}</span>
-        <progress class="rounded h-2" type="range" min="0" max="{{ participant.combat_stats.mana_maximo }}"
-            value="{{ participant.mana }}"></progress>
+        <progress mana-usuario="{{ participant.nombre }}" class="rounded h-2" type="range" min="0"
+            max="{{ participant.combat_stats.mana_maximo }}" value="{{ participant.mana }}"></progress>
     </div>
 </div>
 {% endmacro%}

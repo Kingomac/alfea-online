@@ -3,6 +3,7 @@ from .AtaqueTurno import AtaqueTurno
 from uuid import uuid4
 from db import redis_db
 from redis.commands.json.path import Path
+from game_data_loader import ataques_csv
 
 
 class InCombat:
@@ -33,6 +34,9 @@ class InCombat:
         }, )
         return self.id
 
+    def delete(self):
+        redis_db.json().delete(f"combate:{self.id}")
+
     @staticmethod
     def load(id: str):
         data = redis_db.json().get(f"combate:{id}")
@@ -55,6 +59,6 @@ class InCombat:
             "id": self.id,
             "heroes": [x.__dict__() for x in self.heroes],
             "villanos": [x.__dict__() for x in self.villanos],
-            "ataquesTurno": self.ataquesTurno,
+            "ataquesTurno": [{'usuario': x.id_usuario, 'objetivo': x.id_objetivo, 'ataque': ataques_csv.get_by_id(x.id_ataque).nombre} for x in self.ataquesTurno],
             "npcHanAtacado": self.npc_han_atacado
         }
