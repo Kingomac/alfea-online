@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Moneda{% endblock %}
+
+{% block main %}
+
+<h1>Moneda</h1>
+
+<p>La moneda usada en el juego son Rubís de Magix</p>
+
+<p>En la serie no se menciona en ningún momento el nombre de la moneda y tampoco se usa frecuentemente. Sin embargo,
+    sale en el episodio 3 de la primera temporada cuando las chicas van a la ciudad de Magix a comprar un vestido para
+    que Bloom vaya a la fiesta de inicio de curso de Alfea. De aquí se obtiene el símbolo de la divisa.</p>
+<p>Por supuesto, Estella, como buena amiga se ofrece a pagarle el vestido a Bloom, que no tiene dinero.</p>
+
+<div class="grid grid-cols-2">
+    <img src="{{ url_for('lore.static', filename='img/moneda-magix-precio.webp') }}" alt="Moneda de Magix" class="w-96">
+    <img src="{{ url_for('lore.static', filename='img/tarjeta-stella.webp') }}" class="w-96">
+</div>
+
+<p>Para seguir detallando la moneda, se hace referencia al capítulo 18 de la temporada 2, en la que Griffin da unas
+    monedas Rubís a las chicas del Winx Club, que les ayudarán a encontrar a las Trix en el castillo de Torre de Nubes.
+    Es la única vez que se ve un posible soporte físico de la moneda, aunque no queda muy claro si realmente los rubís
+    equivalen a la divisa utilizada en el caso anterior.</p>
+<div class="grid grid-cols-2">
+    <img src="{{ url_for('lore.static', filename='img/moneda-rubis.webp') }}" class="w-96">
+    <img src="{{ url_for('lore.static', filename='img/rubis.webp') }}" class="w-96">
+</div>
+{% endblock %}
