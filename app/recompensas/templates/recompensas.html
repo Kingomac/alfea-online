@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% from 'macros/card_ataque.html' import cardAtaque with context %}
+
+{% block title %}Recompensas{% endblock %}
+
+{% block main %}
+<h1>Recompensas</h1>
+<h2>recompensas: {{ recompensas }} </h2>
+<ul>
+    {% for recompensa in recompensas %}
+    <li>
+        {{ recompensa.experiencia }} puntos de experiencia
+        {{ recompensa.monedas }} monedas
+        {{ recompensa.combat_stats }}
+        {{ cardAtaque(recompensa.ataque_obj) }}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
