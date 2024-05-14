@@ -7,13 +7,12 @@ from game_data_loader import ataques_csv
 
 
 class InCombat:
-    def __init__(self, id: str, heroes: list[InCombatParticipant], villanos: list[InCombatParticipant], ataquesTurno: list[AtaqueTurno], npc_han_atacado: bool = False) -> None:
+    def __init__(self, id: str, heroes: list[InCombatParticipant], villanos: list[InCombatParticipant], ataquesTurno: list[AtaqueTurno]) -> None:
         self.id = id
         self.heroes: list[InCombatParticipant] = heroes
         self.villanos: list[InCombatParticipant] = villanos
         # id usuario -> id ataque
         self.ataquesTurno: list[AtaqueTurno] = ataquesTurno
-        self.npc_han_atacado = npc_han_atacado
 
     def get_participant_by_nombre(self, nombre: str):
         for x in self.heroes:
@@ -25,13 +24,8 @@ class InCombat:
         return None
 
     def save(self):
-        redis_db.json().set(f"combate:{self.id}", Path.root_path(), {
-            "id": self.id,
-            "heroes": [x.__dict__() for x in self.heroes],
-            "villanos": [x.__dict__() for x in self.villanos],
-            "ataquesTurno": self.ataquesTurno,
-            "npcHanAtacado": self.npc_han_atacado
-        }, )
+        redis_db.json().set(f"combate:{self.id}",
+                            Path.root_path(), self.__dict__())
         return self.id
 
     def delete(self):
@@ -53,8 +47,7 @@ class InCombat:
                                 x['nombre'], int(x['vida']), int(x['mana']), x['id_npc']) for x in data["heroes"]],
                             [InCombatParticipant.from_combat(
                                 x['nombre'], int(x['vida']), int(x['mana']), x['id_npc']) for x in data["villanos"]],
-                            [AtaqueTurno(**x) for x in data["ataquesTurno"]],
-                            bool(data["npcHanAtacado"]))
+                            [AtaqueTurno(**x) for x in data["ataquesTurno"]])
         return None
 
     @staticmethod
@@ -66,6 +59,5 @@ class InCombat:
             "id": self.id,
             "heroes": [x.__dict__() for x in self.heroes],
             "villanos": [x.__dict__() for x in self.villanos],
-            "ataquesTurno": [{'usuario': x.id_usuario, 'objetivo': x.id_objetivo, 'ataque': ataques_csv.get_by_id(x.id_ataque).nombre} for x in self.ataquesTurno],
-            "npcHanAtacado": self.npc_han_atacado
+            "ataquesTurno": [x.__dict__() for x in self.ataquesTurno]
         }

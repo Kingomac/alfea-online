@@ -69,33 +69,37 @@
         import { io } from '/static/socket.io.esm.min.js'
         const socket = io('/combate')
 
-        socket.on('ataques_turno_{{ id_combate }}', (ataques) => {
-            console.log(ataques)
-        })
-
-        socket.on('nuevo_turno_{{ id_combate }}', (incombat) => {
-            console.log(incombat)
+        socket.on('nuevo_turno_{{ id_combate }}', (datosCombate) => {
+            console.log(datosCombate)
             // Actualizar lista de ataques
             const listAtaques = document.getElementById('ataquesTurno')
             listAtaques.textContent = ""
-            for (const ataque of incombat.ataquesTurno) {
+            for (const mensaje of datosCombate.mensajes) {
                 const li = document.createElement('li')
-                li.textContent = `${ataque.usuario} ha atacado a ${ataque.objetivo} con ${ataque.ataque}`
+                li.textContent = mensaje
                 listAtaques.append(li)
             }
 
-            for (const usuario of incombat.heroes) {
+            // Actualizar vida y mana de los usuarios
+            for (const usuario of datosCombate.combate.heroes) {
                 document.querySelector(`progress[vida-usuario="${usuario.nombre}"]`).value = usuario.vida
+                document.querySelector(`span[vida-usuario="${usuario.nombre}"]`).innerText = usuario.vida
                 document.querySelector(`progress[mana-usuario="${usuario.nombre}"]`).value = usuario.mana
+                document.querySelector(`span[mana-usuario="${usuario.nombre}"]`).innerText = usuario.mana
             }
 
-            for (const usuario of incombat.villanos) {
+            for (const usuario of datosCombate.combate.villanos) {
                 document.querySelector(`progress[vida-usuario="${usuario.nombre}"]`).value = usuario.vida
+                document.querySelector(`span[vida-usuario="${usuario.nombre}"]`).innerText = usuario.vida
                 document.querySelector(`progress[mana-usuario="${usuario.nombre}"]`).value = usuario.mana
+                document.querySelector(`span[mana-usuario="${usuario.nombre}"]`).innerText = usuario.mana
             }
+
+            mostrar(SELECTOR_ATAQUES)
+            esconder(MENSAJE_FINAL)
 
             // Si el usuario está muerto redirigirlo al index
-            if (incombat.{% if es_heroe %}heroes{% else %}villanos{% endif %}.find(usuario => usuario.vida <= 0 && usuario.nombre === "{{ current_user.nombre }}")) {
+            if (datosCombate.combate.{% if es_heroe %}heroes{% else %}villanos{% endif %}.find(usuario => usuario.vida <= 0 && usuario.nombre === "{{ current_user.nombre }}")) {
             window.location.href = '/'
         }
         })
@@ -107,21 +111,26 @@
             idCombate: "{{ id_combate }}"
         }
 
-        function mostrarSelectorAtaques() {
-            document.getElementById('menu-seleccion-ataques').style.display = 'flex'
+        const SELECTOR_ATAQUES = { id: 'menu-seleccion-ataques' }
+        const SELECTOR_OBJETIVO = { id: 'menu-seleccion-objetivo' }
+        const MENSAJE_FINAL = { id: 'mensaje-final' }
+
+        /**
+        * Muestra un elemento
+        * @param { {id: string, type: 'flex' | 'block' | 'grid'} } param0 
+        */
+        function mostrar({ id, type = 'flex' }) {
+            document.getElementById(id).style.display = type
         }
 
-        function esconderSelectorAtaques() {
-            document.getElementById('menu-seleccion-ataques').style.display = 'none'
+        /**
+        * Esconde un elemento
+        * @param { {id: string} } param0 
+        */
+        function esconder({ id }) {
+            document.getElementById(id).style.display = 'none'
         }
 
-        function mostrarSelectorObjetivo() {
-            document.getElementById('menu-seleccion-objetivo').style.display = 'flex'
-        }
-
-        function esconderSelectorObjetivo() {
-            document.getElementById('menu-seleccion-objetivo').style.display = 'none'
-        }
 
         function atacarObjetivo() {
             ataqueSeleccionado.objetivoNombre = document.getElementById('objetivo').value
@@ -135,19 +144,19 @@
                     if (e.target.tagName === 'BUTTON') return
                     const ataqueId = e.target.getAttribute('ataque-id')
                     ataqueSeleccionado.ataqueId = x.getAttribute('ataque-id')
-                    esconderSelectorAtaques()
-                    mostrarSelectorObjetivo()
+                    esconder(SELECTOR_ATAQUES)
+                    mostrar(SELECTOR_OBJETIVO)
                 })
             }
 
             document.getElementById('selectorObjetivoCancelar').onclick = () => {
-                esconderSelectorObjetivo()
-                mostrarSelectorAtaques()
+                esconder(SELECTOR_OBJETIVO)
+                mostrar(SELECTOR_ATAQUES)
             }
 
             document.getElementById('selectorObjetivoAceptar').onclick = () => {
-                esconderSelectorObjetivo()
-                document.getElementById('mensaje-final').style.display = 'block'
+                esconder(SELECTOR_OBJETIVO)
+                mostrar(MENSAJE_FINAL)
                 atacarObjetivo()
             }
         }
