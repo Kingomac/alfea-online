@@ -7,3 +7,8 @@ bp_wiki = Blueprint('wiki', __name__, url_prefix='/wiki',
 @bp_wiki.route('/moneda')
 def moneda():
     return render_template('moneda.html')
+
+
+@bp_wiki.route('/experiencia')
+def experiencia():
+    return render_template('experiencia.html')
