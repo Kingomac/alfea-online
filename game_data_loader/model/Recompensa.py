@@ -8,7 +8,7 @@ class Recompensa:
         self.__id = id
         self.__experiencia = experiencia
         self.__monedas = monedas
-        self.__combate_stats_str = combat_stats
+        self.__combat_stats_str = combat_stats
         self.__ataque = ataque
 
     @property
@@ -24,12 +24,12 @@ class Recompensa:
         return self.__monedas
 
     @property
-    def combate_stats_str(self):
-        return self.__combate_stats_str
+    def combat_stats_str(self):
+        return self.__combat_stats_str
 
     @property
-    def combate_stats(self):
-        return CombatStats.from_str(self.__combate_stats_str)
+    def combat_stats(self):
+        return CombatStats.from_str(self.__combat_stats_str)
 
     @property
     def ataque(self):

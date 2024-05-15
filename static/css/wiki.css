@@ -2,3 +2,7 @@ p {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+
+img {
+    border-radius: 1rem;
+}
