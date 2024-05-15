@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Alfea Online Wiki - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='output.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/wiki.css') }}">
+</head>
+
+<body class="grid grid-rows-3 md:grid-cols-12 justify-items-center">
+    <aside class="p-4 min-w-64 order-2 md:order-1 col-span-3 justify-self-start">
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('wiki.moneda') }}">Moneda</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <main class="p-4 col-span-9 order-1 md:order-2 lg:col-span-6 text-justify">
+        {% block main %}{% endblock %}
+    </main>
+    <aside class="lg:col-span-3 order-3">
+    </aside>
+</body>
+
+</html>

@@ -1,9 +1,9 @@
 from flask import Blueprint, render_template, send_file, url_for, send_from_directory
 
-bp_lore = Blueprint('lore', __name__, url_prefix='/lore',
+bp_wiki = Blueprint('wiki', __name__, url_prefix='/wiki',
                     template_folder='templates', static_folder='static')
 
 
-@bp_lore.route('/moneda')
+@bp_wiki.route('/moneda')
 def moneda():
     return render_template('moneda.html')
