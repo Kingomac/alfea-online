@@ -7,11 +7,11 @@
     </div>
     <div class="pantalla">
         {% for app in movil_apps %}
-            <div class="app">
-                <img loading="lazy" src="{{ url_for('.static', filename='movil/iconos/' + app['id'] + '.webp') }}"
-                     alt="{{ app['nombre'] }}">
-                <span>{{ app['nombre'] }}</span>
-            </div>
+        <a class="app" href="{{ url_for(app['url']) }}">
+            <img loading="lazy" src="{{ url_for('.static', filename='movil/iconos/' + app['id'] + '.webp') }}"
+                alt="{{ app['nombre'] }}">
+            <span>{{ app['nombre'] }}</span>
+        </a>
         {% endfor %}
 
     </div>

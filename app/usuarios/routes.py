@@ -41,8 +41,8 @@ def index():
                 flask_login.login_user(usr)
                 print(f"{usr.sala_actual=}")
                 alias = salas_csv.get_by_id(str(usr.sala_actual))['alias']
-                print(f"{url_for('ui.sala', alias=alias)=}")
-                return redirect(url_for('ui.sala', alias=alias))
+                print(f"{url_for('salas.lugar', alias=alias)=}")
+                return redirect(url_for('salas.lugar', alias=alias))
             form.errors = {'nombre': [u'Contraseña incorrecta']}
         else:
             form.errors = {'nombre': [u'Usuario no registrado']}

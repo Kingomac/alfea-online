@@ -12,3 +12,13 @@ def moneda():
 @bp_wiki.route('/experiencia')
 def experiencia():
     return render_template('experiencia.html')
+
+
+@bp_wiki.route('/movil')
+def movil():
+    return render_template('movil.html')
+
+
+@bp_wiki.route('/')
+def index():
+    return render_template('index.html')

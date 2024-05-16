@@ -1,0 +1,42 @@
+{% extends "base_wiki.html" %}
+
+{% block title %}Móvil{% endblock %}
+
+{% block main %}
+
+<h1>Móvil</h1>
+
+<p>El móvil contiene muchas de las acciones que se pueden realizar en el juego desde una sala.</p>
+
+<p>El diseño elegido para el móvil es el usado por Musa desde la temporada 5 a la 8.</p>
+<img src="{{ url_for('wiki.static', filename='img/movil-musa.webp') }}" alt="Móvil de Musa" class="w-96">
+
+<p>Listado de aplicaciones:</p>
+<table class="text-center">
+    <thead>
+        <tr>
+            <th>Aplicación</th>
+            <th>Descripción</th>
+            <th>Icono</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Wiki</td>
+            <td>Abre esta misma Wiki</td>
+            <td><img class="w-28 inline"
+                    src="{{ url_for('salas.static', filename='movil/iconos/wiki.webp') }}"><br>Biblioteca de
+                Solaria</td>
+        </tr>
+        <tr>
+            <td>Chat privado</td>
+            <td>Mensajes privados de chat entre usuarios</td>
+            <td><img class="w-28 inline" src="{{ url_for('salas.static', filename='movil/iconos/chat.webp') }}"><br>Livy
+                la
+                pixie
+                mensajera</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

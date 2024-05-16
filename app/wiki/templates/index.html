@@ -1,0 +1,16 @@
+{% extends "base_wiki.html" %}
+
+{% block title %}Índice{% endblock %}
+
+{% block main %}
+
+<h1>Alfea Online Wiki</h1>
+
+<p>Bienvenido a la Wiki de Alfea Online. Aquí encontrarás toda la información sobre el funcionamiento del juego y
+    explicaciones de las referencias y guiños a la serie original.</p>
+
+<p>Espero que te diviertas jugando y que aprendas sobre este basto mundo maravilloso.</p>
+
+<img src="{{ url_for('wiki.static', filename='img/fondo-enchantix.webp') }}" alt="Enchantix">
+
+{% endblock %}
