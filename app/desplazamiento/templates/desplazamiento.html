@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Desplazamiento{% endblock %}
+
+{% block main %}
+<h1 class="text-6xl font-winx text-wpink-500 leading-loose">Desplazamiento</h1>
+
+<div class="flex flex-wrap gap-2 justify-center">
+    {% for id, grupo in salas_by_grupo %}
+    <div class="rounded duration-500 h-[70vh] w-60 hover:w-96 p-4 bg-cover bg-center bg-no-repeat relative"
+        style="background-image: url('{{ url_for('desplazamiento.static', filename='img/' + id + '.webp') }}'); background-position:center;">
+        <h3 class="text-4xl leading-loose text-center font-winx text-wpink-500 bg-white h- bg-opacity-50 rounded">{{
+            grupo['nombre']
+            }}
+        </h3>
+        <ul class="truncate hover:text-ellipsis bg-white bg-opacity-50 mt-5 rounded p-1 text-center">
+            {% for sala in grupo['salas'] %}
+            <li><a class="hover:text-lg duration-300" href="#">{{ sala['nombre_sala'] }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
