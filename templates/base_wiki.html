@@ -16,13 +16,14 @@
         <nav>
             <ul>
                 <li class="border-b border-gray-300"><a href="{{ url_for('wiki.index') }}">Inicio</a></li>
+                <li><a href="{{ url_for('wiki.estadisticas_combate') }}">Estadísticas de combate</a></li>
                 <li><a href="{{ url_for('wiki.experiencia') }}">Experiencia</a></li>
                 <li><a href="{{ url_for('wiki.moneda') }}">Moneda</a></li>
                 <li><a href="{{ url_for('wiki.movil') }}">Móvil</a></li>
             </ul>
         </nav>
     </aside>
-    <main class="p-4 col-span-9 order-1 md:order-2 lg:col-span-6 text-justify">
+    <main class="p-4 col-span-9 order-1 md:order-2 lg:col-span-6 text-justify w-full">
         {% block main %}{% endblock %}
     </main>
     <aside class="lg:col-span-3 order-3">

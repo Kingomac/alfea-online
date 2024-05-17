@@ -19,6 +19,11 @@ def movil():
     return render_template('movil.html')
 
 
+@bp_wiki.route('/estadisticas-combate')
+def estadisticas_combate():
+    return render_template('estadisticas_combate.html')
+
+
 @bp_wiki.route('/')
 def index():
     return render_template('index.html')
