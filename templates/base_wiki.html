@@ -11,19 +11,22 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/wiki.css') }}">
 </head>
 
-<body class="grid grid-rows-3 md:grid-rows-1 md:grid-cols-12 justify-items-center">
-    <aside class="p-4 min-w-64 order-2 md:order-1 col-span-3 justify-self-start">
+<body
+    class="grid grid-rows-3 md:grid-rows-1 md:grid-cols-12 justify-items-center bg-gradient-winx1 bg-no-repeat bg-fixed">
+    <aside class="bg-white bg-opacity-65 p-4 min-w-64 order-2 md:order-1 col-span-3 justify-self-start min-h-[100vh]">
         <nav>
-            <ul>
-                <li class="border-b border-gray-300"><a href="{{ url_for('wiki.index') }}">Inicio</a></li>
-                <li><a href="{{ url_for('wiki.estadisticas_combate') }}">Estadísticas de combate</a></li>
-                <li><a href="{{ url_for('wiki.experiencia') }}">Experiencia</a></li>
-                <li><a href="{{ url_for('wiki.moneda') }}">Moneda</a></li>
-                <li><a href="{{ url_for('wiki.movil') }}">Móvil</a></li>
+            <ul class="pl-5 grid justify-items-stretch gap-2 text-center">
+                {% for pag in [('Inicio', 'index'), ('Estadísticas de combate', 'estadisticas_combate'), ('Experiencia',
+                'experiencia'), ('Moneda', 'moneda'), ('Móvil', 'movil')] %}
+                <li><a class="block bg-white w-full h-full rounded p-1 bg-opacity-40 hover:bg-opacity-60"
+                        href="{{ url_for('wiki.' + pag[1]) }}">{{ pag[0] }}</a></li>
+                {% endfor %}
             </ul>
         </nav>
     </aside>
-    <main class="p-4 col-span-9 order-1 md:order-2 lg:col-span-6 text-justify w-full">
+    <main class="p-4 col-span-9 order-1 md:order-2 lg:col-span-6 text-justify w-full bg-white bg-opacity-65">
+        <h1 class="text-6xl font-winx font-bold text-wpink-500 leading-loose">{% block pageTitle %}{% endblock pageTitle
+            %}</h1>
         {% block main %}{% endblock %}
     </main>
     <aside class="lg:col-span-3 order-3">

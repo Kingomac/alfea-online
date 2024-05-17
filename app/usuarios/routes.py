@@ -32,6 +32,10 @@ def registro():
 
 @bp_usuarios.route('/', methods=['GET', 'POST'])
 def index():
+    if flask_login.current_user.is_authenticated:
+        alias = salas_csv.get_by_id(
+            str(flask_login.current_user.sala_actual))['alias']
+        return redirect(url_for('salas.lugar', alias=alias))
     form = InicioSesionForm()
     if form.validate_on_submit():
         dbusr = decode_hgetall(redis_db.hgetall(f"usuario:{form.nombre.data}"))

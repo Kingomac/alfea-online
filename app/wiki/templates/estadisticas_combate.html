@@ -2,64 +2,52 @@
 
 {% block title %}Estadísticas de combate{% endblock %}
 
+{% block pageTitle %}Estadísticas de combate{% endblock pageTitle %}
+
 {% block main %}
 
-<h1>Estadísticas de combate</h1>
+<p>En este artículo se explican los símbolos utilizados para describir las estadísticas de combate.</p>
 
-<p>Símbolos utilizados:</p>
+<h2 class="mt-5">Ataque físico</h2>
+<p>El ataque físico se representa por la espada de Brandon</p>
+<div class="grid gap-2 md:grid-cols-2 place-items-center">
+    <img src="{{ url_for('static', filename='img/estadisticas-combate/ataque-fisico.svg') }}" title="Ataque físico"
+        alt="Ataque físico" class="h-32">
+    <img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/ataque-fisico.webp') }}"
+        alt="Brandon, el especialista, blandiendo su larga y gruesa espada verde" class="w-96">
+</div>
 
-<details>
-    <summary>Ataque físico</summary>
-    <div>
-        <p>El ataque físico se representa por la espada de Brandon <img
-                src="{{ url_for('static', filename='img/estadisticas-combate/ataque-fisico.svg') }}"
-                title="Ataque físico" alt="Ataque físico" class="h-32"></p>
-        <img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/ataque-fisico.webp') }}"
-            alt="Brandon, el especialista, blandiendo su larga y gruesa espada verde" class="w-96">
-    </div>
-</details>
+<h2 class="mt-5">Defensa física</h2>
+<p>La defensa física se representa por el escudo de Sky</p>
+<div class="grid gap-2 md:grid-cols-2 place-items-center">
+    <img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/defensa-fisica.webp') }}"
+        alt="Sky, el especialista, con su escudo azul" class="w-96">
+    <img src="{{ url_for('static', filename='img/estadisticas-combate/defensa-fisica.svg') }}" title="Defensa física"
+        alt="Defensa física" class="h-32">
+</div>
 
-<details>
-    <summary>Defensa física</summary>
-    <div>
-        <p>La defensa física se representa por el escudo de Sky <img
-                src="{{ url_for('static', filename='img/estadisticas-combate/defensa-fisica.svg') }}"
-                title="Defensa física" alt="Defensa física" class="h-32"> </p>
-        <img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/defensa-fisica.webp') }}"
-            alt="Sky, el especialista, con su escudo azul" class="w-96">
-    </div>
-</details>
+<h2 class="mt-5">Ataque mágico</h2>
+<p>El ataque mágico se representa por una bola de Sparx. El Sparx es el elemento que se muestra por primera vez
+    en la temporada 8, es la fuente de los poderes mágicos de las hadas y las brujas y del universo mágico en si
+    mismo. El Sparx es también uno de los principales componentes de la Llama del Dragón.<img
+        src="{{ url_for('static', filename='img/estadisticas-combate/ataque-magico.svg') }}" class="h-32"
+        title="Ataque mágico" alt="Ataque mágico"></p>
+<p>Las directoras Griffin y Faragonda pueden crear bolas de Sparx combinando sus poderes.</p>
+<img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/ataque-magico.webp') }}"
+    alt="Las directoras Griffin y Faragonda muestran una bola de Sparx" class="w-128">
 
 
-<details>
-    <summary>Ataque mágico</summary>
-    <div>
-        <p>El ataque mágico se representa por una bola de Sparx. El Sparx es el elemento que se muestra por primera vez
-            en la temporada 8, es la fuente de los poderes mágicos de las hadas y las brujas y del universo mágico en si
-            mismo. El Sparx es también uno de los principales componentes de la Llama del Dragón.<img
-                src="{{ url_for('static', filename='img/estadisticas-combate/ataque-magico.svg') }}" class="h-32"
-                title="Ataque mágico" alt="Ataque mágico"></p>
-        <p>Las directoras Griffin y Faragonda pueden crear bolas de Sparx combinando sus poderes.</p>
-        <img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/ataque-magico.webp') }}"
-            alt="Las directoras Griffin y Faragonda muestran una bola de Sparx" class="w-128">
-    </div>
-</details>
-
-<details>
-    <summary>Defensa mágica</summary>
-    <div>
-        <p>La defensa mágica se representa como una estrella, ya que, dada la gran variedad de escudos mágicos y
-            hechizos defensivos utilizados en la serie es difícil escoger uno que los represente a todos. Sin embargo,
-            como tanto Bloom como Estela utilizan escudos con forma de estrella se escogió ese como tal.</p>
-        <p>Estas son las referencias utilizadas de la primera, quinta y octava temporadas. </p>
-        <div class="grid gap-2 lg:grid-cols-3">
-            <img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/defensa-magica/1.webp') }}"
-                alt="Bloom, hada del fuego del dragón, con su escudo de estrella, temporada 1">
-            <img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/defensa-magica/2.webp') }}"
-                alt="Estela, hada del sol brillante, con su escudo de estrella, temporada 5">
-            <img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/defensa-magica/3.webp') }}"
-                alt="Estela, hada del sol brillante, con su escudo de estrella, temporada 8">
-        </div>
-    </div>
-</details>
+<h2 class="mt-5">Defensa mágica</h2>
+<p>La defensa mágica se representa como una estrella, ya que, dada la gran variedad de escudos mágicos y
+    hechizos defensivos utilizados en la serie es difícil escoger uno que los represente a todos. Sin embargo,
+    como tanto Bloom como Estela utilizan escudos con forma de estrella se escogió ese como tal.</p>
+<p>Estas son las referencias utilizadas de la primera, quinta y octava temporadas. </p>
+<div class="grid gap-2 lg:grid-cols-3">
+    <img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/defensa-magica/1.webp') }}"
+        alt="Bloom, hada del fuego del dragón, con su escudo de estrella, temporada 1">
+    <img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/defensa-magica/2.webp') }}"
+        alt="Estela, hada del sol brillante, con su escudo de estrella, temporada 5">
+    <img src="{{ url_for('wiki.static', filename='img/estadisticas-combate/defensa-magica/3.webp') }}"
+        alt="Estela, hada del sol brillante, con su escudo de estrella, temporada 8">
+</div>
 {% endblock %}
