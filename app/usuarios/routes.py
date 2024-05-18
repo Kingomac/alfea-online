@@ -1,5 +1,4 @@
-from flask import Blueprint
-
+from flask import Blueprint, request
 from util import decode_hgetall
 from .RegistroForm import RegistroForm
 from .InicioSesionForm import InicioSesionForm
@@ -26,6 +25,8 @@ def registro():
         redis_db.sadd(f'ataques:{usuario.nombre}', *form.ataques.data)
         redis_db.sadd(f'ataques_equipados:{
                       usuario.nombre}', *form.ataques.data)
+        form.foto_perfil.data.save(
+            'static/img/fotos_perfil/' + form.nombre.data + '.webp')
         return redirect(url_for('usuarios.index'))
     return render_template('registro.html', form=form)
 

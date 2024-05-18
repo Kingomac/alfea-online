@@ -13,13 +13,17 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <form method="POST" action="/registro">
+    <form method="POST" action="/registro" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <fieldset>
             <legend>Perfil</legend>
             {{ form.nombre.label }} {{ form.nombre }}
             {{ form.password.label }} {{ form.password }}
             {{ form.foto_perfil.label }} {{ form.foto_perfil }}
+        </fieldset>
+        <fieldset>
+            La foto de perfil debe estar en formato .webp y es recomendable una resolución de 512x512 píxeles para que
+            se vea bien.
         </fieldset>
         <fieldset>
             <legend>Selecciona tus primeros ataques</legend>
