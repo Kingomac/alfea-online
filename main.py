@@ -1,5 +1,5 @@
 from flask import Flask, send_from_directory
-from app import bp_usuarios, bp_chat, registar_sockets, bp_salas, bp_combate, registrar_sockets_lobby_combate, bp_recompensas, bp_wiki, bp_desplazamiento
+from app import bp_usuarios, bp_chat, registar_sockets, bp_salas, bp_combate, registrar_sockets_lobby_combate, bp_recompensas, bp_wiki, bp_desplazamiento, bp_perfil
 from app.combate import registrar_sockets_combate
 import redis
 from flask_login import LoginManager
@@ -20,6 +20,7 @@ app.register_blueprint(bp_combate)
 app.register_blueprint(bp_recompensas)
 app.register_blueprint(bp_wiki)
 app.register_blueprint(bp_desplazamiento)
+app.register_blueprint(bp_perfil)
 
 registar_sockets(socketio)
 registrar_sockets_lobby_combate(socketio)

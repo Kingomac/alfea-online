@@ -1,20 +1,24 @@
 {% macro cardInCombatParticipant(participant) %}
-<div class="flex border rounded">
-    <img alt="algun dia">
-    <div class="grid grid-cols-2">
+<div class="flex border gap-10 justify-center">
+    <img alt="algun dia" class="w-28" src="{{ url_for('perfil.foto_perfil', nombre=participant.nombre) }}">
+    <div class="grid grid-cols-[2fr_1fr] w-full gap-2 items-center">
         <span class="col-span-2 text-center">{{ participant.nombre }}</span>
-        <div class="grid grid-cols-2">
+        <progress vida-usuario="{{ participant.nombre }}" class="rounded" min="0"
+            max="{{ participant.combat_stats.vida_maxima }}" value="{{ participant.vida }}"
+            title="{{ participant.vida }}/{{ participant.combat_stats.vida_maxima}}"></progress>
+        <div>
+            <span vida-usuario="{{ participant.nombre }}">{{ participant.vida }}/{{ participant.combat_stats.vida_maxima
+                }}</span>
             <span>Vida</span>
-            <span vida-usuario="{{ participant.nombre }}">{{ participant.vida }}</span>
         </div>
-        <progress vida-usuario="{{ participant.nombre }}" class="rounded h-2" min="0"
-            max="{{ participant.combat_stats.vida_maxima }}" value="{{ participant.vida }}"></progress>
-        <div class="grid grid-cols-2">
+        <progress mana-usuario="{{ participant.nombre }}" class="rounded" type="range" min="0"
+            max="{{ participant.combat_stats.mana_maximo }}" value="{{ participant.mana }}"
+            title="{{ participant.mana }}/{{ participant.combat_stats.mana_maximo}}"></progress>
+        <div>
+            <span mana-usuario="{{ participant.nombre }}">{{ participant.mana }}/{{ participant.combat_stats.mana_maximo
+                }}</span>
             <span>Maná</span>
-            <span mana-usuario="{{ participant.nombre }}">{{ participant.mana }}</span>
         </div>
-        <progress mana-usuario="{{ participant.nombre }}" class="rounded h-2" type="range" min="0"
-            max="{{ participant.combat_stats.mana_maximo }}" value="{{ participant.mana }}"></progress>
     </div>
 </div>
 {% endmacro%}

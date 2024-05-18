@@ -7,6 +7,7 @@ module.exports = {
         'winx': ['Winx Script', 'cursive'],
       },
       gridTemplateColumns: {
+        'middle-3': '2fr 3fr 2fr',
         'middle-5': '1fr 5fr 1fr'
       },
       gridTemplateRows: {
