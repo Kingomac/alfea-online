@@ -3,27 +3,29 @@
 {% block title %}Registro{% endblock %}
 
 {% block main %}
-{% if form.errors %}
-<ul>
-    {% for field, errors in form.errors.items() %}
-    {% for error in errors %}
-    <li>{{ form[field].label }}: {{ error }}</li>
-    {% endfor %}
-    {% endfor %}
-</ul>
-{% endif %}
-<form method="POST" action="/registro">
-    {{ form.hidden_tag() }}
-    <fieldset>
-        <legend>Perfil</legend>
-        {{ form.nombre.label }} {{ form.nombre }}
-        {{ form.password.label }} {{ form.password }}
-        {{ form.foto_perfil.label }} {{ form.foto_perfil }}
-    </fieldset>
-    <fieldset>
-        <legend>Selecciona tus primeros ataques</legend>
-        {{ form.ataques(class_="h-[300px]") }}
-    </fieldset>
-    {{ form.submit }}
-</form>
+<main>
+    {% if form.errors %}
+    <ul>
+        {% for field, errors in form.errors.items() %}
+        {% for error in errors %}
+        <li>{{ form[field].label }}: {{ error }}</li>
+        {% endfor %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form method="POST" action="/registro">
+        {{ form.hidden_tag() }}
+        <fieldset>
+            <legend>Perfil</legend>
+            {{ form.nombre.label }} {{ form.nombre }}
+            {{ form.password.label }} {{ form.password }}
+            {{ form.foto_perfil.label }} {{ form.foto_perfil }}
+        </fieldset>
+        <fieldset>
+            <legend>Selecciona tus primeros ataques</legend>
+            {{ form.ataques(class_="h-[300px]") }}
+        </fieldset>
+        {{ form.submit }}
+    </form>
+</main>
 {% endblock %}

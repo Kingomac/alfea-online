@@ -24,6 +24,7 @@
         socket.on('connect', () => {
             console.log('Conectado al servidor')
             socket.emit('conectar_sala', '{{ sala }}')
+
             document.getElementById('btn-enviar').onclick = () => {
                 const mensaje = document.getElementById('txt-mensaje').value
                 socket.emit("mensaje_nuevo_{% if sala.startswith('priv') %}priv{% else %}sala{% endif %}", JSON.stringify({
@@ -32,6 +33,18 @@
                     usuario: '{{ current_user.nombre }}'
                 }))
             }
+
+            document.getElementById('txt-mensaje').oninput = (e) => {
+                console.log('me cago en napoles')
+            }
+
+            document.getElementById('txt-mensaje').onkeydown = (e) => {
+                console.log(e.key)
+                if (e.key === 'Enter') {
+                    document.getElementById('btn-enviar').click()
+                }
+            }
+
             socket.on('mensaje_nuevo', (mensaje) => {
                 console.log('Nuevo mensaje', mensaje)
                 const li = document.createElement('li')

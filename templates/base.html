@@ -9,12 +9,11 @@
     <title>Alfea Online - {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='output.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='fonts/fonts.css') }}">
+    {% block head %}{% endblock %}
 </head>
 
 <body class="bg-gradient-winx1 bg-no-repeat bg-fixed">
-    <main>
-        {% block main %}{% endblock %}
-    </main>
+    {% block main %}{% endblock %}
 </body>
 
 </html>

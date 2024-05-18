@@ -3,34 +3,36 @@
 {% block title %}Desplazamiento{% endblock %}
 
 {% block main %}
-<h1 class="text-6xl font-winx text-wpink-500 leading-loose">Desplazamiento</h1>
-<p class="text-center bg-white bg-opacity-60 rounded p-3 m-5">Los desplazamientos entre distintas zonas tienen
-    un coste de 3
-    <img src="{{ url_for('static', filename='img/moneda.svg') }}" class="w-5 inline" title="Monedas" alt="Monedas">
-</p>
-<div class="flex flex-wrap gap-1 justify-center">
-    {% for id, grupo in salas_by_grupo %}
-    <div class="shrink rounded duration-1000 h-[70vh] w-60 basis-60 hover:grow p-4 bg-cover bg-center bg-no-repeat hover:z-10 hover:shadow-lg"
-        style="background-image: url('{{ url_for('desplazamiento.static', filename='img/' + id + '.webp') }}'); background-position:center;">
-        <h3 class="text-4xl leading-loose text-center font-winx text-wpink-500 bg-white h- bg-opacity-60 rounded">{{
-            grupo['nombre']
-            }}
-        </h3>
-        <ul class="truncate hover:text-ellipsis bg-white bg-opacity-60 mt-5 rounded p-1 text-center">
-            {% for sala in grupo['salas'] %}
-            <li><button class="hover:text-lg duration-300" onclick="setSalaDestino({{ sala['id'] }})">{{
-                    sala['nombre_sala'] }}</button>
-            </li>
-            {% endfor %}
-        </ul>
+<main>
+    <h1 class="text-6xl font-winx text-wpink-500 leading-loose">Desplazamiento</h1>
+    <p class="text-center bg-white bg-opacity-60 rounded p-3 m-5">Los desplazamientos entre distintas zonas tienen
+        un coste de 3
+        <img src="{{ url_for('static', filename='img/moneda.svg') }}" class="w-5 inline" title="Monedas" alt="Monedas">
+    </p>
+
+    <div class="flex flex-wrap gap-1 justify-center">
+        {% for id, grupo in salas_by_grupo %}
+        <div class="shrink rounded duration-1000 h-[70vh] w-60 basis-60 hover:grow p-4 bg-cover bg-center bg-no-repeat hover:z-10 hover:shadow-lg"
+            style="background-image: url('{{ url_for('desplazamiento.static', filename='img/' + id + '.webp') }}'); background-position:center;">
+            <h3 class="text-4xl leading-loose text-center font-winx text-wpink-500 bg-white h- bg-opacity-60 rounded">{{
+                grupo['nombre']
+                }}
+            </h3>
+            <ul class="truncate hover:text-ellipsis bg-white bg-opacity-60 mt-5 rounded p-1 text-center">
+                {% for sala in grupo['salas'] %}
+                <li><button class="hover:text-lg duration-300" onclick="setSalaDestino({{ sala['id'] }})">{{
+                        sala['nombre_sala'] }}</button>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 
-<form id="form-desplazar" action="{{ url_for('desplazamiento.desplazar') }}" method="post">
-    <input type="hidden" name="id_sala_destino" id="id_sala_destino">
-</form>
-
+    <form id="form-desplazar" action="{{ url_for('desplazamiento.desplazar') }}" method="post">
+        <input type="hidden" name="id_sala_destino" id="id_sala_destino">
+    </form>
+</main>
 <script>
     function setSalaDestino(idSala) {
         document.getElementById('id_sala_destino').value = idSala;

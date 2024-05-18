@@ -24,7 +24,15 @@
                     sala: '{{ sala }}',
                     usuario: '{{ current_user.nombre }}'
                 }))
+            document.getElementById('txt-mensaje-{{ sala }}').value = ''
         }
+
+        document.getElementById('txt-mensaje-{{ sala }}').onkeydown = (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('btn-enviar-{{ sala }}').click()
+            }
+        }
+
         socket.on('mensaje_nuevo', (mensaje) => {
             console.log('Nuevo mensaje', mensaje)
             const li = document.createElement('li')

@@ -4,20 +4,22 @@
 {% block title %}Recompensas{% endblock %}
 
 {% block main %}
-<h1>Recompensas</h1>
-<button class="mx-auto block w-96">Reclamar todas</button>
-<div class="max-w-4xl mx-auto flex flex-row flex-wrap justify-center">
-    {% for recompensa in recompensas %}
-    <div class="w-96 bg-green-200 m-5 border border-green-500 p-2 grid grid-cols-2 justify-items-center">
-        <span class="w-full text-right">{{ recompensa.experiencia }}</span>
-        <img class="size-8" src="{{ url_for('static', filename='img/experiencia.svg') }}" alt="Experiencia"
-            title="Experiencia">
-        <span class="w-full text-right">{{ recompensa.monedas }}</span>
-        <img class="size-8" src="{{ url_for('static', filename='img/moneda.svg') }}" alt="Rubís de Magix"
-            title="Rubís de Magix">
-        <span>{{ recompensa.combat_stats_str }}</span>
-        <div class="col-span-2 grid">{{ cardAtaque(recompensa.ataque_obj) }}</div>
+<main>
+    <h1>Recompensas</h1>
+    <button class="mx-auto block w-96">Reclamar todas</button>
+    <div class="max-w-4xl mx-auto flex flex-row flex-wrap justify-center">
+        {% for recompensa in recompensas %}
+        <div class="w-96 bg-green-200 m-5 border border-green-500 p-2 grid grid-cols-2 justify-items-center">
+            <span class="w-full text-right">{{ recompensa.experiencia }}</span>
+            <img class="size-8" src="{{ url_for('static', filename='img/experiencia.svg') }}" alt="Experiencia"
+                title="Experiencia">
+            <span class="w-full text-right">{{ recompensa.monedas }}</span>
+            <img class="size-8" src="{{ url_for('static', filename='img/moneda.svg') }}" alt="Rubís de Magix"
+                title="Rubís de Magix">
+            <span>{{ recompensa.combat_stats_str }}</span>
+            <div class="col-span-2 grid">{{ cardAtaque(recompensa.ataque_obj) }}</div>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
+</main>
 {% endblock %}
