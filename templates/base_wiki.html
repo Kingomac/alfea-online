@@ -7,8 +7,9 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Alfea Online Wiki - {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='output.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/wiki.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='output.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/wiki.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/fonts.css') }}">
 </head>
 
 <body class="bg-gradient-winx1 bg-no-repeat bg-fixed grid lg:grid-cols-12 md:gap-5">
@@ -21,8 +22,10 @@
             {% endfor %}
         </ul>
     </nav>
-    <main class="p-4 text-justify bg-white bg-opacity-65 lg:col-span-8">
-        <h1 class="text-6xl font-winx font-bold text-wpink-500 leading-loose">{% block pageTitle %}{% endblock pageTitle
+    <main class="p-4 text-justify bg-white bg-opacity-65 lg:col-span-8 [&_h2]:text-2xl [&_h2]:font-bold">
+        <h1 class="text-6xl text-center font-winx drop-shadow-title text-wpink-500 leading-loose">{% block pageTitle
+            %}{% endblock
+            pageTitle
             %}</h1>
         {% block main %}{% endblock %}
     </main>

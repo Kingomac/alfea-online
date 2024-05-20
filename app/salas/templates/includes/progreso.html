@@ -4,7 +4,7 @@
     src="{{ url_for('perfil.foto_perfil', nombre=current_user.nombre) }}" alt="{{ current_user.nombre }}"
     title="{{ current_user.nombre }}">
 {{ current_user.titulo_nobiliario }}
-<table class="table-auto">
+<table class="table-auto [&_td]:p-2">
     <tbody class="border-dashed border-[#cfc93a] border-2 bg-[#cfc93a] bg-opacity-60">
         <tr>
             <td>{{ current_user.nivel }}</td>

@@ -3,7 +3,8 @@
 {% block title %}Sala {{ nombre_sala }}{% endblock %}
 
 {% block main %}
-<main class="w-[100vw] h-[100vh] grid grid-cols-middle-2/5 md:grid-cols-middle-1/5 place-items-stretch gap-10 p-5">
+<main
+    class="w-[100vw] h-[100vh] grid grid-cols-middle-sm md:grid-cols-middle-md lg:grid-cols-middle-lg place-items-stretch gap-10 p-5">
     <!-- Lista de usuarios conectados -->
     <section>
         <h1>Usuarios conectados</h1>
@@ -12,8 +13,10 @@
     </section>
     <!-- Parte principal (chat y opciones) -->
     <section class="grid grid-rows-[auto_1fr]">
-        <div class="flex justify-center items-center gap-10">
-            <h1>{{ nombre_sala }}</h1>
+        <div class="flex justify-center items-center gap-10 drop-shadow-title">
+            <h1 class="font-winx text-5xl text-wpink-500">{{
+                nombre_sala }}
+            </h1>
             <button>...</button>
         </div>
         <div id="chat-sala" class="grid grid-rows-[1fr_auto]">

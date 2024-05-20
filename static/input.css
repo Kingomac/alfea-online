@@ -6,29 +6,4 @@
     * {
         @apply box-border;
     }
-
-    h1 {
-        @apply text-2xl text-center;
-    }
-
-    h2 {
-        @apply text-xl;
-    }
-
-    thead,
-    tbody {
-        @apply border border-gray-300;
-    }
-
-    th,
-    td {
-        @apply m-2 p-2 text-center;
-    }
-
-    input[type="submit"],
-    input[type="text"],
-    input[type="password"],
-    fieldset {
-        @apply border border-gray-300 rounded-md p-1;
-    }
 }

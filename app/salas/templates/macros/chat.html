@@ -1,8 +1,19 @@
 {% macro salaChat(sala, mensajes=[]) %}
 
-<ul class="lista-mensajes" id="lista-mensajes-{{ sala }}">
+<ul id="lista-mensajes-{{ sala }}" class="
+    [&_li]:mt-1
+    [&_li]:bg-white
+    [&_li]:bg-opacity-60
+    [&_li]:p-1
+    [&_time]:text-right
+    [&_li]:grid [&_li]:grid-rows-2 [&_.autor]:text-xs [&_.autor]:text-xs [&_.autor]:grid [&_.autor]:grid-cols-2">
     {% for mensaje in mensajes %}
-    <li>{{ mensaje.get_fecha_bonita() }} - {{ mensaje.usuario }}: {{ mensaje.mensaje }}</li>
+    <!--<li>{{ mensaje.get_fecha_bonita() }} - {{ mensaje.usuario }}: {{ mensaje.mensaje }}</li>-->
+    <li>
+        <div class="autor"><span>{{ mensaje.usuario }}</span><time>{{ mensaje.get_fecha_bonita() }}</time></div><span>{{
+            mensaje.mensaje
+            }}</span>
+    </li>
     {% endfor %}
 </ul>
 <div class="grid grid-cols-[1fr_auto] gap-2">

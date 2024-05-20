@@ -1,28 +1,32 @@
 {% macro listaUsuariosSala(usuarios,sala) %}
 
-    <ul id="listaUsuarios">
-        {% for usuario in usuarios %}
-            <li id="listaUsuarios-{{ usuario }}">{{ usuario }}</li>
-        {% endfor %}
-    </ul>
+<ul id="listaUsuarios"
+    class="text-center text-wrap [&_li]:mt-2 [&_img]:w-12 [&_img]:h-12 [&_li]:bg-white [&_li]:bg-opacity-60 [&_span]:p-2 [&_li]:grid [&_li]:grid-cols-[auto_1fr] [&_li]:items-center">
+    {% for usuario in usuarios %}
+    <li id="listaUsuarios-{{ usuario }}"><img src="{{ url_for('perfil.foto_perfil', nombre=usuario) }}"
+            alt="Foto de perfil de {{ usuario }}"><span>{{ usuario
+            }}</span></li>
+    {% endfor %}
+</ul>
 
-    <script type="module">
-        import {io} from '/static/socket.io.esm.min.js'
+<script type="module">
+    import { io } from '/static/socket.io.esm.min.js'
 
-        const socket = io()
+    const socket = io()
 
-        socket.on('connect', () => {
-            console.log('Conectado al servidor')
-            socket.on('add_usuario_sala_{{ sala }}', (usuario) => {
-                document.querySelector('#listaUsuarios').innerHTML += `<li id="listaUsuarios-${usuario}">${usuario}</li>`
-                console.log('Usuario agregado a la sala')
-            })
-            socket.on('rm_usuario_sala_{{ sala }}', (usuario) => {
-                console.log(`Usuario eliminado de la sala: ${usuario}`)
-                document.querySelector(`#listaUsuarios-${usuario}`).remove()
-            })
+    socket.on('connect', () => {
+        console.log('Conectado al servidor')
+        socket.on('add_usuario_sala_{{ sala }}', (usuario) => {
+            document.querySelector('#listaUsuarios').innerHTML += `<li id="listaUsuarios-${usuario}"><img src="/perfil/${usuario}/foto"
+                alt="Foto de perfil de ${usuario}"><span>${usuario}</span></li>`
+            console.log('Usuario agregado a la sala')
         })
+        socket.on('rm_usuario_sala_{{ sala }}', (usuario) => {
+            console.log(`Usuario eliminado de la sala: ${usuario}`)
+            document.querySelector(`#listaUsuarios-${usuario}`).remove()
+        })
+    })
 
-    </script>
+</script>
 
 {% endmacro %}
