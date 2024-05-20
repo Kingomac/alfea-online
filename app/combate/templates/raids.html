@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Raids{% endblock %}
+
+{% block main %}
+
+<main>
+    <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Raids</h1>
+    <p class="text-center bg-white bg-opacity-60 rounded p-3 m-5">Los raids son misiones que puedes realizar en grupo
+        con otros jugadores. Cada raid tiene un coste de 5
+        <img src="{{ url_for('static', filename='img/moneda.svg') }}" class="w-5 inline" title="Monedas" alt="Monedas">
+        y tienes actualmente {{ current_user.monedas }} <img src="{{ url_for('static', filename='img/moneda.svg') }}"
+            class="w-5 inline" title="Monedas" alt="Monedas">.
+    </p>
+
+    <section class="">
+        {% for id, raid in raids.items() %}
+        <article>
+            <span>{{ raid['nombre'] }}</span>
+            <ul>
+                {% for heroe in raid['heroes'] %}
+                <li>{{ heroe.nombre }}</li>
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for villano in raid['villanos'] %}
+                <li>{{ villano.nombre }}</li>
+                {% endfor %}
+        </article>
+        {% endfor %}
+    </section>
+</main>
+
+{% endblock %}

@@ -10,11 +10,10 @@ from util import decode_hgetall
 
 class Usuario(UserMixin):
 
-    def __init__(self, nombre: str, password, nivel: int, experiencia: int, monedas: int, titulo_nobiliario: str, matrimonio: str,
+    def __init__(self, nombre: str, password, experiencia: int, monedas: int, titulo_nobiliario: str, matrimonio: str,
                  sala_actual: str, combate_stats_str: str):
         self.nombre: str = nombre
         self.password: str = password
-        self.nivel: int = nivel
         self.experiencia: int = experiencia
         self.monedas: int = monedas
         self.titulo_nobiliario: str = titulo_nobiliario
@@ -45,7 +44,7 @@ class Usuario(UserMixin):
         fetch = decode_hgetall(redis_db.hgetall(f"usuario:{nombre}"))
         if fetch is None:
             return None
-        return Usuario(fetch['nombre'], fetch['password'], int(fetch['nivel']), int(fetch['experiencia']),
+        return Usuario(fetch['nombre'], fetch['password'], int(fetch['experiencia']),
                        int(fetch['monedas']
                            ), fetch['titulo_nobiliario'], fetch['matrimonio'], fetch['sala_actual'],
                        fetch['combate_stats_str'])

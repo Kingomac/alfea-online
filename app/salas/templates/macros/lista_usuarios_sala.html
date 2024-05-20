@@ -1,11 +1,11 @@
 {% macro listaUsuariosSala(usuarios,sala) %}
 
 <ul id="listaUsuarios"
-    class="text-center text-wrap [&_li]:mt-2 [&_img]:w-12 [&_img]:h-12 [&_li]:bg-white [&_li]:bg-opacity-60 [&_span]:p-2 [&_li]:grid [&_li]:grid-cols-[auto_1fr] [&_li]:items-center">
+    class="text-center text-wrap [&_li]:mt-2 [&_img]:w-12 [&_img]:h-12 [&_li]:bg-white [&_li]:bg-opacity-60 [&_span]:p-2 [&_li]:grid [&_li]:grid-cols-[auto_1fr_auto] [&_li]:items-center">
     {% for usuario in usuarios %}
     <li id="listaUsuarios-{{ usuario }}"><img src="{{ url_for('perfil.foto_perfil', nombre=usuario) }}"
             alt="Foto de perfil de {{ usuario }}"><span>{{ usuario
-            }}</span></li>
+            }}</span><button class="p-2 h-full hover:bg-white">...</button></li>
     {% endfor %}
 </ul>
 

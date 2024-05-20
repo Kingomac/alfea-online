@@ -1,2 +1,11 @@
-id;sala;heroes;villanos;imagen
-1;alfea-patio;2,3,4;1;
+id;nombre;heroes;villanos
+1;Valtor ataca Alfea;2,3,4;1
+2;Las Trix atacan Alfea;26,29;10,11,12
+3;Valtor ataca Torre Nubosa;30;1
+4;Valtor ataca Ciudad de Magix;2,3,4,5,6,7;1
+5;Valtor y las Trix atacan Fuente Roja;13,14,15,16,17;1,10,11,12
+6;Las Trix atacan Eraklyon;13,14,9;10,11,12
+7;Bloom pierde la paciencia con Diaspro;2;9
+8;Dark Bloom ataca a las Winx;2,3,4,5,6,7;34
+9;Los cazadores de hadas quieren cazar a Roxy;2,3,4,5,6,7,8,9;22,23,24,25
+10;Derrota a Valtor en su forma verdadera;2,3,4,5,6,7;1

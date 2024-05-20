@@ -59,3 +59,18 @@ def combate(id_combate):
 @bp_combate.route('/lobby/duelo/<usr1>/<usr2>')
 def duelo():
     return 'Lobby de duelo'
+
+
+@bp_combate.route('/raids')
+def raids():
+    raids = {}
+    for raid in raids_csv.rows:
+        heroes = npc_csv.getm_npc_by_id(raid['heroes'].split(','))
+        villanos = npc_csv.getm_npc_by_id(raid['villanos'].split(','))
+        raids[raid['id']] = {
+            'nombre': raid['nombre'],
+            'heroes': heroes,
+            'villanos': villanos
+        }
+
+    return render_template('raids.html', raids=raids)

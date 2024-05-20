@@ -1,58 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+{% block title %}Chat{% endblock %}
 
-<body>
-    <h1>Chat - {{ sala }}</h1>
-    <ul id="lista-mensajes">
-        {% for mensaje in mensajes %}
-        <li>{{ mensaje.get_fecha_bonita() }} - {{ mensaje.usuario }}: {{ mensaje.mensaje }}</li>
+{% block main %}
+
+<main>
+    <!-- Lista de amigos -->
+    <ul>
+        {% for amigo in amigos %}
+        <li><button>{{ amigo }}</button></li>
         {% endfor %}
     </ul>
-    <div>
-        <input id="txt-mensaje" type="text" placeholder="Envía un mensaje" />
-        <button id="btn-enviar">Enviar</button>
-    </div>
-    <script type="module">
-        import { io } from '/static/socket.io.esm.min.js'
 
-        const socket = io()
-        socket.on('connect', () => {
-            console.log('Conectado al servidor')
-            socket.emit('conectar_sala', '{{ sala }}')
+    <!-- Zona de chat -->
 
-            document.getElementById('btn-enviar').onclick = () => {
-                const mensaje = document.getElementById('txt-mensaje').value
-                socket.emit("mensaje_nuevo_{% if sala.startswith('priv') %}priv{% else %}sala{% endif %}", JSON.stringify({
-                    mensaje: mensaje,
-                    sala: '{{ sala }}',
-                    usuario: '{{ current_user.nombre }}'
-                }))
-            }
 
-            document.getElementById('txt-mensaje').oninput = (e) => {
-                console.log('me cago en napoles')
-            }
+</main>
 
-            document.getElementById('txt-mensaje').onkeydown = (e) => {
-                console.log(e.key)
-                if (e.key === 'Enter') {
-                    document.getElementById('btn-enviar').click()
-                }
-            }
-
-            socket.on('mensaje_nuevo', (mensaje) => {
-                console.log('Nuevo mensaje', mensaje)
-                const li = document.createElement('li')
-                li.innerText = mensaje.fecha_bonita + ' - ' + mensaje.usuario + ': ' + mensaje.mensaje
-                document.getElementById('lista-mensajes').append(li)
-            })
-        })
-    </script>
-</body>
-
-</html>
+{% endblock %}
