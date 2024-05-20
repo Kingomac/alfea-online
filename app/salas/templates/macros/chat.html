@@ -1,14 +1,12 @@
-{% macro salaChat(sala, mensajes=[]) %}
+{% macro salaChat(sala, mensajes=[], height='100%') %}
 
-<ul id="lista-mensajes-{{ sala }}" class="
-    [&_li]:mt-1
+<ul id="lista-mensajes-{{ sala }}" style="height: {{ height }};" class="overflow-y-scroll [&_li]:mt-1
     [&_li]:bg-white
     [&_li]:bg-opacity-60
     [&_li]:p-1
     [&_time]:text-right
     [&_li]:grid [&_li]:grid-rows-2 [&_.autor]:text-xs [&_.autor]:text-xs [&_.autor]:grid [&_.autor]:grid-cols-2">
     {% for mensaje in mensajes %}
-    <!--<li>{{ mensaje.get_fecha_bonita() }} - {{ mensaje.usuario }}: {{ mensaje.mensaje }}</li>-->
     <li>
         <div class="autor"><span>{{ mensaje.usuario }}</span><time>{{ mensaje.get_fecha_bonita() }}</time></div><span>{{
             mensaje.mensaje
@@ -16,8 +14,9 @@
     </li>
     {% endfor %}
 </ul>
-<div class="grid grid-cols-[1fr_auto] gap-2">
-    <input id="txt-mensaje-{{ sala }}" type="text" placeholder="Envía un mensaje" />
+<div class="grid grid-cols-[1fr_auto] gap-2 mt-2">
+    <input class="p-2 border-2 border-white focus:border-red-500" id="txt-mensaje-{{ sala }}" type="text"
+        placeholder="Envía un mensaje" />
     <button id="btn-enviar-{{ sala }}">Enviar</button>
 </div>
 <script type="module">
@@ -47,7 +46,7 @@
         socket.on('mensaje_nuevo', (mensaje) => {
             console.log('Nuevo mensaje', mensaje)
             const li = document.createElement('li')
-            li.innerText = mensaje.fecha_bonita + ' - ' + mensaje.usuario + ': ' + mensaje.mensaje
+            li.innerHTML = `<div class="autor"><span>${mensaje.usuario}</span><time>${mensaje.fecha_bonita}</time></div><span>${mensaje.mensaje}</span>`
             document.getElementById('lista-mensajes-{{ sala }}').append(li)
         })
     })
