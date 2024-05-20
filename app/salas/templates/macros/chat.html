@@ -15,7 +15,7 @@
     {% endfor %}
 </ul>
 <div class="grid grid-cols-[1fr_auto] gap-2 mt-2">
-    <input class="p-2 border-2 border-white focus:border-red-500" id="txt-mensaje-{{ sala }}" type="text"
+    <input class="p-2 border-2 border-white focus:border-wpink-500" id="txt-mensaje-{{ sala }}" type="text"
         placeholder="Envía un mensaje" />
     <button id="btn-enviar-{{ sala }}">Enviar</button>
 </div>
@@ -28,6 +28,7 @@
         socket.emit('conectar_sala', '{"sala":"{{ sala }}", "usuario":"{{ current_user.nombre }}"}')
         document.getElementById('btn-enviar-{{ sala }}').onclick = () => {
             const mensaje = document.getElementById('txt-mensaje-{{ sala }}').value
+            if (mensaje == '') return
             socket.emit("mensaje_nuevo_{% if sala.startswith('priv') %}priv{% else %}sala{% endif %}",
                 JSON.stringify({
                     mensaje: mensaje,

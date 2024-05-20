@@ -3,8 +3,8 @@
 {% block title %}Sala {{ nombre_sala }}{% endblock %}
 
 {% block main %}
-<main
-    class="w-[100vw] h-[100vh] grid grid-cols-middle-sm md:grid-cols-middle-md lg:grid-cols-middle-lg place-items-stretch gap-10 p-5">
+<main style="background-image: url('{{ url_for('.static', filename='fondos/' + sala + '.webp') }}');"
+    class="bg-no-repeat bg-cover bg-center bg-blend-soft-light w-[100vw] h-[100vh] grid grid-cols-middle-sm md:grid-cols-middle-md lg:grid-cols-middle-lg place-items-stretch gap-10 p-5">
     <!-- Lista de usuarios conectados -->
     <section>
         <h1>Usuarios conectados</h1>
@@ -13,15 +13,15 @@
     </section>
     <!-- Parte principal (chat y opciones) -->
     <section class="grid grid-rows-[auto_1fr]">
-        <div class="flex justify-center items-center gap-10 drop-shadow-title">
-            <h1 class="font-winx text-5xl text-wpink-500">{{
+        <div class="flex justify-center items-center gap-10 bg-wpink-100 drop-shadow-title bg-opacity-60 p-4">
+            <h1 class="font-winx text-5xl text-wpink-500 drop-shadow-title">{{
                 nombre_sala }}
             </h1>
             <button>...</button>
         </div>
         <div id="chat-sala" class="grid grid-rows-[1fr_auto]">
             {% from 'macros/chat.html' import salaChat with context %}
-            {{ salaChat(sala=sala, mensajes=mensajes, height='85vh') }}
+            {{ salaChat(sala=sala, mensajes=mensajes, height='80vh') }}
         </div>
         <div id="opciones-sala">
         </div>
