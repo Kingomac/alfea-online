@@ -8,7 +8,8 @@ module.exports = {
       },
       gridTemplateColumns: {
         'middle-3': '2fr 3fr 2fr',
-        'middle-5': '1fr 5fr 1fr'
+        'middle-2/5': '2fr 5fr 2fr',
+        'middle-1/5': '1fr 5fr 1fr'
       },
       gridTemplateRows: {
         '1fr-auto': '1fr auto'

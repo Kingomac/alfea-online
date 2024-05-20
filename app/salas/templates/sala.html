@@ -3,7 +3,7 @@
 {% block title %}Sala {{ nombre_sala }}{% endblock %}
 
 {% block main %}
-<main class="grid h-[100vh] grid-cols-middle-5 place-items-stretch">
+<main class="w-[100vw] h-[100vh] grid grid-cols-middle-2/5 md:grid-cols-middle-1/5 place-items-stretch gap-10 p-5">
     <!-- Lista de usuarios conectados -->
     <section>
         <h1>Usuarios conectados</h1>
@@ -11,12 +11,12 @@
         {{ listaUsuariosSala(usuarios=usuarios_sala, sala=sala) }}
     </section>
     <!-- Parte principal (chat y opciones) -->
-    <section>
+    <section class="grid grid-rows-[auto_1fr]">
         <div class="flex justify-center items-center gap-10">
             <h1>{{ nombre_sala }}</h1>
             <button>...</button>
         </div>
-        <div id="chat-sala">
+        <div id="chat-sala" class="grid grid-rows-[1fr_auto]">
             {% from 'macros/chat.html' import salaChat with context %}
             {{ salaChat(sala=sala, mensajes=mensajes) }}
         </div>
@@ -24,14 +24,16 @@
         </div>
     </section>
     <!-- IU de estado y móvil -->
-    <section class="grid grid-rows-1fr-auto">
+    <section class="grid grid-rows-1fr-auto gap-5">
         <!-- Progreso -->
-        <section>
-            <h1>Progreso</h1>
+        <section
+            class="flex flex-col justify-center text-center items-center gap-2 border-2 border-[#39873d] shadow-lg p-2 duration-500 text-[#edcffc] font-bold"
+            style="background-image: url('{{ url_for('.static', filename='fondo-tecna.webp') }}'); background-size: 20%; background-repeat: repeat;">
+            {% include 'includes/progreso.html' %}
         </section>
         <!-- Móvil -->
         <section>
-            {% include 'movil.inc.html' %}
+            {% include 'includes/movil.html' %}
         </section>
     </section>
 </main>

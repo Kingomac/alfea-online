@@ -5,7 +5,7 @@
     <li>{{ mensaje.get_fecha_bonita() }} - {{ mensaje.usuario }}: {{ mensaje.mensaje }}</li>
     {% endfor %}
 </ul>
-<div>
+<div class="grid grid-cols-[1fr_auto] gap-2">
     <input id="txt-mensaje-{{ sala }}" type="text" placeholder="Envía un mensaje" />
     <button id="btn-enviar-{{ sala }}">Enviar</button>
 </div>
