@@ -4,33 +4,26 @@
 
 
 {% block main %}
-<main>
-    <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Adquirir nuevas
-        habilidades</h1>
-    <p>Puedes gastar tus puntos de experiencia para mejorar tus estadísticas y adquirir nuevos ataques.</p>
-
-    <!-- Puntos disponibles -->
+<main class="text-gray-900 flex flex-col items-center gap-5">
     <section>
+        <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Adquirir nuevas
+            habilidades</h1>
+        <p class="p-2 bg-white bg-opacity-50">Puedes gastar tus puntos de experiencia para mejorar tus estadísticas y
+            adquirir nuevos ataques.</p>
+    </section>
+    <!-- Puntos disponibles -->
+    <section class="p-2 bg-white bg-opacity-50 text-xl">
         <p>Puntos disponibles: <span id="puntos_disponibles">{{ current_user.experiencia }} </span></p>
     </section>
 
     <!-- Mejorar estadísticas -->
-    <table>
+    <table
+        class="[&_td]:p-2 [&_td]:bg-white [&_td]:bg-opacity-50 table-auto border-separate border-spacing-y-1 text-center">
         <thead>
-
-            <!--
-    self.vida_maxima = vida_maxima
-        self.mana_maximo = mana_maximo
-        self.poder_fisico = poder_fisico
-        self.poder_magico = poder_magico
-        self.resistencia_fisica = resistencia_fisica
-        self.resistencia_magica = resistencia_magica
-        self.velocidad = velocidad
-
-    -->
             <tr>
                 <td><label for="vida_maxima">Vida máxima</label></td>
-                <td><img src="" alt="Vida máxima" title="Vida máxima"></td>
+                <td><img src="{{ url_for('static', filename='img/estadisticas-combate/vida.svg') }}" class="w-12 h-12"
+                        alt="Vida máxima" title="Vida máxima"></td>
                 <td><input id="vida_maxima" type="range" min="{{ combat_stats.vida_maxima }}"
                         value="{{ combat_stats.vida_maxima }}" autocomplete="off"
                         max="{{ current_user.experiencia + combat_stats.vida_maxima }}"></td>
@@ -39,7 +32,8 @@
 
             <tr>
                 <td><label for="mana_maximo">Maná máximo</label></td>
-                <td><img src="" alt="Maná máximo" title="Maná máximo"></td>
+                <td><img src="{{ url_for('static', filename='img/estadisticas-combate/mana.svg') }}" class="w-12 h-12"
+                        alt="Maná máximo" title="Maná máximo"></td>
                 <td><input id="mana_maximo" type="range" min="{{ combat_stats.mana_maximo }}"
                         value="{{ combat_stats.mana_maximo }}" autocomplete="off"
                         max="{{ current_user.experiencia + combat_stats.mana_maximo }}"></td>
@@ -48,7 +42,8 @@
 
             <tr>
                 <td><label for="poder_fisico">Poder físico</label></td>
-                <td><img src="" alt="Poder físico" title="Poder físico"></td>
+                <td><img src="{{ url_for('static', filename='img/estadisticas-combate/ataque-fisico.svg') }}"
+                        class="w-12 h-12" alt="Poder físico" title="Poder físico"></td>
                 <td><input id="poder_fisico" type="range" min="{{ combat_stats.poder_fisico }}"
                         value="{{ combat_stats.poder_fisico }}" autocomplete="off"
                         max="{{ current_user.experiencia + combat_stats.poder_fisico }}"></td>
@@ -57,7 +52,8 @@
 
             <tr>
                 <td><label for="poder_magico">Poder mágico</label></td>
-                <td><img src="" alt="Poder mágico" title="Poder mágico"></td>
+                <td><img src="{{ url_for('static', filename='img/estadisticas-combate/ataque-magico.svg') }}"
+                        class="w-12 h-12" alt="Poder mágico" title="Poder mágico"></td>
                 <td><input id="poder_magico" type="range" min="{{ combat_stats.poder_magico }}"
                         value="{{ combat_stats.poder_magico }}" autocomplete="off"
                         max="{{ current_user.experiencia + combat_stats.poder_magico }}"></td>
@@ -66,7 +62,8 @@
 
             <tr>
                 <td><label for="resistencia_fisica">Resistencia física</label></td>
-                <td><img src="" alt="Resistencia física" title="Resistencia física"></td>
+                <td><img src="{{ url_for('static', filename='img/estadisticas-combate/defensa-fisica.svg') }}"
+                        class="w-12 h-12" alt="Resistencia física" title="Resistencia física"></td>
                 <td><input id="resistencia_fisica" type="range" min="{{ combat_stats.resistencia_fisica }}"
                         value="{{ combat_stats.resistencia_fisica }}" autocomplete="off"
                         max="{{ current_user.experiencia + combat_stats.resistencia_fisica }}"></td>
@@ -75,7 +72,8 @@
 
             <tr>
                 <td><label for="resistencia_magica">Resistencia mágica</label></td>
-                <td><img src="" alt="Resistencia mágica" title="Resistencia mágica"></td>
+                <td><img src="{{ url_for('static', filename='img/estadisticas-combate/defensa-magica.svg') }}"
+                        class="w-12 h-12" alt="Resistencia mágica" title="Resistencia mágica"></td>
                 <td><input id="resistencia_magica" type="range" min="{{ combat_stats.resistencia_magica }}"
                         value="{{ combat_stats.resistencia_magica }}" autocomplete="off"
                         max="{{ current_user.experiencia + combat_stats.resistencia_magica }}"></td>
@@ -92,6 +90,7 @@
             </tr>
         </thead>
     </table>
+    <button class="bg-wpink-100 hover:bg-wpink-500 py-3 px-32 text-xl">Guardar</button>
 </main>
 
 <script type="module">
@@ -141,17 +140,13 @@
             valoresRanges[key].innerText = range.value
         })
         range.addEventListener('change', () => {
-            console.log('aksjkladsjas')
             if (getSumaRanges() > PUNTOS_TOTALES_EXPERIENCIA) {
                 range.value = (getPuntosDisponibles() + parseInt(range.min)).toString()
-                console.log(`set range: ${getPuntosDisponibles()} + ${parseInt(range.min)}`)
             }
             puntos_disponibles.innerText = PUNTOS_TOTALES_EXPERIENCIA - getSumaRanges()
             valoresRanges[key].innerText = range.value
             console.log(key, range.value)
         })
     }
-
-    console.log(PUNTOS_TOTALES_EXPERIENCIA)
 </script>
 {% endblock %}
