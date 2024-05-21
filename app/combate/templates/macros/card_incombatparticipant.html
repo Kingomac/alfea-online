@@ -1,23 +1,26 @@
 {% macro cardInCombatParticipant(participant) %}
-<div class="flex border gap-10 justify-center">
-    <img alt="algun dia" class="w-28" src="{{ url_for('perfil.foto_perfil', nombre=participant.nombre) }}">
-    <div class="grid grid-cols-[2fr_1fr] w-full gap-2 items-center">
-        <span class="col-span-2 text-center">{{ participant.nombre }}</span>
-        <progress vida-usuario="{{ participant.nombre }}" class="rounded" min="0"
-            max="{{ participant.combat_stats.vida_maxima }}" value="{{ participant.vida }}"
-            title="{{ participant.vida }}/{{ participant.combat_stats.vida_maxima}}"></progress>
-        <div>
-            <span vida-usuario="{{ participant.nombre }}">{{ participant.vida }}/{{ participant.combat_stats.vida_maxima
+<div class="grid grid-cols-[7rem_auto] gap-2 bg-white bg-opacity-60">
+    <img alt="Foto de perfil de {{ participant.nombre }}" class="h-28 w-28 justify-self-start"
+        src="{{ url_for('perfil.foto_perfil', nombre=participant.nombre) }}">
+    <div class="pr-2">
+        <span class="text-center col-span-3 font-bold">{{ participant.nombre }}</span>
+        <div class="grid grid-cols-[auto_1fr_auto] gap-1">
+            <img src="{{ url_for('static', filename='img/estadisticas-combate/vida.svg') }}" alt="Vida" title="Vida"
+                class="w-8 h-8">
+            <progress vida-usuario="{{ participant.nombre }}" class="rounded" min="0"
+                max="{{ participant.combat_stats.vida_maxima }}" value="{{ participant.vida }}"
+                title="{{ participant.vida }}/{{ participant.combat_stats.vida_maxima}}"></progress>
+            <span vida-usuario="{{ participant.nombre }}">{{ participant.vida }}/{{
+                participant.combat_stats.vida_maxima
                 }}</span>
-            <span>Vida</span>
-        </div>
-        <progress mana-usuario="{{ participant.nombre }}" class="rounded" type="range" min="0"
-            max="{{ participant.combat_stats.mana_maximo }}" value="{{ participant.mana }}"
-            title="{{ participant.mana }}/{{ participant.combat_stats.mana_maximo}}"></progress>
-        <div>
-            <span mana-usuario="{{ participant.nombre }}">{{ participant.mana }}/{{ participant.combat_stats.mana_maximo
+            <img src="{{ url_for('static', filename='img/estadisticas-combate/mana.svg') }}" alt="Maná" title="Maná"
+                class="w-8 h-8">
+            <progress mana-usuario="{{ participant.nombre }}" class="rounded" type="range" min="0"
+                max="{{ participant.combat_stats.mana_maximo }}" value="{{ participant.mana }}"
+                title="{{ participant.mana }}/{{ participant.combat_stats.mana_maximo}}"></progress>
+            <span mana-usuario="{{ participant.nombre }}">{{ participant.mana }}/{{
+                participant.combat_stats.mana_maximo
                 }}</span>
-            <span>Maná</span>
         </div>
     </div>
 </div>
