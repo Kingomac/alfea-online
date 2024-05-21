@@ -90,7 +90,7 @@
             </tr>
         </thead>
     </table>
-    <button class="bg-wpink-100 hover:bg-wpink-500 py-3 px-32 text-xl">Guardar</button>
+    <button id="btn-guardar" class="bg-wpink-100 hover:bg-wpink-500 py-3 px-32 text-xl">Guardar</button>
 </main>
 
 <script type="module">
@@ -147,6 +147,33 @@
             valoresRanges[key].innerText = range.value
             console.log(key, range.value)
         })
+    }
+
+    document.getElementById('btn-guardar').onclick = () => guardarEstadisticas()
+    function guardarEstadisticas() {
+        fetch("{{ url_for('experiencia.mejorar_estadisticas_post') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                vida_maxima: ranges.vida_maxima.value,
+                mana_maximo: ranges.mana_maximo.value,
+                poder_fisico: ranges.poder_fisico.value,
+                poder_magico: ranges.poder_magico.value,
+                resistencia_fisica: ranges.resistencia_fisica.value,
+                resistencia_magica: ranges.resistencia_magica.value,
+                velocidad: ranges.velocidad.value
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                window.location.reload()
+            })
+            .catch(error => {
+                console.error('Error:', error)
+            })
     }
 </script>
 {% endblock %}
