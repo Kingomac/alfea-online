@@ -13,19 +13,22 @@
             class="w-5 inline" title="Monedas" alt="Monedas">.
     </p>
 
-    <section class="">
+    <section class="flex flex-wrap gap-4 p-5">
         {% for id, raid in raids.items() %}
-        <article>
-            <span>{{ raid['nombre'] }}</span>
-            <ul>
+        <article onclick="window.location.href='{{ url_for('combate.lobby_raid', id_raid=id) }}'"
+            class="bg-white bg-opacity-60 text-center text-wrap p-3 grid grid-cols-[1fr_auto_1fr] gap-4 items-center cursor-pointer">
+            <span class="col-span-3 text-lg">{{ raid['nombre'] }}</span>
+            <ul class="flex flex-col">
                 {% for heroe in raid['heroes'] %}
                 <li>{{ heroe.nombre }}</li>
                 {% endfor %}
             </ul>
-            <ul>
+            <span class="italic text-lg">vs</span>
+            <ul class="flex flex-col">
                 {% for villano in raid['villanos'] %}
                 <li>{{ villano.nombre }}</li>
                 {% endfor %}
+            </ul>
         </article>
         {% endfor %}
     </section>

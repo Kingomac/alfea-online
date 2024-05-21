@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, render_template
 from app import bp_usuarios, bp_chat, registar_sockets, bp_salas, bp_combate, registrar_sockets_lobby_combate, bp_recompensas, bp_wiki, bp_desplazamiento, bp_perfil
 from app.combate import registrar_sockets_combate
 import redis
@@ -29,7 +29,7 @@ registrar_sockets_combate(socketio)
 
 @login_manager.unauthorized_handler
 def unauthorized_callback():
-    return 'Unauthorized'
+    return render_template('unauthorized.html')
 
 
 @login_manager.user_loader
