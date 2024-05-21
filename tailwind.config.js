@@ -22,6 +22,7 @@ module.exports = {
         },
         'wblue': {
           500: '#6cb6fd',
+          300: '#5bacf0',
           100: '#affeff'
         },
 

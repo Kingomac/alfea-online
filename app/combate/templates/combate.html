@@ -45,9 +45,10 @@
     </div>
 
     <!-- Menú de selección de objetivo -->
-    <div style="display: none;" id="menu-seleccion-objetivo">
-        <label for="objetivo">Selecciona un objetivo</label>
-        <select id="objetivo">
+    <div style="display: none;" id="menu-seleccion-objetivo"
+        class="bg-white bg-opacity-60 p-5 grid grid-cols-2 mx-auto max-w-[700px] gap-5">
+        <label for="objetivo" class="font-bold text-xl text-right">Selecciona un objetivo:</label>
+        <select id="objetivo" class="p-2 text-center bg-wblue-300 text-gray-100 font-bold">
             {% if es_villano %}
             {% for usuario in heroes %}
             <option value="{{ usuario.nombre }}">{{ usuario.nombre }}</option>
@@ -58,8 +59,8 @@
             {% endfor %}
             {% endif %}
         </select>
-        <button id="selectorObjetivoCancelar">Cancelar</button>
-        <button id="selectorObjetivoAceptar">Aceptar</button>
+        <button class="bg-wpink-100 hover:bg-wpink-500 p-3" id="selectorObjetivoCancelar">Cancelar</button>
+        <button class="bg-wpink-500 hover:bg-wpink-100 p-3 text-gray-100" id="selectorObjetivoAceptar">Aceptar</button>
     </div>
 
     <!-- Mensaje final -->
@@ -113,8 +114,8 @@
             idCombate: "{{ id_combate }}"
         }
 
-        const SELECTOR_ATAQUES = { id: 'menu-seleccion-ataques' }
-        const SELECTOR_OBJETIVO = { id: 'menu-seleccion-objetivo' }
+        const SELECTOR_ATAQUES = { id: 'menu-seleccion-ataques', type: 'block' }
+        const SELECTOR_OBJETIVO = { id: 'menu-seleccion-objetivo', type: 'grid' }
         const MENSAJE_FINAL = { id: 'mensaje-final' }
 
         /**
