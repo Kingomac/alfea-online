@@ -8,169 +8,164 @@
 {% endblock %}
 
 {% block main %}
-<main>
-    <!-- Parte de combate -->
-    <section>
-        <h1 class="sm:hidden">SM</h1>
-        <h1 class="md:hidden">MD</h1>
-        <h1 class="lg:hidden">LG</h1>
-        <h1 class="xl:hidden">XL</h1>
-        <h1>Título</h1>
-
-        <!-- Listas de usuarios -->
-        <div class="p-5 gap-2 grid grid-rows-3 md:grid-rows-[auto_auto] md:grid-cols-2 xl:grid-rows-1 xl:grid-cols-3">
-            <!-- Lista de usuarios héroes -->
-            <div class="flex flex-col gap-2">
-                {% for usuario in heroes %}
-                {{ cardInCombatParticipant(usuario) }}
-                {% endfor %}
-            </div>
-            <!-- Ataques del último turno -->
-            <ul id="ataquesTurno" class="[&_li]:mt-1 [&_li]:bg-white
+<main class="text-gray-800">
+    <!-- Listas de usuarios -->
+    <div class="my-5 p-5 gap-2 grid grid-rows-3 md:grid-rows-[auto_auto] md:grid-cols-2 xl:grid-rows-1 xl:grid-cols-3">
+        <!-- Lista de usuarios héroes -->
+        <div class="flex flex-col gap-2">
+            {% for usuario in heroes %}
+            {{ cardInCombatParticipant(usuario) }}
+            {% endfor %}
+        </div>
+        <!-- Ataques del último turno -->
+        <ul id="ataquesTurno" class="[&_li]:mt-1 [&_li]:bg-white
                                     [&_li]:bg-opacity-60 [&_li]:p-1
                                     justify-self-center
                                     md:col-span-2 xl:col-span-1
                                     md:order-3 xl:order-2">
-            </ul>
-            <!-- Lista de usuarios villanos -->
-            <div class="flex flex-col gap-2 md:order-2 xl:order-3">
-                {% for usuario in villanos %}
-                {{ cardInCombatParticipant(usuario) }}
-                {% endfor %}
-            </div>
+        </ul>
+        <!-- Lista de usuarios villanos -->
+        <div class="flex flex-col gap-2 md:order-2 xl:order-3">
+            {% for usuario in villanos %}
+            {{ cardInCombatParticipant(usuario) }}
+            {% endfor %}
         </div>
+    </div>
 
-        <!-- Menú de selección de ataques -->
-        <div class="flex flex-wrap justify-around gap-2" id="menu-seleccion-ataques">
+    <!-- Menú de selección de ataques -->
+    <div id="menu-seleccion-ataques" class="bg-white bg-opacity-60 m-5 p-3">
+        <h1 class="text-center text-xl font-bold pb-3">Selecciona un ataque:</h1>
+        <div class="flex flex-wrap justify-center gap-2">
             {% from 'macros/card_ataque.html' import cardAtaque with context %}
             {% for ataque in ataques %}
             <!-- Llamada al macro cardAtaque -->
             {{ cardAtaque(ataque) }}
             {% endfor %}
         </div>
+    </div>
 
-        <!-- Menú de selección de objetivo -->
-        <div style="display: none;" id="menu-seleccion-objetivo">
-            <label for="objetivo">Selecciona un objetivo</label>
-            <select id="objetivo">
-                {% if es_villano %}
-                {% for usuario in heroes %}
-                <option value="{{ usuario.nombre }}">{{ usuario.nombre }}</option>
-                {% endfor %}
-                {% else %}
-                {% for usuario in villanos %}
-                <option value="{{ usuario.nombre }}">{{ usuario.nombre }}</option>
-                {% endfor %}
-                {% endif %}
-            </select>
-            <button id="selectorObjetivoCancelar">Cancelar</button>
-            <button id="selectorObjetivoAceptar">Aceptar</button>
-        </div>
+    <!-- Menú de selección de objetivo -->
+    <div style="display: none;" id="menu-seleccion-objetivo">
+        <label for="objetivo">Selecciona un objetivo</label>
+        <select id="objetivo">
+            {% if es_villano %}
+            {% for usuario in heroes %}
+            <option value="{{ usuario.nombre }}">{{ usuario.nombre }}</option>
+            {% endfor %}
+            {% else %}
+            {% for usuario in villanos %}
+            <option value="{{ usuario.nombre }}">{{ usuario.nombre }}</option>
+            {% endfor %}
+            {% endif %}
+        </select>
+        <button id="selectorObjetivoCancelar">Cancelar</button>
+        <button id="selectorObjetivoAceptar">Aceptar</button>
+    </div>
 
-        <!-- Mensaje final -->
-        <div style="display: none;" id="mensaje-final">
-            <p>Espera a que el resto de jugadores seleccionen sus ataques</p>
-        </div>
+    <!-- Mensaje final -->
+    <div style="display: none;" id="mensaje-final">
+        <p>Espera a que el resto de jugadores seleccionen sus ataques</p>
+    </div>
 
-        <script type="module">
-            import { io } from '/static/socket.io.esm.min.js'
-            const socket = io('/combate')
+    <script type="module">
+        import { io } from '/static/socket.io.esm.min.js'
+        const socket = io('/combate')
 
-            socket.on('nuevo_turno_{{ id_combate }}', (datosCombate) => {
-                console.log(datosCombate)
-                // Actualizar lista de ataques
-                const listAtaques = document.getElementById('ataquesTurno')
-                listAtaques.textContent = ""
-                for (const mensaje of datosCombate.mensajes) {
-                    const li = document.createElement('li')
-                    li.textContent = mensaje
-                    listAtaques.append(li)
-                }
-
-                // Actualizar vida y mana de los usuarios
-                for (const usuario of datosCombate.combate.heroes) {
-                    document.querySelector(`progress[vida-usuario="${usuario.nombre}"]`).value = usuario.vida
-                    document.querySelector(`span[vida-usuario="${usuario.nombre}"]`).innerText = usuario.vida
-                    document.querySelector(`progress[mana-usuario="${usuario.nombre}"]`).value = usuario.mana
-                    document.querySelector(`span[mana-usuario="${usuario.nombre}"]`).innerText = usuario.mana
-                }
-
-                for (const usuario of datosCombate.combate.villanos) {
-                    document.querySelector(`progress[vida-usuario="${usuario.nombre}"]`).value = usuario.vida
-                    document.querySelector(`span[vida-usuario="${usuario.nombre}"]`).innerText = usuario.vida
-                    document.querySelector(`progress[mana-usuario="${usuario.nombre}"]`).value = usuario.mana
-                    document.querySelector(`span[mana-usuario="${usuario.nombre}"]`).innerText = usuario.mana
-                }
-
-                mostrar(SELECTOR_ATAQUES)
-                esconder(MENSAJE_FINAL)
-
-                // Si el usuario está muerto redirigirlo al index
-                if (datosCombate.combate.{% if es_heroe %}heroes{% else %}villanos{% endif %}.find(usuario => usuario.vida <= 0 && usuario.nombre === "{{ current_user.nombre }}")) {
-                window.location.href = '/'
+        socket.on('nuevo_turno_{{ id_combate }}', (datosCombate) => {
+            console.log(datosCombate)
+            // Actualizar lista de ataques
+            const listAtaques = document.getElementById('ataquesTurno')
+            listAtaques.textContent = ""
+            for (const mensaje of datosCombate.mensajes) {
+                const li = document.createElement('li')
+                li.textContent = mensaje
+                listAtaques.append(li)
             }
+
+            // Actualizar vida y mana de los usuarios
+            for (const usuario of datosCombate.combate.heroes) {
+                document.querySelector(`progress[vida-usuario="${usuario.nombre}"]`).value = usuario.vida
+                document.querySelector(`span[vida-usuario="${usuario.nombre}"]`).innerText = usuario.vida
+                document.querySelector(`progress[mana-usuario="${usuario.nombre}"]`).value = usuario.mana
+                document.querySelector(`span[mana-usuario="${usuario.nombre}"]`).innerText = usuario.mana
+            }
+
+            for (const usuario of datosCombate.combate.villanos) {
+                document.querySelector(`progress[vida-usuario="${usuario.nombre}"]`).value = usuario.vida
+                document.querySelector(`span[vida-usuario="${usuario.nombre}"]`).innerText = usuario.vida
+                document.querySelector(`progress[mana-usuario="${usuario.nombre}"]`).value = usuario.mana
+                document.querySelector(`span[mana-usuario="${usuario.nombre}"]`).innerText = usuario.mana
+            }
+
+            mostrar(SELECTOR_ATAQUES)
+            esconder(MENSAJE_FINAL)
+
+            // Si el usuario está muerto redirigirlo al index
+            if (datosCombate.combate.{% if es_heroe %}heroes{% else %}villanos{% endif %}.find(usuario => usuario.vida <= 0 && usuario.nombre === "{{ current_user.nombre }}")) {
+            window.location.href = '/'
+        }
         })
 
-            let ataqueSeleccionado = {
-                usuarioNombre: "{{ current_user.nombre }}",
-                ataqueId: null,
-                objetivoNombre: null,
-                idCombate: "{{ id_combate }}"
+        let ataqueSeleccionado = {
+            usuarioNombre: "{{ current_user.nombre }}",
+            ataqueId: null,
+            objetivoNombre: null,
+            idCombate: "{{ id_combate }}"
+        }
+
+        const SELECTOR_ATAQUES = { id: 'menu-seleccion-ataques' }
+        const SELECTOR_OBJETIVO = { id: 'menu-seleccion-objetivo' }
+        const MENSAJE_FINAL = { id: 'mensaje-final' }
+
+        /**
+        * Muestra un elemento
+        * @param { {id: string, type: 'flex' | 'block' | 'grid'} } param0 
+        */
+        function mostrar({ id, type = 'flex' }) {
+            document.getElementById(id).style.display = type
+        }
+
+        /**
+        * Esconde un elemento
+        * @param { {id: string} } param0 
+        */
+        function esconder({ id }) {
+            document.getElementById(id).style.display = 'none'
+        }
+
+
+        function atacarObjetivo() {
+            ataqueSeleccionado.objetivoNombre = document.getElementById('objetivo').value
+            socket.emit('atacar', ataqueSeleccionado)
+        }
+
+        window.onload = () => {
+            const ataques = document.querySelectorAll('[ataque-id]')
+            for (const x of ataques) {
+                x.addEventListener('click', (e) => {
+                    console.log('CLICK:', e.target)
+                    if (e.target.getAttribute('interaccion-ataque') === 'no') return
+                    const ataqueId = e.target.getAttribute('ataque-id')
+                    ataqueSeleccionado.ataqueId = x.getAttribute('ataque-id')
+                    esconder(SELECTOR_ATAQUES)
+                    mostrar(SELECTOR_OBJETIVO)
+                })
             }
 
-            const SELECTOR_ATAQUES = { id: 'menu-seleccion-ataques' }
-            const SELECTOR_OBJETIVO = { id: 'menu-seleccion-objetivo' }
-            const MENSAJE_FINAL = { id: 'mensaje-final' }
-
-            /**
-            * Muestra un elemento
-            * @param { {id: string, type: 'flex' | 'block' | 'grid'} } param0 
-            */
-            function mostrar({ id, type = 'flex' }) {
-                document.getElementById(id).style.display = type
+            document.getElementById('selectorObjetivoCancelar').onclick = () => {
+                esconder(SELECTOR_OBJETIVO)
+                mostrar(SELECTOR_ATAQUES)
             }
 
-            /**
-            * Esconde un elemento
-            * @param { {id: string} } param0 
-            */
-            function esconder({ id }) {
-                document.getElementById(id).style.display = 'none'
+            document.getElementById('selectorObjetivoAceptar').onclick = () => {
+                esconder(SELECTOR_OBJETIVO)
+                mostrar(MENSAJE_FINAL)
+                atacarObjetivo()
             }
+        }
 
+    </script>
 
-            function atacarObjetivo() {
-                ataqueSeleccionado.objetivoNombre = document.getElementById('objetivo').value
-                socket.emit('atacar', ataqueSeleccionado)
-            }
-
-            window.onload = () => {
-                const ataques = document.querySelectorAll('[ataque-id]')
-                for (const x of ataques) {
-                    x.addEventListener('click', (e) => {
-                        if (e.target.tagName === 'BUTTON') return
-                        const ataqueId = e.target.getAttribute('ataque-id')
-                        ataqueSeleccionado.ataqueId = x.getAttribute('ataque-id')
-                        esconder(SELECTOR_ATAQUES)
-                        mostrar(SELECTOR_OBJETIVO)
-                    })
-                }
-
-                document.getElementById('selectorObjetivoCancelar').onclick = () => {
-                    esconder(SELECTOR_OBJETIVO)
-                    mostrar(SELECTOR_ATAQUES)
-                }
-
-                document.getElementById('selectorObjetivoAceptar').onclick = () => {
-                    esconder(SELECTOR_OBJETIVO)
-                    mostrar(MENSAJE_FINAL)
-                    atacarObjetivo()
-                }
-            }
-
-        </script>
-
-    </section>
 </main>
 
 {% endblock %}

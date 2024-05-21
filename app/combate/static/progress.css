@@ -5,12 +5,12 @@
 }
 
 [mana-usuario]::-webkit-progress-value {
-    background-color: #4CAF50;
+    background-color: #ff63bc;
     border-radius: 2px;
 }
 
 [mana-usuario]::-moz-progress-bar {
-    background-color: #4CAF50;
+    background-color: #ff63bc;
     border-radius: 2px;
 }
 
@@ -21,11 +21,11 @@
 }
 
 [vida-usuario]::-webkit-progress-value {
-    background-color: #f44336;
+    background-color: #5bacf0;
     border-radius: 2px;
 }
 
 [vida-usuario]::-moz-progress-bar {
-    background-color: #f44336;
+    background-color: #5bacf0;
     border-radius: 2px;
 }
