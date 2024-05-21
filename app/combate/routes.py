@@ -42,7 +42,7 @@ def lobby_raid(id_raid):
     usuarios_villanos = add_usuarios_listlobby(id_raid, 'villanos', villanos)
     puede_unirse = current_user.nombre not in usuarios_heroes and current_user.nombre not in usuarios_villanos
     mensajes = get_mensajes_sala(f'raid-{id_raid}')
-    return render_template('lobby.html', n_heroes=len(usuarios_heroes), n_villanos=len(usuarios_villanos), puede_unirse=puede_unirse, heroes=heroes, villanos=villanos, id_raid=id_raid, mensajes=mensajes)
+    return render_template('lobby.html', nombre_raid=datos_raid['nombre'], n_heroes=len(usuarios_heroes), n_villanos=len(usuarios_villanos), puede_unirse=puede_unirse, heroes=heroes, villanos=villanos, id_raid=id_raid, mensajes=mensajes)
 
 
 @bp_combate.route('/combate/<id_combate>')

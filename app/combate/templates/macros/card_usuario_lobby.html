@@ -1,17 +1,29 @@
 {% macro cardLobby(datos) %}
-<div class="grid grid-cols-2 gap-1 place-items-stretch text-right border-2 rounded p-2">
-    <span class="col-span-2 text-center">{{ datos['nombre'] }}</span>
-    <span>Vida máxima - {{ datos['vida_maxima'] }}</span>
-    <progress min="0" max="1000" value="{{ datos['vida_maxima'] }}"></progress>
-    <span>Maná máximo - {{ datos['mana_maximo'] }}</span>
-    <progress type="range" min="0" max="1000" value="{{ datos['mana_maximo'] }}"></progress>
-    <span>Poder físico - {{ datos['poder_fisico'] }}</span>
-    <progress type="range" min="0" max="1000" value="{{ datos['poder_fisico'] }}"></progress>
-    <span>Poder mágico - {{ datos['poder_magico'] }}</span>
-    <progress type="range" min="0" max="1000" value="{{ datos['poder_magico'] }}"></progress>
-    <span>Resistencia física - {{ datos['resistencia_fisica'] }}</span>
-    <progress type="range" min="0" max="1000" value="{{ datos['resistencia_fisica'] }}"></progress>
-    <span>Resistencia mágica - {{ datos['resistencia_magica'] }}</span>
-    <progress type="range" min="0" max="1000" value="{{ datos['resistencia_magica'] }}"></progress>
+<div class="grid grid-cols-[auto_auto_auto] gap-1 items-center text-right bg-white bg-opacity-60">
+    <span class="col-span-3 text-center">{{ datos['nombre'] }}</span>
+    <span>Vida máxima</span>
+    <span>{{ datos['vida_maxima'] }}</span>
+    <img src="{{ url_for('static', filename='img/estadisticas-combate/vida.svg') }}" alt="Vida máxima"
+        title="Vida máxima" class="w-10 h-10">
+    <span>Maná máximo</span>
+    <span>{{ datos['mana_maximo'] }}</span>
+    <img src="{{ url_for('static', filename='img/estadisticas-combate/mana.svg') }}" alt="Maná máxima"
+        title="Maná máxima" class="w-10 h-10">
+    <span>Poder físico</span>
+    <span>{{ datos['poder_fisico'] }}</span>
+    <img src="{{ url_for('static', filename='img/estadisticas-combate/ataque-fisico.svg') }}" alt="Poder físico"
+        title="Poder físico" class="w-10 h-10">
+    <span>Poder mágico</span>
+    <span>{{ datos['poder_magico'] }}</span>
+    <img src="{{ url_for('static', filename='img/estadisticas-combate/ataque-magico.svg') }}" alt="Poder mágico"
+        title="Poder mágico" class="w-10 h-10">
+    <span>Resistencia física</span>
+    <span>{{ datos['resistencia_fisica'] }}</span>
+    <img src="{{ url_for('static', filename='img/estadisticas-combate/defensa-fisica.svg') }}" alt="Resistencia física"
+        title="Resistencia física" class="w-10 h-10">
+    <span>Resistencia mágica</span>
+    <span>{{ datos['resistencia_magica'] }}</span>
+    <img src="{{ url_for('static', filename='img/estadisticas-combate/defensa-magica.svg') }}" alt="Resistencia mágica"
+        title="Resistencia mágica" class="w-10 h-10">
 </div>
 {% endmacro %}

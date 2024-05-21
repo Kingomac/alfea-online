@@ -6,19 +6,17 @@
 {% block main %}
 
 <!-- Contenido principal -->
-<section class="grid grid-cols-3 text-center place-items-stretch h-[100vh]">
-
-    <section class="col-span-3">
-        <h1>{{ datos_sala["nombre_sala"] }}</h1>
-    </section>
+<section class="grid grid-cols-3 md:grid-cols-[1fr_2fr_1fr] place-items-stretch h-[100vh]">
 
     <!-- Heroes -->
-    <section>
-        <h1>Heroes ({{ n_heroes }})</h1>
+    <section class="p-2">
+        <h1 class="text-center p-2 bg-white bg-opacity-60 my-2 text-xl text-wpink-500 font-bold">Heroes ({{ n_heroes }})
+        </h1>
         {% if puede_unirse %}
-        <button class="bg-blue-200 w-full hover:bg-blue-400" unirse-bando="heroes">Unirse</button>
+        <button class="bg-wpink-500 w-full hover:bg-wpink-100 p-2 text-white font-bold bg-opacity-60"
+            unirse-bando="heroes">Unirse</button>
         {% endif %}
-        <div class="flex flex-col gap-2 overflow-auto h-[80vh]">
+        <div class="flex flex-col gap-2 overflow-auto h-[82vh] bg-wpink-100 bg-opacity-40">
             {% for heroe in heroes %}
             {{ cardLobby(heroe) }}
             {% endfor %}
@@ -26,25 +24,29 @@
     </section>
 
     <!-- Chat -->
-    <section class="content-end">
+    <section class="p-2">
+        <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">{{ nombre_raid }}</h1>
         {% from 'macros/chat.html' import salaChat with context %}
-        {{ salaChat(sala='raid-' + id_raid, mensajes=mensajes) }}
+        {{ salaChat(sala='raid-' + id_raid, mensajes=mensajes, height='75vh') }}
     </section>
 
     <!-- Villanos -->
-    <section>
-        <h1>Villanos ({{ n_villanos }})</h1>
+    <section class="p-2">
+        <h1 class="text-center p-2 bg-white bg-opacity-60 my-2 text-xl text-wpink-500 font-bold">Villanos ({{ n_villanos
+            }})</h1>
         {% if puede_unirse %}
-        <button class="bg-blue-200 w-full hover:bg-blue-400" unirse-bando="villanos">Unirse</button>
+        <button class="bg-wpink-500 w-full hover:bg-wpink-100 p-2 text-white font-bold bg-opacity-60"
+            unirse-bando="villanos">Unirse</button>
         {% endif %}
-        <div class="flex flex-col gap-2 overflow-auto h-[80vh]">
+        <div class="flex flex-col gap-2 overflow-auto h-[82vh] bg-wpink-100 bg-opacity-40">
             {% for villano in villanos %}
             {{ cardLobby(villano) }}
             {% endfor %}
         </div>
     </section>
 
-    <button class="col-span-3 p-2 bg-red-200 w-full hover:bg-red-400" id="iniciar-combate">Iniciar combate</button>
+    <button class="col-span-3 p-2 bg-red-400 w-full hover:bg-red-500 font-bold font-xl" id="iniciar-combate">Iniciar
+        combate</button>
 </section>
 
 <script type="module">
