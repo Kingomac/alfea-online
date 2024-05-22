@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% from 'macros/card_ataque.html' import cardAtaque with context %}
+
+{% block title %}Inventario{% endblock %}
+
+{% block main %}
+<main class="text-gray-900 text-center">
+    <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Inventario de ataques</h1>
+    <p class="bg-white bg-opacity-60 px-5 py-3 mx-5">Arrastra los ataques entre las columnas o pulsa los botones
+        para
+        equiparlos y desequiparlos.</p>
+    <p class="bg-red-600 text-gray-100 bg-opacity-60 px-5 py-3 mx-5 mt-2 hidden" id="caja_errores"></p>
+    <div class="grid grid-cols-2">
+        <!-- Ataques no equipados -->
+        <section dropzone="move" class="my-5 ml-5 mr-2">
+            <p class="bg-white bg-opacity-60 px-5 py-3 mb-3">Arrastra los ataques a la columna de la derecha para
+                equiparlos</p>
+            <div class="flex flex-wrap gap-5 bg-white bg-opacity-60 px-5 py-3 justify-around" id="columna_desequipados">
+                {% for ataque in ataques_no_equipados %}
+                <article desequipado-ataque-id="{{ ataque.id }}" class="flex flex-col justify-stretch" draggable="true">
+                    {{ cardAtaque(ataque) }}
+                    <button equipar-ataque-id="{{ ataque.id }}" class="border-2">Equipar</button>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+        <!-- Ataques equipados -->
+        <section dropzone="move" class="my-5 mr-5 ml-2">
+            <p class="bg-white bg-opacity-60 px-5 py-3 mb-3">Solo puedes tener 5 ataques equipados</p>
+            <div class="flex flex-wrap gap-5 bg-white bg-opacity-60 px-5 py-3 justify-around" id="columna_equipados">
+                {% for ataque in ataques_equipados %}
+                <article equipado-ataque-id="{{ ataque.id }}" class="flex flex-col justify-stretch" draggable="true">
+                    {{ cardAtaque(ataque) }}
+                    <button desequipar-ataque-id="{{ ataque.id }}" class="border-2">Desquipar</button>
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</main>
+<script type="module" src="{{ url_for('.static', filename='js/inventario.mjs') }}"></script>
+{% endblock %}

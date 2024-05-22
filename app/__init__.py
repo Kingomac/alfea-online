@@ -7,3 +7,4 @@ from .wiki import bp_wiki
 from .desplazamiento import bp_desplazamiento
 from .perfil import bp_perfil
 from .tiendas import bp_tienda
+from .inventario import bp_inventario
