@@ -19,7 +19,8 @@
                 {% for ataque in ataques_no_equipados %}
                 <article desequipado-ataque-id="{{ ataque.id }}" class="flex flex-col justify-stretch" draggable="true">
                     {{ cardAtaque(ataque) }}
-                    <button equipar-ataque-id="{{ ataque.id }}" class="border-2">Equipar</button>
+                    <button equipar-ataque-id="{{ ataque.id }}"
+                        class="{% if ataque.lanzamiento == 'convergencia' %}bg-lime-300{% else %}bg-yellow-300{% endif %} bg-opacity-70 py-2">Equipar</button>
                 </article>
                 {% endfor %}
             </div>
@@ -31,7 +32,8 @@
                 {% for ataque in ataques_equipados %}
                 <article equipado-ataque-id="{{ ataque.id }}" class="flex flex-col justify-stretch" draggable="true">
                     {{ cardAtaque(ataque) }}
-                    <button desequipar-ataque-id="{{ ataque.id }}" class="border-2">Desquipar</button>
+                    <button desequipar-ataque-id="{{ ataque.id }}"
+                        class="{% if ataque.lanzamiento == 'convergencia' %}bg-lime-300{% else %}bg-yellow-300{% endif %} bg-opacity-70 py-2">Desquipar</button>
                 </article>
                 {% endfor %}
             </div>

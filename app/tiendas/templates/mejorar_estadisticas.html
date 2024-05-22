@@ -151,7 +151,7 @@
 
     document.getElementById('btn-guardar').onclick = () => guardarEstadisticas()
     function guardarEstadisticas() {
-        fetch("{{ url_for('experiencia.mejorar_estadisticas_post') }}", {
+        fetch("{{ url_for('tienda.mejorar_estadisticas_post') }}", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
