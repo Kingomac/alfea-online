@@ -15,5 +15,8 @@ class AtaquesCsv(BaseCsvFile):
     def get_choices_iniciales(self):
         return [(datos['id'], datos['nombre']) for datos in self.rows[:12]]
 
+    def get_all(self):
+        return [Ataque(datos['id'], datos['nombre'], int(datos['ataque_fisico']), int(datos['ataque_magico']), int(datos['defensa_fisica']), int(datos['defensa_magica']), int(datos['precision']), int(datos['coste_mana']), int(datos['prob_critico']), datos['lanzamiento'], datos['forma'], datos['descripcion']) for datos in self.rows]
+
 
 ataques_csv = AtaquesCsv()
