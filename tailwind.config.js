@@ -18,7 +18,8 @@ module.exports = {
       colors: {
         'wpink': {
           500: '#d42e5d',
-          100: '#ff7aac'
+          100: '#ff7aac',
+          50: '#ffccf0'
         },
         'wblue': {
           500: '#6cb6fd',

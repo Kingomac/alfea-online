@@ -3,33 +3,37 @@
 {% block title %}Registro{% endblock %}
 
 {% block main %}
-<main>
-    {% if form.errors %}
-    <ul>
-        {% for field, errors in form.errors.items() %}
-        {% for error in errors %}
-        <li>{{ form[field].label }}: {{ error }}</li>
-        {% endfor %}
-        {% endfor %}
-    </ul>
-    {% endif %}
+<main class="flex flex-col items-center text-gray-900">
+    <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-relaxed">Registro</h1>
     <form method="POST" action="/registro" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-        <fieldset>
-            <legend>Perfil</legend>
+        {% if form.errors %}
+        <fieldset class="bg-red-600 bg-opacity-70 py-4 pb-4 text-gray-100">
+            {% for field, errors in form.errors.items() %}
+            {% for error in errors %}
+            <p>{{ form[field].label }}: {{ error }}</p>
+            {% endfor %}
+            {% endfor %}
+        </fieldset>
+        {% endif %}
+        <fieldset
+            class="grid grid-cols-[auto_1fr] gap-5 p-8 bg-white bg-opacity-70 [&_label]:text-right my-2 [&_input]:p-2 [&_input]:ring [&_input]:ring-wpink-500 [&_input]:bg-opacity-60 items-center">
+            <legend class="bg-wpink-500 text-white p-1 font-bold text-sm">Perfil</legend>
             {{ form.nombre.label }} {{ form.nombre }}
             {{ form.password.label }} {{ form.password }}
             {{ form.foto_perfil.label }} {{ form.foto_perfil }}
         </fieldset>
-        <fieldset>
+        <fieldset class="p-3 bg-white bg-opacity-70">
             La foto de perfil debe estar en formato .webp y es recomendable una resolución de 512x512 píxeles para que
             se vea bien.
         </fieldset>
-        <fieldset>
-            <legend>Selecciona tus primeros ataques</legend>
-            {{ form.ataques(class_="h-[300px]") }}
+        <fieldset class="p-8 bg-white bg-opacity-70 mt-2">
+            <legend class="bg-wpink-500 text-white p-1 font-bold text-sm">Selecciona tus primeros ataques</legend>
+            {{ form.ataques(class_="h-[300px] w-full h-48 p-2 bg-wpink-50 ring-4 ring-wpink-500
+            checked:[&_option]:bg-wpink-100 checked:[&_option]:font-bold") }}
         </fieldset>
-        {{ form.submit }}
+        {{ form.submit(class_="p-5 text-center text-white font-bold bg-wpink-500 hover:bg-wpink-100 w-full mt-3
+        duration-300") }}
     </form>
 </main>
 {% endblock %}
