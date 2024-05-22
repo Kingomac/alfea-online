@@ -1,37 +1,47 @@
-{% extends 'base.html' %}
+{% extends 'base_nobody.html' %}
 
 {% block title %}Inicio{% endblock %}
 
-{% block main %}
-<main>
-    <h1>Bienvenido a Alfea Online</h1>
-    <form method="POST" action="/" class="w-fit m-auto content-center">
-        {{ form.hidden_tag() }}
-        {% if form.errors %}
-        <fieldset>
-            {% for field, errors in form.errors.items() %}
-            {% for error in errors %}
-            <p>{{error}}</p>
-            {% endfor %}
-            {% endfor %}
-        </fieldset>
-        {% endif %}
-        <fieldset class="border-2 grid grid-cols-2 p-2 gap-2">
-            <legend>Inicia sesión</legend>
-            {{ form.nombre.label }} {{ form.nombre }}
-            {{ form.password.label }} {{ form.password }}
-            {{ form.submit(class_="col-span-2") }}
-        </fieldset>
-    </form>
-    <section class="m-2 flex flex-col gap-2 place-items-center">
-        <h2>Regístrate en Alfea Online y explora la dimensión de Magix</h2>
-        <a class="p-2 rounded border-2 bg-sky-300 hover:bg-sky-600"
-            href="{{ url_for('usuarios.registro') }}">Regístrate</a>
-    </section>
-    <section>
-        <p>Alfea Online es un MMORPG no lineal en el que tú construyes tu propia historia.</p>
-        <p>Tu decides, hada, mago/a, especialista o bruja. ¿Ayudas a las Winx o a Valtor? ¿Prefieres ir por libre y
-            matar a todos? ¿Solo chatear?</p>
-    </section>
-</main>
+{% block body %}
+
+<body
+    style="background-image:url('{{ url_for('static', filename='img/fondo-login.webp') }}');background-repeat:no-repeat;background-size:cover;background-position:center;">
+    <canvas style="z-index: -1;" id="efecto-particulas" class="absolute top-0 left-0"></canvas>
+    <main class="pt-5 flex flex-col items-center text-gray-900 min-h-[100vh]">
+        <div class="bg-white bg-opacity-70 px-10">
+            <h2 class="text-center text-5xl drop-shadow-title font-winx text-wpink-500 leading-relaxed">Bienvenido a
+            </h2>
+            <h1 class="text-center text-8xl drop-shadow-title font-winx text-wpink-500 leading-relaxed">Alfea Online
+            </h1>
+        </div>
+        <form method="POST" action="/" class="w-fit m-auto content-center my-5 font-bold">
+            {{ form.hidden_tag() }}
+            {% if form.errors %}
+            <fieldset class="bg-red-600 bg-opacity-70 p-4 text-gray-100">
+                {% for field, errors in form.errors.items() %}
+                {% for error in errors %}
+                <p>{{error}}</p>
+                {% endfor %}
+                {% endfor %}
+            </fieldset>
+            {% endif %}
+            <fieldset
+                class="grid grid-cols-[auto_1fr] p-8 gap-5 bg-white bg-opacity-70 [&_label]:text-right my-2 [&_input]:p-2 [&_input]:ring [&_input]:ring-wpink-500 [&_input]:bg-opacity-60 items-center">
+                {{ form.nombre.label }} {{ form.nombre }}
+                {{ form.password.label }} {{ form.password }}
+                {{ form.submit(class_="col-span-2 bg-wpink-100 hover:bg-wpink-500 duration-300")
+                }}
+            </fieldset>
+        </form>
+        <section class="mt-12 flex flex-col gap-2 place-items-center bg-white bg-opacity-70 p-5 font-bold">
+            <p>Alfea Online es un MMORPG no lineal en el que tú construyes tu propia historia. Tu decides, hada, mago/a,
+                especialista o bruja. ¿Ayudas a las Winx o a Valtor? ¿Prefieres ir por libre y matar a todos? ¿Solo
+                chatear?</p>
+            <h2 class="text-xl">Regístrate en Alfea Online y explora la dimensión de Magix</h2>
+            <a class="p-2 ring ring-wpink-500 bg-wpink-100 hover:bg-wpink-500"
+                href="{{ url_for('usuarios.registro') }}">Regístrate</a>
+        </section>
+    </main>
+    <script type="module" src="{{ url_for('static', filename='js/efecto-particulas.mjs') }}"></script>
+</body>
 {% endblock %}
