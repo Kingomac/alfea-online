@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  gunicorn:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - FLASK_APP=main.py
+      - FLASK_ENV=production
+    
+  redis:
+    image: "redis:alpine"
+    
+
