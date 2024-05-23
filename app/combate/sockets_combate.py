@@ -1,7 +1,9 @@
 from flask_socketio import SocketIO
-from app.combate.model import InCombat, AtaqueTurno
+from app.combate.model import InCombat, AtaqueTurno, InCombatParticipant
 from game_data_loader import ataques_csv
+from game_data_loader.model import Ataque
 import random
+import math
 from .util import negativeIsZero
 
 
@@ -28,6 +30,7 @@ def registrar_sockets_combate(socketio: SocketIO):
         print(f"{len(incombat.ataquesTurno)=}")
 
         if len(incombat.ataquesTurno) == num_vivos_no_npcs:
+            print("Se han enviado todos los ataques, se procede a calcular el turno")
 
             # Ataques de NPCs
             for villano in incombat.villanos:
@@ -46,15 +49,18 @@ def registrar_sockets_combate(socketio: SocketIO):
             # Gestión de escudos
             escudos = {}
             for x in incombat.ataquesTurno:
-                ataque = ataques_csv.get_by_id(x.ataque)
+                ataque: Ataque = ataques_csv.get_by_id(x.ataque)
                 escudos[x.usuario] = (
                     ataque.defensa_fisica, ataque.defensa_magica)
-                if ataque.defensa_fisica > 0:
+                if ataque.defensa_fisica > 0 and ataque.defensa_magica > 0:
                     mensajes.append(
-                        f"{x.usuario} ha activado un escudo físico de {ataque.defensa_fisica} de potencia")
-                if ataque.defensa_magica > 0:
+                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo físico de {ataque.defensa_fisica} y mágico de {ataque.defensa_magica} de potencia")
+                elif ataque.defensa_fisica > 0:
                     mensajes.append(
-                        f"{x.usuario} ha activado un escudo mágico de {ataque.defensa_magica} de potencia")
+                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo físico de {ataque.defensa_fisica} de potencia")
+                elif ataque.defensa_magica > 0:
+                    mensajes.append(
+                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo mágico de {ataque.defensa_magica} de potencia")
 
             def get_escudo_objetivo(objetivo):
                 return escudos[objetivo] if objetivo in escudos else (0, 0)
@@ -65,8 +71,9 @@ def registrar_sockets_combate(socketio: SocketIO):
 
             # Calcular daños de cada ataque
             for x in incombat.ataquesTurno:
-                ataque = ataques_csv.get_by_id(x.ataque)
-                atacante = incombat.get_participant_by_nombre(x.usuario)
+                ataque: Ataque = ataques_csv.get_by_id(x.ataque)
+                atacante: InCombatParticipant = incombat.get_participant_by_nombre(
+                    x.usuario)
                 objetivo = incombat.get_participant_by_nombre(x.objetivo)
 
                 # Restar maná
@@ -76,19 +83,26 @@ def registrar_sockets_combate(socketio: SocketIO):
                 if atacante.mana < 0:
                     atacante.vida += atacante.mana * 1.16
                     mensajes.append(
-                        f"{atacante.nombre} se ha hecho {atacante.mana * 1.16} de daño por atacar sin maná")
+                        f"{atacante.nombre} se ha hecho {abs(atacante.mana * 1.16)} de daño por usar {ataque.nombre} sin maná")
 
                 # Inflingir daño a objetivo
                 if objetivo.vida > 0:
-                    dano = ataque.ataque_fisico + \
-                        atacante.combat_stats.poder_fisico - \
-                        get_escudo_objetivo(x.objetivo)[0]
-                    dano += ataque.ataque_magico + \
-                        atacante.combat_stats.poder_magico - \
-                        get_escudo_objetivo(x.objetivo)[1]
-                    objetivo.vida -= negativeIsZero(dano)
-                    mensajes.append(
-                        f"{atacante.nombre} ha hecho {dano} de daño a {objetivo.nombre}")
+                    # Sumar daño físico
+                    dano = 0
+                    if ataque.ataque_fisico > 0:
+                        dano += math.sqrt(ataque.ataque_fisico) * math.log10(ataque.ataque_fisico) * atacante.combat_stats.poder_fisico / math.sqrt(
+                            1 + atacante.combat_stats.poder_fisico) - get_escudo_objetivo(x.objetivo)[0] - objetivo.combat_stats.resistencia_fisica / math.sqrt(objetivo.combat_stats.resistencia_fisica + 1)
+                    if ataque.ataque_magico > 0:
+                        dano += math.sqrt(ataque.ataque_magico) * math.log10(ataque.ataque_magico) * atacante.combat_stats.poder_magico / math.sqrt(
+                            1 + atacante.combat_stats.poder_magico) - get_escudo_objetivo(x.objetivo)[1] - objetivo.combat_stats.resistencia_magica / math.sqrt(objetivo.combat_stats.resistencia_magica + 1)
+                    dano = math.floor(max(dano, 0))
+                    objetivo.vida -= dano
+                    if dano > 0:
+                        mensajes.append(
+                            f"{atacante.nombre} ha usado {ataque.nombre} y ha hecho {dano} de daño a {objetivo.nombre}")
+                    elif ataque.ataque_fisico > 0 or ataque.ataque_magico > 0:
+                        mensajes.append(
+                            f"El escudo de {objetivo.nombre} ha parado completamente el {ataque.nombre} de {atacante.nombre}")
                     if objetivo.vida < 0:
                         objetivo.vida = 0
                         mensajes.append(f"{objetivo.nombre} ha muerto")
@@ -98,7 +112,6 @@ def registrar_sockets_combate(socketio: SocketIO):
                           namespace='/combate')
 
             # Reset estado turno
-            incombat.npc_han_atacado = False
             incombat.ataquesTurno = []
 
             # Determinar si el combate ha terminado

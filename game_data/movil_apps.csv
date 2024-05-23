@@ -5,5 +5,6 @@ inventario;Inventario;inventario.index
 mercado;Mercado;usuarios.index
 wiki;Wiki;wiki.index
 raids;Raids;combate.raids
+recompensas;Recompensas;recompensas.index
 mejorar-estadisticas;Mejorar estadísticas;tienda.mejorar_estadisticas_get
 tienda-ataques;Tienda de ataques;tienda.tienda_ataques_get
