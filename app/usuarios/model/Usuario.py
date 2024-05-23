@@ -4,8 +4,7 @@ import werkzeug.security as ws
 from .CombatStats import CombatStats
 from db import redis_db
 import json
-
-from util import decode_hgetall
+from db.util import decode_hgetall
 
 
 class Usuario(UserMixin):

@@ -1,7 +1,7 @@
 from flask_socketio import SocketIO
 from db import redis_db
 from game_data_loader import raids_csv, npc_csv
-from util import decode_hgetall
+from db.util import decode_hgetall
 from app.usuarios import Usuario
 from app.combate.model import InCombatParticipant, InCombat
 

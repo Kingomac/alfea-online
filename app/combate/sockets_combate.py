@@ -2,6 +2,7 @@ from flask_socketio import SocketIO
 from app.combate.model import InCombat, AtaqueTurno
 from game_data_loader import ataques_csv
 import random
+from .util import negativeIsZero
 
 
 def registrar_sockets_combate(socketio: SocketIO):
@@ -85,7 +86,7 @@ def registrar_sockets_combate(socketio: SocketIO):
                     dano += ataque.ataque_magico + \
                         atacante.combat_stats.poder_magico - \
                         get_escudo_objetivo(x.objetivo)[1]
-                    objetivo.vida -= dano
+                    objetivo.vida -= negativeIsZero(dano)
                     mensajes.append(
                         f"{atacante.nombre} ha hecho {dano} de daño a {objetivo.nombre}")
                     if objetivo.vida < 0:

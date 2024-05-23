@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from util import decode_hgetall
+from db.util import decode_hgetall
 from .RegistroForm import RegistroForm
 from .InicioSesionForm import InicioSesionForm
 from flask import render_template, redirect, url_for
