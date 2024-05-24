@@ -1,7 +1,7 @@
 {% macro cardInCombatParticipant(participant) %}
 <div class="grid grid-cols-[7rem_auto] gap-2 bg-white bg-opacity-60">
     <img alt="Foto de perfil de {{ participant.nombre }}" class="h-28 w-28 justify-self-start"
-        src="{{ url_for('perfil.foto_perfil', nombre=participant.nombre) }}">
+        src="{% if participant.is_npc %}{{ url_for('combate.static', filename='perfil-npc/' + participant.id_npc + '.webp') }} {% else %} {{ url_for('perfil.foto_perfil', nombre=participant.nombre) }}{% endif %}">
     <div class="pr-2">
         <span class="text-center col-span-3 font-bold">{{ participant.nombre }}</span>
         <div class="grid grid-cols-[auto_1fr_auto] gap-1">
