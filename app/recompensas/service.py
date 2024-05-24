@@ -10,6 +10,8 @@ def reclamar_recompensas(usuario: str):
     recompensas = get_recompensas_usuario(usuario)
     total = {'experiencia': 0, 'monedas': 0}
     for rec in recompensas:
+        total['experiencia'] += rec.experiencia
+        total['monedas'] += rec.monedas
         redis_db.hincrby(f"usuario:{usuario}", "experiencia", rec.experiencia)
         redis_db.hincrby(f"usuario:{usuario}", "monedas", rec.monedas)
     redis_db.delete(f"recompensas:{usuario}")

@@ -6,8 +6,12 @@
 {% block main %}
 <main class="text-gray-900 flex flex-col items-center gap-5">
     <section>
-        <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Adquirir nuevas
-            habilidades</h1>
+        <div class="flex justify-center items-center gap-5 flex-wrap">
+            <a href="{{ url_for('usuarios.index') }}"><img class="w-24"
+                    src="{{ url_for('static', filename='img/magicarrow.webp') }}" alt="Atrás" title="Atrás"></a>
+            <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Adquirir nuevas
+                habilidades</h1>
+        </div>
         <p class="p-2 bg-white bg-opacity-50">Puedes gastar tus puntos de experiencia para mejorar tus estadísticas y
             adquirir nuevos ataques.</p>
     </section>

@@ -5,7 +5,11 @@
 
 {% block main %}
 <main class="text-gray-900">
-    <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Recompensas</h1>
+    <div class="flex justify-center items-center gap-5 flex-wrap">
+        <a href="{{ url_for('usuarios.index') }}"><img class="w-24"
+                src="{{ url_for('static', filename='img/magicarrow.webp') }}" alt="Atrás" title="Atrás"></a>
+        <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Recompensas</h1>
+    </div>
     <a href="{{ url_for('recompensas.reclamar') }}" class="mx-auto block w-96 p-5 text-xl text-center text-white font-bold bg-wpink-500 hover:bg-wpink-100 mt-3
     duration-300">Reclamar todas</a>
     <div class="max-w-4xl mx-auto gap-5 flex flex-row flex-wrap justify-center mt-5">

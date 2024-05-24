@@ -103,10 +103,8 @@
 
             // Si el usuario está muerto redirigirlo al index
             if (datosCombate.combate.{% if es_heroe %}heroes{% else %}villanos{% endif %}.find(usuario => usuario.vida <= 0 && usuario.nombre === "{{ current_user.nombre }}")) {
-            alert('Has muerto. Redirigiendo a la página principal en 3 segundos.')
-            setTimeout(() => {
-                window.location.href = '/'
-            }, 3000)
+            alert('Has muerto. Redirigiendo a la página principal.')
+            window.location.href = '/'
         }
         })
 
@@ -114,10 +112,8 @@
             console.log("Fin del combate")
             console.log(res)
             const ganador = JSON.parse(res)["ganador"]
-            alert(`Han ganado los ${ganador}. Los ganadores han recibido una recompensa. Redirigiendo a la página principal en 3 segundos.`)
-            setTimeout(() => {
-                window.location.href = '/'
-            }, 3000)
+            alert(`Han ganado los ${ganador}. Los ganadores han recibido una recompensa. Redirigiendo a la página principal.`)
+            window.location.href = '/'
         })
 
         let ataqueSeleccionado = {

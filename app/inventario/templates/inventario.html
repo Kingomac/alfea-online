@@ -5,7 +5,12 @@
 
 {% block main %}
 <main class="text-gray-900 text-center">
-    <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Inventario de ataques</h1>
+    <div class="flex justify-center items-center gap-5 flex-wrap">
+        <a href="{{ url_for('usuarios.index') }}"><img class="w-24"
+                src="{{ url_for('static', filename='img/magicarrow.webp') }}" alt="Atrás" title="Atrás"></a>
+        <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Inventario de ataques
+        </h1>
+    </div>
     <p class="bg-white bg-opacity-60 px-5 py-3 mx-5">Arrastra los ataques entre las columnas o pulsa los botones
         para
         equiparlos y desequiparlos.</p>

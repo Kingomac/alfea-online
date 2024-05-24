@@ -5,7 +5,11 @@
 {% block main %}
 
 <main class="text-gray-900">
-    <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Raids</h1>
+    <div class="flex justify-center items-center gap-5 flex-wrap">
+        <a href="{{ url_for('usuarios.index') }}"><img class="w-24"
+                src="{{ url_for('static', filename='img/magicarrow.webp') }}" alt="Atrás" title="Atrás"></a>
+        <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Raids</h1>
+    </div>
     <p class="text-center bg-white bg-opacity-60 rounded p-3 m-5">Los raids son misiones que puedes realizar en grupo
         con otros jugadores. Cada raid tiene un coste de 5
         <img src="{{ url_for('static', filename='img/moneda.svg') }}" class="w-5 inline" title="Monedas" alt="Monedas">
