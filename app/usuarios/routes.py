@@ -20,7 +20,7 @@ def registro():
         if redis_db.exists(f"usuario:{form.nombre.data}") > 0:
             return 'Usuario ya registrado'
         usuario = Usuario(form.nombre.data, ws.generate_password_hash(form.password.data), experiencia=0,
-                          monedas=50, titulo_nobiliario='', matrimonio='', sala_actual=1, combate_stats_str=str(CombatStats.get_default()))
+                          monedas=50, sala_actual=1, combate_stats_str=str(CombatStats.get_default()))
         redis_db.hmset(f"usuario:{form.nombre.data}", usuario.__dict__)
         redis_db.sadd(f'ataques:{usuario.nombre}', *form.ataques.data)
         redis_db.sadd(f'ataques_equipados:{

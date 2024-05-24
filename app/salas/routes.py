@@ -25,8 +25,6 @@ def lugar(alias):
                         redis_db.scan_iter(match=f"conexion-sala:{alias}:*"))
     print(f"{usuarios_sala=}")
     # tuple(map(lambda x: json.loads(x)['usuario'], redis_db.lrange(f"usuarios-sala:{alias}", 0, -1)))
-    desplazamientos_cercanos = salas_csv.get_desplazamientos_cercanos(
-        datos_sala['grupo'])
 
     return render_template('sala.html', sala=alias, mensajes=mensajes, movil_apps=movil_apps_csv.rows,
-                           usuarios_sala=usuarios_sala, desplazamientos_cercanos=desplazamientos_cercanos, **datos_sala)
+                           usuarios_sala=usuarios_sala, **datos_sala)

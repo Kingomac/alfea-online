@@ -9,7 +9,7 @@ class SalasGruposCsv(BaseCsvFile):
     def get_by_id(self, grupo_id):
         return next((grupo for grupo in self.rows if grupo['id'] == grupo_id), None)
 
-    def get_salas_by_grupo(self):
+    def group_by_grupo(self):
         salas = {}
         for sala in salas_csv.rows:
             if sala['grupo'] not in salas:

@@ -9,7 +9,7 @@ bp_desplazamiento = Blueprint('desplazamiento', __name__, url_prefix='/desplazam
 
 @bp_desplazamiento.route('/')
 def index():
-    salas = salas_grupos_csv.get_salas_by_grupo()
+    salas = salas_grupos_csv.group_by_grupo()
     grupo_sala_actual = salas_csv.get_by_id(current_user.sala_actual)['grupo']
     return render_template('desplazamiento.html', salas_by_grupo=salas.items(), grupo_sala_actual=grupo_sala_actual)
 
