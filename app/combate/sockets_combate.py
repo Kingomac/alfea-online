@@ -50,17 +50,30 @@ def registrar_sockets_combate(socketio: SocketIO):
             escudos = {}
             for x in incombat.ataquesTurno:
                 ataque: Ataque = ataques_csv.get_by_id(x.ataque)
-                escudos[x.usuario] = (
-                    ataque.defensa_fisica, ataque.defensa_magica)
-                if ataque.defensa_fisica > 0 and ataque.defensa_magica > 0:
+                acierta = random.random() * 100 < ataque.precision
+                critico = random.random() * 100 < ataque.prob_critico
+                porcentaje_critico = random.uniform(
+                    1.01, 1.5) if critico else 1
+
+                if acierta:
+                    if critico:
+                        escudos[x.usuario] = (
+                            ataque.defensa_fisica * porcentaje_critico, ataque.defensa_magica * porcentaje_critico)
+                    escudos[x.usuario] = (
+                        ataque.defensa_fisica, ataque.defensa_magica)
+                else:
+                    escudos[x.usuario] = (0, 0)
                     mensajes.append(
-                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo físico de {ataque.defensa_fisica} y mágico de {ataque.defensa_magica} de potencia")
+                        f"{x.usuario} ha fallado el escudo {ataque.nombre}")
+                if ataque.defensa_fisica > 0 and ataque.defensa_magica > 0 and critico:
+                    mensajes.append(
+                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo físico de {escudos[x.usuario][0]} y mágico de {escudos[x.usuario][1]} de potencia{f' que ha aumentado por su suerte un {int((porcentaje_critico-1)*100)}%'if critico else ''}")
                 elif ataque.defensa_fisica > 0:
                     mensajes.append(
-                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo físico de {ataque.defensa_fisica} de potencia")
+                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo físico de {escudos[x.usuario][0]} de potencia{f' que ha aumentado por su suerte un {int((porcentaje_critico-1)*100)}%'if critico else ''}")
                 elif ataque.defensa_magica > 0:
                     mensajes.append(
-                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo mágico de {ataque.defensa_magica} de potencia")
+                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo mágico de {escudos[x.usuario][0]} de potencia{f' que ha aumentado por su suerte un {int((porcentaje_critico-1)*100)}%'if critico else ''}")
 
             def get_escudo_objetivo(objetivo):
                 return escudos[objetivo] if objetivo in escudos else (0, 0)
@@ -76,6 +89,11 @@ def registrar_sockets_combate(socketio: SocketIO):
                     x.usuario)
                 objetivo = incombat.get_participant_by_nombre(x.objetivo)
 
+                acierta = random.random() * 100 < ataque.precision
+                critico = random.random() * 100 < ataque.prob_critico
+                porcentaje_critico = random.uniform(
+                    1.01, 1.5) if critico else 1
+
                 # Restar maná
                 atacante.mana -= ataque.coste_mana
 
@@ -87,25 +105,31 @@ def registrar_sockets_combate(socketio: SocketIO):
 
                 # Inflingir daño a objetivo
                 if objetivo.vida > 0:
-                    # Sumar daño físico
-                    dano = 0
-                    if ataque.ataque_fisico > 0:
-                        dano += math.sqrt(ataque.ataque_fisico) * math.log10(ataque.ataque_fisico) * atacante.combat_stats.poder_fisico / math.sqrt(
-                            1 + atacante.combat_stats.poder_fisico) - get_escudo_objetivo(x.objetivo)[0] - objetivo.combat_stats.resistencia_fisica / math.sqrt(objetivo.combat_stats.resistencia_fisica + 1)
-                    if ataque.ataque_magico > 0:
-                        dano += math.sqrt(ataque.ataque_magico) * math.log10(ataque.ataque_magico) * atacante.combat_stats.poder_magico / math.sqrt(
-                            1 + atacante.combat_stats.poder_magico) - get_escudo_objetivo(x.objetivo)[1] - objetivo.combat_stats.resistencia_magica / math.sqrt(objetivo.combat_stats.resistencia_magica + 1)
-                    dano = math.floor(max(dano, 0))
-                    objetivo.vida -= dano
-                    if dano > 0:
-                        mensajes.append(
-                            f"{atacante.nombre} ha usado {ataque.nombre} y ha hecho {dano} de daño a {objetivo.nombre}")
-                    elif ataque.ataque_fisico > 0 or ataque.ataque_magico > 0:
-                        mensajes.append(
-                            f"El escudo de {objetivo.nombre} ha parado completamente el {ataque.nombre} de {atacante.nombre}")
-                    if objetivo.vida < 0:
-                        objetivo.vida = 0
-                        mensajes.append(f"{objetivo.nombre} ha muerto")
+                    if acierta:
+                        # Sumar daño físico
+                        dano = 0
+                        if ataque.ataque_fisico > 0:
+                            dano += math.sqrt(ataque.ataque_fisico) * math.log10(ataque.ataque_fisico) * atacante.combat_stats.poder_fisico / math.sqrt(
+                                1 + atacante.combat_stats.poder_fisico) - get_escudo_objetivo(x.objetivo)[0] - objetivo.combat_stats.resistencia_fisica / math.sqrt(objetivo.combat_stats.resistencia_fisica + 1)
+                        if ataque.ataque_magico > 0:
+                            dano += math.sqrt(ataque.ataque_magico) * math.log10(ataque.ataque_magico) * atacante.combat_stats.poder_magico / math.sqrt(
+                                1 + atacante.combat_stats.poder_magico) - get_escudo_objetivo(x.objetivo)[1] - objetivo.combat_stats.resistencia_magica / math.sqrt(objetivo.combat_stats.resistencia_magica + 1)
+                        dano *= porcentaje_critico
+                        dano = math.floor(max(dano, 0))
+                        objetivo.vida -= dano
+                        if dano > 0:
+                            mensajes.append(
+                                f"{atacante.nombre} ha usado {ataque.nombre} y ha hecho {dano} de daño a {objetivo.nombre}{f' que por ser crítico ha infligido un {int((porcentaje_critico-1)*100)}% de daño adicional'if critico else ''}")
+                        elif ataque.ataque_fisico > 0 or ataque.ataque_magico > 0:
+                            mensajes.append(
+                                f"El escudo de {objetivo.nombre} ha parado completamente el {ataque.nombre} de {atacante.nombre}")
+                        if objetivo.vida < 0:
+                            objetivo.vida = 0
+                            mensajes.append(f"{objetivo.nombre} ha muerto")
+                    else:
+                        if ataque.ataque_fisico > 0 or ataque.ataque_magico > 0:
+                            mensajes.append(
+                                f"{atacante.nombre} ha fallado el ataque {ataque.nombre}")
 
             # Enviar actualización a los clientes
             socketio.emit(f'nuevo_turno_{data['idCombate']}', {'combate': incombat.__dict__(), 'mensajes': mensajes},
