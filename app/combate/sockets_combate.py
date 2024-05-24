@@ -4,7 +4,8 @@ from game_data_loader import ataques_csv
 from game_data_loader.model import Ataque
 import random
 import math
-from .util import negativeIsZero
+import json
+from .util import dar_recompensa_aleatoria
 
 
 def registrar_sockets_combate(socketio: SocketIO):
@@ -67,13 +68,13 @@ def registrar_sockets_combate(socketio: SocketIO):
                         f"{x.usuario} ha fallado el escudo {ataque.nombre}")
                 if ataque.defensa_fisica > 0 and ataque.defensa_magica > 0 and critico:
                     mensajes.append(
-                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo físico de {escudos[x.usuario][0]} y mágico de {escudos[x.usuario][1]} de potencia{f' que ha aumentado por su suerte un {int((porcentaje_critico-1)*100)}%'if critico else ''}")
+                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo físico de {int(escudos[x.usuario][0])} y mágico de {int(escudos[x.usuario][1])} de potencia{f' que ha aumentado por su suerte un {int((porcentaje_critico-1)*100)}%'if critico else ''}")
                 elif ataque.defensa_fisica > 0:
                     mensajes.append(
-                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo físico de {escudos[x.usuario][0]} de potencia{f' que ha aumentado por su suerte un {int((porcentaje_critico-1)*100)}%'if critico else ''}")
+                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo físico de {int(escudos[x.usuario][0])} de potencia{f' que ha aumentado por su suerte un {int((porcentaje_critico-1)*100)}%'if critico else ''}")
                 elif ataque.defensa_magica > 0:
                     mensajes.append(
-                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo mágico de {escudos[x.usuario][0]} de potencia{f' que ha aumentado por su suerte un {int((porcentaje_critico-1)*100)}%'if critico else ''}")
+                        f"{x.usuario} ha usado {ataque.nombre}, obtiene un escudo mágico de {int(escudos[x.usuario][0])} de potencia{f' que ha aumentado por su suerte un {int((porcentaje_critico-1)*100)}%'if critico else ''}")
 
             def get_escudo_objetivo(objetivo):
                 return escudos[objetivo] if objetivo in escudos else (0, 0)
@@ -101,7 +102,7 @@ def registrar_sockets_combate(socketio: SocketIO):
                 if atacante.mana < 0:
                     atacante.vida += atacante.mana * 1.16
                     mensajes.append(
-                        f"{atacante.nombre} se ha hecho {abs(atacante.mana * 1.16)} de daño por usar {ataque.nombre} sin maná")
+                        f"{atacante.nombre} se ha hecho {int(abs(atacante.mana * 1.16))} de daño por usar {ataque.nombre} sin maná")
 
                 # Inflingir daño a objetivo
                 if objetivo.vida > 0:
@@ -119,7 +120,7 @@ def registrar_sockets_combate(socketio: SocketIO):
                         objetivo.vida -= dano
                         if dano > 0:
                             mensajes.append(
-                                f"{atacante.nombre} ha usado {ataque.nombre} y ha hecho {dano} de daño a {objetivo.nombre}{f' que por ser crítico ha infligido un {int((porcentaje_critico-1)*100)}% de daño adicional'if critico else ''}")
+                                f"{atacante.nombre} ha usado {ataque.nombre} y ha hecho {int(dano)} de daño a {objetivo.nombre}{f' que por ser crítico ha infligido un {int((porcentaje_critico-1)*100)}% de daño adicional'if critico else ''}")
                         elif ataque.ataque_fisico > 0 or ataque.ataque_magico > 0:
                             mensajes.append(
                                 f"El escudo de {objetivo.nombre} ha parado completamente el {ataque.nombre} de {atacante.nombre}")
@@ -148,10 +149,16 @@ def registrar_sockets_combate(socketio: SocketIO):
                     ganadores = 'empate'
                 elif num_heroes_vivos == 0:
                     ganadores = 'villanos'
+                    for villano in incombat.villanos:
+                        if villano.vida > 0 and not villano.is_npc:
+                            dar_recompensa_aleatoria(villano.nombre)
                 else:
                     ganadores = 'heroes'
-                socketio.emit('fin_combate', {
-                              'ganador': ganadores}, namespace='/combate')
+                    for heroe in incombat.heroes:
+                        if heroe.vida > 0 and not heroe.is_npc:
+                            dar_recompensa_aleatoria(heroe.nombre)
+                socketio.emit(f'fin_combate_{incombat.id}', json.dumps({
+                              'ganador': ganadores}), namespace='/combate')
                 incombat.delete()
                 return
 

@@ -10,7 +10,7 @@
             <progress vida-usuario="{{ participant.nombre }}" class="rounded" min="0"
                 max="{{ participant.combat_stats.vida_maxima }}" value="{{ participant.vida }}"
                 title="{{ participant.vida }}/{{ participant.combat_stats.vida_maxima}}"></progress>
-            <span vida-usuario="{{ participant.nombre }}">{{ participant.vida }}/{{
+            <span vida-usuario="{{ participant.nombre }}">{{ participant.vida|round|int }}/{{
                 participant.combat_stats.vida_maxima
                 }}</span>
             <img src="{{ url_for('static', filename='img/estadisticas-combate/mana.svg') }}" alt="Maná" title="Maná"
@@ -18,7 +18,7 @@
             <progress mana-usuario="{{ participant.nombre }}" class="rounded" type="range" min="0"
                 max="{{ participant.combat_stats.mana_maximo }}" value="{{ participant.mana }}"
                 title="{{ participant.mana }}/{{ participant.combat_stats.mana_maximo}}"></progress>
-            <span mana-usuario="{{ participant.nombre }}">{{ participant.mana }}/{{
+            <span mana-usuario="{{ participant.nombre }}">{{ participant.mana|round|int }}/{{
                 participant.combat_stats.mana_maximo
                 }}</span>
         </div>

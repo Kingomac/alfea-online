@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from 'macros/card_ataque.html' import cardAtaque with context %}
+
+{% block title %}Recompensas{% endblock %}
+
+{% block main %}
+<main class="text-gray-900 flex flex-col items-center gap-4">
+    <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Se han reclamado todas las
+        recompensas</h1>
+    <div class="flex bg-white bg-opacity-70 p-4 gap-2 items-center">
+        <span>{{ total['experiencia'] }}</span>
+        <img class="size-8" src="{{ url_for('static', filename='img/experiencia.svg') }}" alt="Experiencia"
+            title="Experiencia">
+    </div>
+
+    <div class="flex bg-white bg-opacity-70 p-4 gap-2 items-center">
+        <span>{{ total['monedas'] }}</span>
+        <img class="size-8" src="{{ url_for('static', filename='img/moneda.svg') }}" alt="Rubís de Magix"
+            title="Rubís de Magix">
+    </div>
+    <a href="{{ url_for('usuarios.index') }}" class="p-5 text-xl text-center text-white font-bold bg-wpink-500 hover:bg-wpink-100 mt-3
+    duration-300">Volver a la sala</a>
+</main>
+{% endblock %}

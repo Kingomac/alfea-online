@@ -7,7 +7,7 @@
     class="bg-no-repeat bg-cover bg-center bg-blend-soft-light w-[100vw] h-[100vh] grid grid-cols-middle-sm md:grid-cols-middle-md lg:grid-cols-middle-lg place-items-stretch gap-10 p-5">
     <!-- Lista de usuarios conectados -->
     <section>
-        <h1>Usuarios conectados</h1>
+        <h2 class="px-4 py-2 bg-white bg-opacity-70">Usuarios conectados</h2>
         {% from 'macros/lista_usuarios_sala.html' import listaUsuariosSala with context %}
         {{ listaUsuariosSala(usuarios=usuarios_sala, sala=sala) }}
     </section>

@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template
-from .service import get_recompensas_usuario, dar_recompensa
+from flask import Blueprint, render_template, redirect
+from .service import get_recompensas_usuario, reclamar_recompensas
 from flask_login import current_user
 
 bp_recompensas = Blueprint('recompensas', __name__, url_prefix='/recompensas',
@@ -12,7 +12,7 @@ def index():
     return render_template('recompensas.html', recompensas=recompensas)
 
 
-@bp_recompensas.route('/dar')
-def dar():
-    dar_recompensa(current_user.nombre)
-    return 'Recompensa dada'
+@bp_recompensas.route('/reclamar')
+def reclamar():
+    total = reclamar_recompensas(current_user.nombre)
+    return render_template('reclamar.html', total=total)

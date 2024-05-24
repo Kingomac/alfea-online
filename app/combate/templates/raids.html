@@ -4,7 +4,7 @@
 
 {% block main %}
 
-<main>
+<main class="text-gray-900">
     <h1 class="text-center text-6xl drop-shadow-title font-winx text-wpink-500 leading-loose">Raids</h1>
     <p class="text-center bg-white bg-opacity-60 rounded p-3 m-5">Los raids son misiones que puedes realizar en grupo
         con otros jugadores. Cada raid tiene un coste de 5
@@ -17,7 +17,7 @@
         {% for id, raid in raids.items() %}
         <article onclick="window.location.href='{{ url_for('combate.lobby_raid', id_raid=id) }}'"
             class="bg-white bg-opacity-60 text-center text-wrap p-3 grid grid-cols-[1fr_auto_1fr] gap-4 items-center cursor-pointer">
-            <span class="col-span-3 text-lg">{{ raid['nombre'] }}</span>
+            <span class="font-bold col-span-3 text-lg">{{ raid['nombre'] }}</span>
             <ul class="flex flex-col">
                 {% for heroe in raid['heroes'] %}
                 <li>{{ heroe.nombre }}</li>
