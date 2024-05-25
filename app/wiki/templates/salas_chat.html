@@ -1,0 +1,21 @@
+{% extends "base_wiki.html" %}
+
+{% block title %}Salas de chat{% endblock %}
+
+{% block pageTitle %}Salas de chat{% endblock pageTitle %}
+
+{% block main %}
+
+<p>La pantalla principal del juego son las salas de chat, que buscan la interacción entre jugadores para hablar sobre el
+    mundo de las Winx y que se reunan para organizar raids.</p>
+<p>Los mensajes enviados en las salas tienen una vida de 2 horas, es decir, a las 2 horas se eliminan.</p>
+<p>El icono utilizado para representar el envío de mensajes es Livy, la Pixie Mensajera, que aparece múltiples veces en
+    la serie enviando mensajes surfeando el aire con su sobre mágico.</p>
+<img src="{{ url_for('.static', filename='img/salas-chat/livy.webp') }}" alt="Livy, la pixie mensajera">
+
+<p>Como curiosdad, decir que, ademaś de mensajera, es la Pixie de la Velocidad, tal y como aparece en el spin-off Pop
+    Pixie. Su transformación Pop Pixie le cierta apariencia de mosca y realmente en el spin-off usa su poder de
+    supervelocidad con otros fines más que enviar mensajes.</p>
+<img src="{{ url_for('.static', filename='img/salas-chat/livy-pop-pixie.webp') }}"
+    alt="Livy con su transformación Pop Pixie">
+{% endblock %}

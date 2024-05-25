@@ -16,8 +16,11 @@
 <body class="bg-gradient-winx1 bg-no-repeat bg-fixed grid lg:grid-cols-12 md:gap-5">
     <nav class="bg-white bg-opacity-65 p-4 lg:col-span-2">
         <ul class="pl-5 grid justify-items-stretch gap-2 text-center">
+            <li><a class="block bg-wpink-100 w-full h-full rounded p-1 bg-opacity-30 hover:bg-opacity-50"
+                    href="{{ url_for('usuarios.index') }}">Jugar</a></li>
             {% for pag in [('Inicio', 'index'), ('Estadísticas de combate', 'estadisticas_combate'), ('Experiencia',
-            'experiencia'), ('Moneda', 'moneda'), ('Móvil', 'movil')] %}
+            'experiencia'), ('Flechas mágicas', 'flechas_magicas'), ('Moneda', 'moneda'), ('Móvil', 'movil'), ('Salas de
+            chat', 'salas_chat')] %}
             <li><a class="block bg-white w-full h-full rounded p-1 bg-opacity-40 hover:bg-opacity-60"
                     href="{{ url_for('wiki.' + pag[1]) }}">{{ pag[0] }}</a></li>
             {% endfor %}

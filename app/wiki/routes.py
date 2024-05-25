@@ -24,6 +24,16 @@ def estadisticas_combate():
     return render_template('estadisticas_combate.html')
 
 
+@bp_wiki.route('/flechas-magicas')
+def flechas_magicas():
+    return render_template('flechas_magicas.html')
+
+
+@bp_wiki.route('/salas-chat')
+def salas_chat():
+    return render_template('salas_chat.html')
+
+
 @bp_wiki.route('/')
 def index():
     return render_template('index.html')

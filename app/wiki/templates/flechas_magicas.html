@@ -1,0 +1,24 @@
+{% extends "base_wiki.html" %}
+
+{% block title %}Flechas mágicas{% endblock %}
+
+{% block pageTitle %}Flechas mágicas{% endblock pageTitle %}
+
+{% block main %}
+<p>Las flechas mágicas se utilizan en las aplicaciones del móvil (del juego) para volver a la sala en la que estaba el
+    usuario.</p>
+
+<p>Estas flechas son una referencia a las creadas por la pixie Lockette en la serie. Lockette es la Pixie de los
+    Portales, por lo que sabe el camino a cualquier lugar y puede abrirlos con sus llaves mágicas.</p>
+
+<img src="{{ url_for('.static', filename='img/flechas-magicas/1.webp') }}" title="Lockette" alt="Lockette" class="w-96">
+
+<p>Las flechas mágicas son grandes flechas rosas, que utilizan en la temporada 6 en los episodios 12 y 21.</p>
+<div class="grid md:grid-cols-2 gap-1">
+    <img src="{{ url_for('.static', filename='img/flechas-magicas/2.webp') }}" title="Flechas mágicas"
+        alt="Flechas mágicas">
+    <img src="{{ url_for('.static', filename='img/flechas-magicas/3.webp') }}" title="Flechas mágicas"
+        alt="Flechas mágicas">
+</div>
+
+{% endblock %}

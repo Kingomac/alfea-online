@@ -11,8 +11,9 @@
 <p>El diseño elegido para el móvil es el usado por Musa desde la temporada 5 a la 8.</p>
 <img src="{{ url_for('wiki.static', filename='img/movil-musa.webp') }}" alt="Móvil de Musa" class="w-96">
 
-<p>Listado de aplicaciones:</p>
-<table class="text-center">
+<h1 class="text-xl font-bold mt-5">Listado de aplicaciones</h1>
+<table
+    class="[&_td]:p-2 [&_td]:bg-white [&_th]:bg-wpink-100 [&_th]:bg-opacity-50 [&_td]:bg-opacity-50 table-auto border-separate border-spacing-y-1 text-center">
     <thead>
         <tr>
             <th>Aplicación</th>
@@ -22,19 +23,53 @@
     </thead>
     <tbody>
         <tr>
+            <td>Desplazarse</td>
+            <td>Permite cambiar entre las distintas salas de chat</td>
+            <td><img class="w-28 inline"
+                    src="{{ url_for('salas.static', filename='movil/iconos/desplazamiento.webp') }}"
+                    alt="Icono de la aplicación de desplazamiento"><br>Sky montado en su Wind Rider</td>
+        </tr>
+        <tr>
+            <td>Inventario</td>
+            <td>Permite cambiar los ataques equipados</td>
+            <td><img class="w-28 inline" src="{{ url_for('salas.static', filename='movil/iconos/inventario.webp') }}"
+                    alt="Icono de la aplicación de inventario"><br>Concorda, la pixie guardiana del Archivo Mágico de
+                Alfea</td>
+        </tr>
+        <tr>
             <td>Wiki</td>
             <td>Abre esta misma Wiki</td>
-            <td><img class="w-28 inline"
-                    src="{{ url_for('salas.static', filename='movil/iconos/wiki.webp') }}"><br>Biblioteca de
+            <td><img class="w-28 inline" src="{{ url_for('salas.static', filename='movil/iconos/wiki.webp') }}"
+                    alt="Icono de la aplicación de Wiki"><br>Biblioteca de
                 Solaria</td>
         </tr>
         <tr>
-            <td>Chat privado</td>
-            <td>Mensajes privados de chat entre usuarios</td>
-            <td><img class="w-28 inline" src="{{ url_for('salas.static', filename='movil/iconos/chat.webp') }}"><br>Livy
-                la
-                pixie
-                mensajera</td>
+            <td>Raids</td>
+            <td>Permite unirse a un grupo de jugadores para luchar en batallas con personajes de la serie</td>
+            <td><img class="w-28 inline" src="{{ url_for('salas.static', filename='movil/iconos/raids.webp') }}"
+                    alt="Icono de la aplicación de Raids"><br>Dark Bloom</td>
+        </tr>
+        <tr>
+            <td>Recompensas</td>
+            <td>Muestra las recompenas acumuladas y permite recogerlas para poder usar sus benificios</td>
+            <td><img class="w-28 inline" src="{{ url_for('salas.static', filename='movil/iconos/recompensas.webp') }}"
+                    alt="Icono de la aplicación de Recompensas"><br>Cofre Agador, acumulador de hechizos robado por
+                Valtor</td>
+        </tr>
+        <tr>
+            <td>Mejorar estadísticas</td>
+            <td>Permite usar la experiencia ganada para mejorar tus estadísticas</td>
+            <td><img class="w-28 inline"
+                    src="{{ url_for('salas.static', filename='movil/iconos/mejorar-estadisticas.webp') }}"
+                    alt="Icono de la aplicación de Mejorar estadísticas"><br>Musa con su transformación Cosmix en la
+                temporada 8</td>
+        </tr>
+        <tr>
+            <td>Tienda de ataques</td>
+            <td>Permite comprar nuevos hechizos para usar en las raids</td>
+            <td><img class="w-28 inline"
+                    src="{{ url_for('salas.static', filename='movil/iconos/tienda-ataques.webp') }}"
+                    alt="Icono de la aplicación de Tienda de ataques"><br>Tienda de juguetes de Pixieville</td>
         </tr>
     </tbody>
 </table>
