@@ -86,7 +86,8 @@
 
             <tr>
                 <td><label for="velocidad">Velocidad</label></td>
-                <td><img src="" alt="Velocidad" title="Velocidad">Velocidad</td>
+                <td><img src="{{ url_for('static', filename='img/estadisticas-combate/velocidad.webp') }}"
+                        class="w-12 h-12" alt="Velocidad" title="Velocidad"></td>
                 <td><input id="velocidad" type="range" min="{{ combat_stats.velocidad }}"
                         value="{{ combat_stats.velocidad }}" autocomplete="off"
                         max="{{ current_user.experiencia + combat_stats.velocidad }}"></td>

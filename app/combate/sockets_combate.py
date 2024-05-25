@@ -51,6 +51,8 @@ def registrar_sockets_combate(socketio: SocketIO):
             escudos = {}
             for x in incombat.ataquesTurno:
                 ataque: Ataque = ataques_csv.get_by_id(x.ataque)
+                if ataque.defensa_fisica < 0 and ataque.defensa_magica < 0:  # solo se aplican escudos
+                    continue
                 acierta = random.random() * 100 < ataque.precision
                 critico = random.random() * 100 < ataque.prob_critico
                 porcentaje_critico = random.uniform(
@@ -86,6 +88,10 @@ def registrar_sockets_combate(socketio: SocketIO):
             # Calcular daños de cada ataque
             for x in incombat.ataquesTurno:
                 ataque: Ataque = ataques_csv.get_by_id(x.ataque)
+
+                if ataque.ataque_fisico < 0 and ataque.ataque_magico < 0:  # si solo aplica escudo no hace daño
+                    continue
+
                 atacante: InCombatParticipant = incombat.get_participant_by_nombre(
                     x.usuario)
                 objetivo = incombat.get_participant_by_nombre(x.objetivo)
@@ -105,7 +111,13 @@ def registrar_sockets_combate(socketio: SocketIO):
                         f"{atacante.nombre} se ha hecho {int(abs(atacante.mana * 1.16))} de daño por usar {ataque.nombre} sin maná")
 
                 # Inflingir daño a objetivo
-                if objetivo.vida > 0:
+                if atacante.vida < 0:
+                    mensajes.append(
+                        f"{atacante.nombre} no ha podido atacar porque ha muerto")
+                elif objetivo.vida < 0:
+                    mensajes.append(f"{objetivo.nombre} ha atacado a {
+                                    objetivo.nombre}, pero ya había muerto")
+                if objetivo.vida > 0 and atacante.vida > 0:
                     if acierta:
                         # Sumar daño físico
                         dano = 0

@@ -24,6 +24,9 @@ class Usuario(UserMixin):
         return CombatStats.from_str(self.combate_stats_str)
         # return CombatStats(*map(int, self.combate_stats_str.split(',')))
 
+    def get_id(self):
+        return self.nombre
+
     @staticmethod
     def find_by_name(nombre):
         fetch = decode_hgetall(redis_db.hgetall(f"usuario:{nombre}"))

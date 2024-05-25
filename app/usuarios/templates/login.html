@@ -7,14 +7,19 @@
 <body
     style="background-image:url('{{ url_for('static', filename='img/fondo-login.webp') }}');background-repeat:no-repeat;background-size:cover;background-position:center;">
     <canvas style="z-index: -1;" id="efecto-particulas" class="absolute top-0 left-0"></canvas>
-    <main class="pt-5 flex flex-col items-center text-gray-900 min-h-[100vh]">
+    <main class="pt-5 flex flex-col items-center text-gray-900 min-h-[100vh] gap-5">
         <div class="bg-white bg-opacity-70 px-10">
             <h2 class="text-center text-5xl drop-shadow-title font-winx text-wpink-500 leading-relaxed">Bienvenido a
             </h2>
             <h1 class="text-center text-8xl drop-shadow-title font-winx text-wpink-500 leading-relaxed">Alfea Online
             </h1>
         </div>
-        <form method="POST" action="/" class="w-fit m-auto content-center my-5 font-bold">
+        {% if ref_registro %}
+        <p class="bg-white bg-opacity-80 p-5 text-lg">
+            ¡Gracias por registrarte! Inicia sesión para empezar a jugar
+        </p>
+        {% endif %}
+        <form method="POST" action="/" class="content-center font-bold">
             {{ form.hidden_tag() }}
             {% if form.errors %}
             <fieldset class="bg-red-600 bg-opacity-70 p-4 text-gray-100">

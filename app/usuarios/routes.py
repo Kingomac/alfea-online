@@ -27,7 +27,7 @@ def registro():
                       usuario.nombre}', *form.ataques.data)
         form.foto_perfil.data.save(
             'static/img/fotos_perfil/' + form.nombre.data + '.webp')
-        return redirect(url_for('usuarios.index'))
+        return redirect(url_for('usuarios.index', ref='registro'))
     return render_template('registro.html', form=form)
 
 
@@ -38,6 +38,7 @@ def index():
             str(flask_login.current_user.sala_actual))['alias']
         return redirect(url_for('salas.lugar', alias=alias))
     form = InicioSesionForm()
+    ref_registro = request.args.get('ref') == 'registro'
     if form.validate_on_submit():
         dbusr = decode_hgetall(redis_db.hgetall(f"usuario:{form.nombre.data}"))
         if dbusr:
@@ -52,4 +53,4 @@ def index():
         else:
             form.errors = {'nombre': [u'Usuario no registrado']}
     print(f"{form.errors=}")
-    return render_template('login.html', form=form)
+    return render_template('login.html', form=form, ref_registro=ref_registro)
