@@ -15,19 +15,17 @@ sequenceDiagram
             U->>Jugador 1: mostrarSelectorAtaques(ataquesJ1)
             activate U
             U->>Jugador 2: mostrarSelectorAtaques(ataquesJ2)
-        and Jugador 1 elige su ataque
-            Jugador 1-->>U: ataqueJ1
-            U-->>S: J1 selecciona ataqueJ1
-            S->>R: guardarAtaqueTurno(J1,ataqueJ1)
-            S->>S: comprobarTodosHanAtacado() -> False
-        and Jugador 2 elige su ataque
-            Jugador 2-->>U: ataqueJ2
-            deactivate U
-            U-->>S: J2 selecciona ataqueJ2
-            deactivate S
-            S->>R: guardarAtaqueTurno(J2,ataqueJ2)
-            S->>S: comprobarTodosHanAtacado() -> True
         end
+        Jugador 1-->>U: ataqueJ1
+        U-->>S: J1 selecciona ataqueJ1
+        S->>R: guardarAtaqueTurno(J1,ataqueJ1)
+        S->>S: comprobarTodosHanAtacado() -> False
+        Jugador 2-->>U: ataqueJ2
+        deactivate U
+        U-->>S: J2 selecciona ataqueJ2
+        deactivate S
+        S->>R: guardarAtaqueTurno(J2,ataqueJ2)
+        S->>S: comprobarTodosHanAtacado() -> True
       
         S->>R: obtenerCombate(idCombate)
         activate R

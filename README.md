@@ -1,21 +1,24 @@
 <h1 style="text-align:center;">Alfea Online</h1>
 
 
+
+Se puede jugar en http://5.250.186.182:8000
+
 ## Desarrollo
 
 Se requiere el siguiente software:
 
 - Python 3.12
 - Node.js 20
-- Redis
+- Redis (con el módulo de JSON activado)
 
 Se recomienda utilizar Docker con la siguiente configuración:
 
-- Redis: ejecutar un contenedor con la [imagen oficial de Redis](https://hub.docker.com/_/redis). Recuerda que debes crear una red y añadir tanto este contenedor como el del devcontainer para poder acceder mediante el nombre.
+- Redis: ejecutar un contenedor con la [imagen oficial de Redis Stack](https://hub.docker.com/r/redis/redis-stack), importante usar esta imagen, puesto que tiene el módulo de JSON activado y existen otras imágenes de Redis que no lo traen. Recuerda que debes crear una red y añadir tanto este contenedor como el del devcontainer para poder acceder mediante el nombre.
 
 ```shell
 $ docker network create als
-$ docker run -d --name redis --network als redis:latest
+$ docker run -d --name redis --network als redis/redis-stack
 ```
 
 - Devcontainer: ejecutar el IDE en un contenedor de desarrollo permite trabajar con las versiones adecuadas sin necesidad de instalar nada más que Docker en tu equipo. Su configuración se encuentra en `.devcontainer/devcontainer.json` y se pueden usar con Visual Studio Code o editor de código que los soporte. En este caso, contiene Node.js y Python y se deben ejecutar los siguientes comandos, en dos terminales separadas, para iniciar el servidor de [Tailwind](https://tailwindcss.com/) (framework de CSS) y la aplicación Flask.
@@ -55,12 +58,18 @@ Se requiere que el CSS de Tailwind haya sido generado en modo producción desde 
 
 
 
-# Combate
+# Diagramas de secuencia
 
-## Diagrama de secuencia
+## Lobby de combate
+
+![](docs/diagrama-secuencia-lobby-raid.svg)
+
+## Combate
 
 ![](docs/diagrama-secuencia-combate.svg)
 
-## Diagrama de flujo
+# Diagrama de flujo
+
+Se decidió incluir un diagrama de flujo adicional, puesto que, se adecua a la funcionalidad de combate implementada en el proyecto.
 
 ![](docs/diagrama-flujo-combate.svg)
