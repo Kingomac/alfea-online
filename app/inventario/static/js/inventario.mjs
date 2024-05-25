@@ -44,6 +44,7 @@ async function equipar(ataqueId) {
         return
     }
     ataqueColumnaEquipar(ataqueId)
+    window.location.reload()
 }
 
 /**
@@ -58,6 +59,7 @@ async function desequipar(ataqueId) {
         return
     }
     ataqueColumnaDesequipar(ataqueId)
+    window.location.reload()
 }
 
 for (const btn of document.querySelectorAll("[equipar-ataque-id]")) {
@@ -105,6 +107,7 @@ document.getElementById("columna_equipados").addEventListener("drop", async (eve
         return
     }
     ataqueColumnaEquipar(ataqueId)
+    window.location.reload()
 })
 
 
@@ -126,4 +129,5 @@ document.getElementById('columna_desequipados').addEventListener("drop", async (
         return
     }
     ataqueColumnaDesequipar(ataqueId)
+    window.location.reload()
 })
