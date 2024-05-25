@@ -10,11 +10,11 @@ Se requiere el siguiente software:
 
 - Python 3.12
 - Node.js 20
-- Redis (con el módulo de JSON activado)
+- Redis
 
 Se recomienda utilizar Docker con la siguiente configuración:
 
-- Redis: ejecutar un contenedor con la [imagen oficial de Redis Stack](https://hub.docker.com/r/redis/redis-stack), importante usar esta imagen, puesto que tiene el módulo de JSON activado y existen otras imágenes de Redis que no lo traen. Recuerda que debes crear una red y añadir tanto este contenedor como el del devcontainer para poder acceder mediante el nombre.
+- Redis: ejecutar un contenedor con la [imagen oficial de Redis](https://hub.docker.com/_/redis). Recuerda que debes crear una red y añadir tanto este contenedor como el del devcontainer para poder acceder mediante el nombre.
 
 ```shell
 $ docker network create als
