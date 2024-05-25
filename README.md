@@ -1,5 +1,6 @@
 <h1 style="text-align:center;">Alfea Online</h1>
 
+
 ## Desarrollo
 
 Se requiere el siguiente software:
@@ -24,6 +25,7 @@ $ pip install -r requirements.txt # Instalar dependencias de Python
 $ npm run dev # Generar CSS de Tailwind
 $ python main.py # Servidor de desarrollo en 127.0.0.1:5000
 ```
+Importante: la configuración de conexión de la base de datos se encuentra en `db/db.py` y actualmente se conecta a un contenedor llamado `redis`, por tanto si utilizas otro método de instalación de Redis u otra configuración, los datos conexión podrían cambiar.
 
 ## Producción
 
