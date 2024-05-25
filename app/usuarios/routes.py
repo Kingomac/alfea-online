@@ -25,8 +25,9 @@ def registro():
         redis_db.sadd(f'ataques:{usuario.nombre}', *form.ataques.data)
         redis_db.sadd(f'ataques_equipados:{
                       usuario.nombre}', *form.ataques.data)
-        form.foto_perfil.data.save(
-            'static/img/fotos_perfil/' + form.nombre.data + '.webp')
+        if form.foto_perfil.data:
+            form.foto_perfil.data.save(
+                'static/img/fotos_perfil/' + form.nombre.data + '.webp')
         return redirect(url_for('usuarios.index', ref='registro'))
     return render_template('registro.html', form=form)
 
