@@ -4,6 +4,7 @@ from uuid import uuid4
 from db import redis_db
 from redis.commands.json.path import Path
 from game_data_loader import ataques_csv
+import json
 
 
 class InCombat:
@@ -24,12 +25,11 @@ class InCombat:
         return None
 
     def save(self):
-        redis_db.json().set(f"combate:{self.id}",
-                            Path.root_path(), self.__dict__())
+        redis_db.set(f"combate:{self.id}", json.dumps(self.__dict__()))
         return self.id
 
     def delete(self):
-        redis_db.json().delete(f"combate:{self.id}")
+        redis_db.delete(f"combate:{self.id}")
 
     @staticmethod
     def tiene_acceso(usuario, id_combate):
@@ -40,7 +40,7 @@ class InCombat:
 
     @staticmethod
     def load(id: str):
-        data = redis_db.json().get(f"combate:{id}")
+        data = json.loads(redis_db.get(f"combate:{id}").decode())
         if data:
             return InCombat(data["id"],
                             [InCombatParticipant.from_combat(

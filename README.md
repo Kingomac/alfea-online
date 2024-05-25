@@ -18,7 +18,7 @@ Se recomienda utilizar Docker con la siguiente configuración:
 
 ```shell
 $ docker network create als
-$ docker run -d --name redis --network als redis/redis-stack
+$ docker run -d --name redis --network als redis:latest
 ```
 
 - Devcontainer: ejecutar el IDE en un contenedor de desarrollo permite trabajar con las versiones adecuadas sin necesidad de instalar nada más que Docker en tu equipo. Su configuración se encuentra en `.devcontainer/devcontainer.json` y se pueden usar con Visual Studio Code o editor de código que los soporte. En este caso, contiene Node.js y Python y se deben ejecutar los siguientes comandos, en dos terminales separadas, para iniciar el servidor de [Tailwind](https://tailwindcss.com/) (framework de CSS) y la aplicación Flask.
